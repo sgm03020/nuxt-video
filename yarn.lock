@@ -1892,6 +1892,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/youtube@0.0.39":
+  version "0.0.39"
+  resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.39.tgz#1c80e882d339a4d89da16b10acc411ceadc26955"
+  integrity sha512-naVjyTZT/CoNwEQW3+mf9E/x6sgB7QIPbRDtVlPUpHlmuQTk+j6gQBy0T5CRkV8oC0GYQjMgfr3VdueTSVLTjw==
+
 "@typescript-eslint/eslint-plugin@^3.7.0":
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-3.10.1.tgz#7e061338a1383f59edc204c605899f93dc2e2c8f"
@@ -10680,6 +10685,14 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-carousel-3d@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-carousel-3d/-/vue-carousel-3d-1.0.1.tgz#2f69ca7fb1569e1804c43c52487b28d8420ad79d"
+  integrity sha512-Q50gIEB6plLdqYd3jLxte8RJsXNPQBcrRsgUey7nnaQ7TvtFoRu/4rpPP1FiihahE0v+IzVv8LLSSJxD+XrQVQ==
+  dependencies:
+    core-js "^3.6.5"
+    vue "^2.6.11"
+
 vue-client-only@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"
@@ -10701,6 +10714,14 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-lazy-youtube-video@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/vue-lazy-youtube-video/-/vue-lazy-youtube-video-2.2.1.tgz#0afad365ea3610525cb9ee14bea0014121629265"
+  integrity sha512-Xynux5gZNDEGFwfZ3+s+lqkT/takN4GcWuGk0yva3pKG2T8NQ/2xXt7Trx0gpICF3LiQp/MCn9iQADXWBkSxoQ==
+  dependencies:
+    "@types/youtube" "0.0.39"
+    vue-typed-refs "^1.0.0"
 
 vue-loader@^15.9.3:
   version "15.9.3"
@@ -10765,7 +10786,12 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.12:
+vue-typed-refs@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-typed-refs/-/vue-typed-refs-1.0.0.tgz#374a1f28c1037c4fbaf988c9e2b07cf634846095"
+  integrity sha512-HrNHyt2SmvPzWqzl6yEb4dBc0yV7xgGb+BTF+XKokO6AwKWBcDd73ka/wCKvZ9KAnyL+4q3NOEQ8kPfyBWFBmg==
+
+vue@^2.6.11, vue@^2.6.12:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

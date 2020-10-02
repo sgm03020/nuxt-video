@@ -75,16 +75,21 @@ export default {
           title: 'Welcome',
           to: '/',
         },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'Inspire',
+        //   to: '/inspire',
+        // },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
+          title: 'Gallery',
+          to: '/gallery',
         },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'SAM\'s Factory Page',
     }
   },
 }
