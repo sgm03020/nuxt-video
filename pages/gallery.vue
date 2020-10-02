@@ -29,6 +29,8 @@
 -->
 <template>
   <v-container fluid>
+    <h1>Gallery</h1>
+    <h2>おすすめの動画</h2>
     <v-row dense>
       <v-col v-for="card in cards" :key="card.title" :cols="card.flex">
         <v-card>
@@ -71,9 +73,17 @@ export default {
         previewImageSize: 'maxresdefault',
         flex: 12,
       },
+      // {
+      //   title: 'Favorite road trips',
+      //   src: 'https://www.youtube.com/embed/4JS70KB9GS0',
+      //   previewImageSize: 'hqdefault',
+      //   flex: 6,
+      // },
       {
-        title: 'Favorite road trips',
-        src: 'https://www.youtube.com/embed/4JS70KB9GS0',
+        title: '腿上げ',
+        id: '4JS70KB9GS0',
+        src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
+        //https://www.youtube.com/watch?v=C9nzVgyEvRU
         previewImageSize: 'hqdefault',
         flex: 6,
       },
