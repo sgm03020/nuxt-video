@@ -79,12 +79,13 @@ export default {
       //   previewImageSize: 'hqdefault',
       //   flex: 6,
       // },
+      // hqdefault sddefault mqdefault
       {
         title: '腿上げ',
         id: '4JS70KB9GS0',
         src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
         //https://www.youtube.com/watch?v=C9nzVgyEvRU
-        previewImageSize: 'hqdefault',
+        previewImageSize: 'sddefault',
         flex: 6,
       },
       {
@@ -96,7 +97,7 @@ export default {
       {
         title: '懸垂',
         src: 'https://www.youtube.com/embed/izgJ5GxR3Tg',
-        previewImageSize: 'mqdefault',
+        previewImageSize: 'sddefault',
         flex: 6,
       },
     ],

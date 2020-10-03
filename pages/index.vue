@@ -9,7 +9,16 @@
           </v-card-title>
           <br />
           <br />
-          <carousel-3d>
+          <carousel-3d
+            :controls-visible="true"
+            :clickable="false"
+            :controls-prev-html="'&#10092;'"
+            :controls-next-html="'&#10093;'"
+            :controls-width="30"
+            :controls-height="340"
+            :width="320"
+            :height="320"
+          >
             <slide v-for="(card, i) in cards" :index="i" :key="i">
               <!-- <v-img :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'">
             </v-img> -->
@@ -70,7 +79,7 @@ export default {
         title: '開設',
         id: 'ZoXdmxYa90c',
         src: 'https://www.youtube.com/embed/ZoXdmxYa90c',
-        previewImageSize: 'sddefault',
+        previewImageSize: 'default',
         flex: 12,
       },
       // maxresdefault
@@ -86,21 +95,28 @@ export default {
         id: '4JS70KB9GS0',
         src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
         //https://www.youtube.com/watch?v=C9nzVgyEvRU
-        previewImageSize: 'hqdefault',
+        previewImageSize: 'default',
         flex: 6,
       },
       {
         title: '腹筋',
         id: 'BQJmBtIqYtU',
         src: 'https://www.youtube.com/embed/BQJmBtIqYtU',
-        previewImageSize: 'sddefault',
+        previewImageSize: 'default',
+        flex: 6,
+      },
+      {
+        title: '開設',
+        id: 'ZoXdmxYa90c',
+        src: 'https://www.youtube.com/embed/ZoXdmxYa90c',
+        previewImageSize: 'default',
         flex: 6,
       },
       {
         title: '懸垂',
         id: 'izgJ5GxR3Tg',
         src: 'https://www.youtube.com/embed/izgJ5GxR3Tg',
-        previewImageSize: 'mqdefault',
+        previewImageSize: 'default',
         flex: 6,
       },
     ],
@@ -112,3 +128,21 @@ export default {
   },
 }
 </script>
+
+
+<style lang="scss">
+.carousel-3d-container {
+  // 前後移動ボタンの色
+  a span {
+    color: white;
+  }
+  .carousel-3d-slide {
+    // 各スライド
+    // padding: 1px;
+    // background-color: black;
+    .title {
+      font-size: 22px;
+    }
+  }
+}
+</style>>
