@@ -48,10 +48,17 @@
           />
 
           <!-- <v-card-title v-text="card.title"></v-card-title> -->
-          <v-card-subtitle class="text-center ma-2 pa-0" v-text="card.title"></v-card-subtitle>
+          <v-card-subtitle
+            class="text-center ma-2 pa-0"
+            v-text="card.title"
+          ></v-card-subtitle>
           <!-- </v-img> -->
         </v-card>
       </v-col>
+    </v-row>
+    <v-row>
+      <v-spacer />
+      <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
     </v-row>
   </v-container>
 </template>

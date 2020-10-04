@@ -3,60 +3,79 @@
     <v-row justify="center" align="center" class="ma-0 pa-0">
       <v-col cols="12" sm="12" md="12" class="ma-0 pa-0">
         <div class="text-center"></div>
-        <v-card class="ma-0 pa-0">
-          <v-card-title class="headline">
-            Welcome to SAM's Online App
-          </v-card-title>
-          <br />
-          <br />
-          <carousel-3d
-            :controls-visible="true"
-            :clickable="false"
-            :controls-prev-html="'&#10092;'"
-            :controls-next-html="'&#10093;'"
-            :controls-width="30"
-            :controls-height="340"
-            :width="320"
-            :height="320"
+        <!-- <v-card class="ma-0 pa-0"> -->
+        <!-- <v-card-title class="headline justify-center"> -->
+        <v-card-title class="justify-center">
+          <!-- Welcome to SAM's Online -->
+          Welcome to SAM's Video Library
+        </v-card-title>
+        <v-row v-if="0" class="justify-space-between pa-2" dense>
+          <v-avatar color="indigo" size="96">
+            <span class="white--text"> Pointゲット </span>
+          </v-avatar>
+          <v-avatar color="orange" size="96">
+            <span class="white--text"> お知らせ </span>
+          </v-avatar>
+          <v-avatar color="teal" size="96">
+            <span class="white--text"> ログイン </span>
+          </v-avatar>
+        </v-row>
+        <carousel-3d
+          :controls-visible="true"
+          :clickable="false"
+          :controls-prev-html="'&#10092;'"
+          :controls-next-html="'&#10093;'"
+          :controls-width="30"
+          :controls-height="224"
+          :width="300"
+          :height="169 + 34 + 1"
+        >
+          <slide
+            class="text-center pt-0"
+            style="background-color: black"
+            v-for="(card, i) in cards"
+            :index="i"
+            :key="i"
           >
-            <slide v-for="(card, i) in cards" :index="i" :key="i">
-              <!-- <v-img :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'">
-            </v-img> -->
-              <LazyYoutubeVideo
-                :src="card.src"
-                :preview-image-size="card.previewImageSize"
-                aspect-ratio="1:1"
-                :thumbnail-listeners="{ load: foo }"
-              />
-            </slide>
-          </carousel-3d>
-          <v-carousel v-if="0">
-            <v-carousel-item v-for="(card, i) in cards" :key="i">
-              <v-img
-                :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'"
-              ></v-img>
-              <!-- <v-img src="https://picsum.photos/id/11/500/300">{{card.id}}</v-img> -->
-            </v-carousel-item>
-          </v-carousel>
-          <v-card-text>
-            <p>スポーツネットワークSAMのオンラインAppページです。</p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p>
-              Thank you for developing with Vuetify and I look forward to
-              bringing more exciting features in the future.
-            </p>
-            <div class="text-xs-right">
-              <!-- <em><small>&mdash; John Leider</small></em> -->
-            </div>
-            <br />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn color="primary" nuxt to="/gallery"> Continue </v-btn>
-          </v-card-actions>
-        </v-card>
+            <!-- <v-img :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'">
+              </v-img> -->
+            <v-row
+              style="height: 34px; background-color: transparent"
+              dense
+              no-gutters
+              justify="center"
+              align-content="center"
+            >
+              {{ card.title }}
+            </v-row>
+            <LazyYoutubeVideo
+              :src="card.src"
+              :preview-image-size="card.previewImageSize"
+              aspect-ratio="16:9"
+              :thumbnail-listeners="{ load: foo }"
+            />
+          </slide>
+        </carousel-3d>
+        <v-card-text>
+          <p>
+            Thank you for watching.
+            This page is for SAM's Video Library.
+          </p>
+          <p></p>
+          <p>
+            <!-- Thank you for developing with Vuetify and I look forward to bringing
+            more exciting features in the future. -->
+          </p>
+          <div class="text-xs-right">
+            <!-- <em><small>&mdash; John Leider</small></em> -->
+          </div>
+          <br />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" nuxt to="/gallery"> 次のページ </v-btn>
+        </v-card-actions>
+        <!-- </v-card> -->
       </v-col>
     </v-row>
   </v-container>
@@ -74,6 +93,8 @@ export default {
     LazyYoutubeVideo,
   },
   data: () => ({
+    colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
+    model: 0,
     cards: [
       {
         title: '開設',
@@ -129,7 +150,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .carousel-3d-container {
   // 前後移動ボタンの色
@@ -145,4 +165,5 @@ export default {
     }
   }
 }
-</style>>
+</style>
+>
