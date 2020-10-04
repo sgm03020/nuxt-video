@@ -27,8 +27,10 @@
           :controls-next-html="'&#10093;'"
           :controls-width="30"
           :controls-height="224"
-          :width="300"
-          :height="169 + 34 + 1"
+          :width="320"
+          :height="180 + 34 + 1"
+          :onMainSlideClick="click"
+          @after-slide-change="onAfterSlideChange"
         >
           <slide
             class="text-center pt-0"
@@ -37,8 +39,6 @@
             :index="i"
             :key="i"
           >
-            <!-- <v-img :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'">
-              </v-img> -->
             <v-row
               style="height: 34px; background-color: transparent"
               dense
@@ -48,7 +48,22 @@
             >
               {{ card.title }}
             </v-row>
-            <LazyYoutubeVideo
+            <v-img v-if="i!=slideIndex"
+              width="320"
+              height="180"
+              :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'"
+            >
+            </v-img>
+            <!-- <v-row
+              style="height: 34px; background-color: transparent"
+              dense
+              no-gutters
+              justify="center"
+              align-content="center"
+            >
+              {{ card.title }}
+            </v-row> -->
+            <LazyYoutubeVideo v-else
               :src="card.src"
               :preview-image-size="card.previewImageSize"
               aspect-ratio="16:9"
@@ -57,10 +72,7 @@
           </slide>
         </carousel-3d>
         <v-card-text>
-          <p>
-            Thank you for watching.
-            This page is for SAM's Video Library.
-          </p>
+          <p>Thank you for watching. This page is for SAM's Video Library.</p>
           <p></p>
           <p>
             <!-- Thank you for developing with Vuetify and I look forward to bringing
@@ -93,6 +105,7 @@ export default {
     LazyYoutubeVideo,
   },
   data: () => ({
+    slideIndex: 0,
     colors: ['primary', 'secondary', 'yellow darken-2', 'red', 'orange'],
     model: 0,
     cards: [
@@ -113,7 +126,7 @@ export default {
       // },
       {
         title: '腿上げ',
-        id: '4JS70KB9GS0',
+        id: 'C9nzVgyEvRU',
         src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
         //https://www.youtube.com/watch?v=C9nzVgyEvRU
         previewImageSize: 'default',
@@ -145,6 +158,16 @@ export default {
   methods: {
     foo() {
       console.log('bar')
+    },
+    click() {
+      alert('click')
+    },
+    onAfterSlideChange(index) {
+      console.log(
+        '@onAfterSlideChange Callback Triggered',
+        'Slide Index ' + index
+      )
+      this.slideIndex = index
     },
   },
 }
