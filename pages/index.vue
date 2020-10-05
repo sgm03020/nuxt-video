@@ -39,7 +39,6 @@
             :index="i"
             :key="i"
           >
-            <client-only>
               <v-row
                 style="height: 34px; background-color: transparent"
                 dense
@@ -49,13 +48,14 @@
               >
                 {{ card.title }}
               </v-row>
-              <!-- <v-img
-                v-if="i != slideIndex"
+              <!-- v-if="i != slideIndex" -->
+              <v-img
+                
                 width="320"
                 height="180"
                 :src="'https://img.youtube.com/vi/' + card.id + '/default.jpg'"
               >
-              </v-img> -->
+              </v-img>
               <!-- <v-row
               style="height: 34px; background-color: transparent"
               dense
@@ -65,13 +65,12 @@
             >
               {{ card.title }}
             </v-row> -->
-              <LazyYoutubeVideo
+              <!-- <LazyYoutubeVideo
                 :src="card.src"
                 :preview-image-size="card.previewImageSize"
                 aspect-ratio="16:9"
                 :thumbnail-listeners="{ load: foo }"
-              />
-            </client-only>
+              /> -->
           </slide>
         </carousel-3d>
         <v-card-text>
