@@ -49,13 +49,13 @@
               >
                 {{ card.title }}
               </v-row>
-              <v-img
+              <!-- <v-img
                 v-if="i != slideIndex"
                 width="320"
                 height="180"
                 :src="'https://img.youtube.com/vi/' + card.id + '/default.jpg'"
               >
-              </v-img>
+              </v-img> -->
               <!-- <v-row
               style="height: 34px; background-color: transparent"
               dense
@@ -66,7 +66,6 @@
               {{ card.title }}
             </v-row> -->
               <LazyYoutubeVideo
-                v-else
                 :src="card.src"
                 :preview-image-size="card.previewImageSize"
                 aspect-ratio="16:9"
