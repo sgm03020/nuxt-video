@@ -28,7 +28,7 @@
           :controls-width="30"
           :controls-height="224"
           :width="320"
-          :height="180 + 34 + 1"
+          :height="180 + 34 + 0"
           :onMainSlideClick="click"
           @after-slide-change="onAfterSlideChange"
         >
@@ -39,22 +39,24 @@
             :index="i"
             :key="i"
           >
-            <v-row
-              style="height: 34px; background-color: transparent"
-              dense
-              no-gutters
-              justify="center"
-              align-content="center"
-            >
-              {{ card.title }}
-            </v-row>
-            <v-img v-if="i!=slideIndex"
-              width="320"
-              height="180"
-              :src="'https://img.youtube.com/vi/' + card.id + '/0.jpg'"
-            >
-            </v-img>
-            <!-- <v-row
+            <client-only>
+              <v-row
+                style="height: 34px; background-color: transparent"
+                dense
+                no-gutters
+                justify="center"
+                align-content="center"
+              >
+                {{ card.title }}
+              </v-row>
+              <v-img
+                v-if="i != slideIndex"
+                width="320"
+                height="180"
+                :src="'https://img.youtube.com/vi/' + card.id + '/default.jpg'"
+              >
+              </v-img>
+              <!-- <v-row
               style="height: 34px; background-color: transparent"
               dense
               no-gutters
@@ -63,12 +65,14 @@
             >
               {{ card.title }}
             </v-row> -->
-            <LazyYoutubeVideo v-else
-              :src="card.src"
-              :preview-image-size="card.previewImageSize"
-              aspect-ratio="16:9"
-              :thumbnail-listeners="{ load: foo }"
-            />
+              <LazyYoutubeVideo
+                v-else
+                :src="card.src"
+                :preview-image-size="card.previewImageSize"
+                aspect-ratio="16:9"
+                :thumbnail-listeners="{ load: foo }"
+              />
+            </client-only>
           </slide>
         </carousel-3d>
         <v-card-text>
