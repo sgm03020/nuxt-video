@@ -44,6 +44,8 @@ export default {
     '@nuxtjs/pwa',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
+    // add
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
