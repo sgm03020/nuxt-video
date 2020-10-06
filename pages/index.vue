@@ -34,13 +34,22 @@
             </v-row>
             <!-- Slide 1 Content -->
             <!-- <img src="https://placehold.it/360x270" /> -->
+            <!-- src="https://img.youtube.com/vi/ZoXdmxYa90c/default.jpg" -->
             <v-img
+              v-if="i != slideIndex"
               width="320"
               height="180"
               :lazy-src="require('assets/images/default.jpg')"
-              src="https://img.youtube.com/vi/ZoXdmxYa90c/default.jpg"
+              :src="card.tmb"
             >
             </v-img>
+            <LazyYoutubeVideo
+              v-else
+              :src="card.src"
+              :preview-image-size="card.previewImageSize"
+              aspect-ratio="16:9"
+              :thumbnail-listeners="{ load: foo }"
+            />
           </slide>
         </carousel-3d>
       </client-only>
@@ -52,11 +61,13 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 
 export default {
   components: {
     Logo,
     VuetifyLogo,
+    LazyYoutubeVideo,
   },
   data: () => ({
     loading: true,
