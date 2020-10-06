@@ -3,7 +3,19 @@
     <div>ABCDEFG</div>
     <div>
       <client-only>
-        <carousel-3d>
+        <carousel-3d
+          v-show="1"
+          :controls-visible="false"
+          :clickable="false"
+          :controls-prev-html="'&#10092;'"
+          :controls-next-html="'&#10093;'"
+          :controls-width="30"
+          :controls-height="60"
+          :width="320"
+          :height="180 + 36 + 0"
+          :onMainSlideClick="void 0"
+          @after-slide-change="onAfterSlideChange"
+        >
           <slide
             class="text-center pt-0"
             style="background-color: black"
@@ -11,6 +23,15 @@
             :index="i"
             :key="i"
           >
+            <v-row
+              style="height: 36px; background-color: transparent"
+              dense
+              no-gutters
+              justify="center"
+              align-content="center"
+            >
+              {{ card.title }}
+            </v-row>
             <!-- Slide 1 Content -->
             <!-- <img src="https://placehold.it/360x270" /> -->
             <v-img
