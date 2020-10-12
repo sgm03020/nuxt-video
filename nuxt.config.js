@@ -2,6 +2,7 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  target: 'static',
   head: {
     titleTemplate: '%s - nuxt-video',
     title: 'nuxt-video',
@@ -21,6 +22,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src: '~/plugins/Carousel3d', mode:'client'},
+    '@/plugins/Hasura.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -45,7 +47,9 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     // add
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    // add
+    '@nuxt/http'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

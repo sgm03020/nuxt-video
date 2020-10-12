@@ -23,12 +23,15 @@
   },
   "dependencies": {
     "@nuxt/content": "^1.8.1",
+    "@nuxt/http": "^0.6.0",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
     "nuxt": "^2.14.5",
     "vue-carousel-3d": "^1.0.1",
     "vue-lazy-youtube-video": "^2.2.1"
