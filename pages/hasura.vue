@@ -7,7 +7,7 @@
 </template>
 
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 //import '@nuxt/http'
 import gql from 'graphql-tag'
@@ -15,7 +15,7 @@ import { print } from 'graphql/language/printer'
 
 const QUERY = gql`
   query {
-    conference(oder_by: { date: desc }) {
+    conferences(oder_by: { date: desc }) {
       name
       place
       date
@@ -31,7 +31,7 @@ export default Vue.extend({
   async asyncData({ app }) {
     // $hasuraはプラグインとして登録しており
     // 引数をappとして、app.$hasuraとアクセスする
-    
+
     //const res = await $http
     // ここではdataすらも利用不可能である
     // FMSsAXLJ7i0
@@ -45,7 +45,7 @@ export default Vue.extend({
       query: print(QUERY),
     })
     return {
-      conferences: data.conference,
+      conferences: data.conferences,
     }
   },
 })

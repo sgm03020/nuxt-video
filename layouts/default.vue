@@ -119,6 +119,11 @@ export default {
           title: 'Gallery',
           to: '/gallery',
         },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Hasura',
+          to: '/hasura',
+        },
       ],
       miniVariant: false,
       right: true,
