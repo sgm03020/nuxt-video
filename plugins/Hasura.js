@@ -3,7 +3,8 @@ export default function ({ $http, env }, inject) {
   const $hasura = $http.create({
     prefixUrl: env.API_HASURA_URL,
   })
-  $hasura.setHeader('X-Hasura-Admin-Secret','password')
+  // 以下はなるべく設定しないようにする
+  //$hasura.setHeader('X-Hasura-Admin-Secret','password')
 
   inject('hasura', $hasura.$post.bind($hasura, ''))
 }

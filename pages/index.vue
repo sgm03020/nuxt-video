@@ -43,9 +43,15 @@
             @after-slide-change="onAfterSlideChange"
             class=""
           >
-            <slide
+            <!-- <slide
               class="text-center ma-0 pa-0 black"
               v-for="(card, i) in cards"
+              :index="i"
+              :key="i"
+            > -->
+            <slide
+              class="text-center ma-0 pa-0 black"
+              v-for="(card, i) in video_contents_master"
               :index="i"
               :key="i"
             >
@@ -76,7 +82,7 @@
               <LazyYoutubeVideo
                 v-else
                 :src="card.src"
-                :preview-image-size="card.previewImageSize"
+                :preview-image-size="card.previewsize"
                 aspect-ratio="16:9"
                 :thumbnail-listeners="{ load: foo }"
               />
@@ -97,6 +103,8 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
+import gql from 'graphql-tag'
+import { print } from 'graphql/language/printer'
 
 export default {
   components: {
@@ -162,7 +170,7 @@ export default {
       },
     ],
   }),
-  async asyncData({ $axios }) {
+  async asyncData({ app }) {
     // ここではdataすらも利用不可能である
     // FMSsAXLJ7i0
     // https://img.youtube.com/vi/FMSsAXLJ7i0/default.jpg
@@ -171,6 +179,28 @@ export default {
     //const image0 = await $axios.$get(url_tmb)
     //console.log(image0)
     //return { image0 }
+
+    const QUERY = gql`
+      query {
+        video_contents_master {
+          id
+          contents_id
+          url
+          src
+          title
+          tmb
+          previewsize
+        }
+      }
+    `
+    // 取得
+    const { data } = await app.$hasura({
+      query: print(QUERY),
+    })
+    return {
+      video_contents_master: data.video_contents_master
+    }
+
   },
   mounted() {
     setTimeout(() => {
