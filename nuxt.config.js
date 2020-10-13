@@ -23,6 +23,7 @@ export default {
   plugins: [
     {src: '~/plugins/Carousel3d', mode:'client'},
     '@/plugins/Hasura.js',
+    '@/plugins/SetInterval.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
