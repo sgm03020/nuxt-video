@@ -124,6 +124,26 @@ export default {
           title: 'Hasura',
           to: '/hasura',
         },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'トピックス',
+          to: '/topics',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '上半身',
+          to: '/upper',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: '下半身',
+          to: '/lower',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'ストレッチ',
+          to: '/stretch',
+        },
       ],
       miniVariant: false,
       right: true,
