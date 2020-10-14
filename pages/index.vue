@@ -7,7 +7,7 @@
         </v-card-title>
       </v-row>
       <div v-show="!loading" class="justify-center text-right">
-        <v-btn color="primary" v-on:click="updateVideoContens(101)"
+        <v-btn color="primary" v-on:click="updateRecommendedContens()"
           >おすすめ</v-btn
         >
         <v-btn color="primary" v-on:click="updateVideoContens(1004)"
@@ -121,6 +121,7 @@ import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
 
 // Hasura QUERY
+// 基本の4つ取りクエリ
 const QUERY = gql`
   query {
     video_contents_master(limit: 4, order_by: { id: asc }) {
@@ -134,7 +135,7 @@ const QUERY = gql`
     }
   }
 `
-
+// カテゴリ選択動画
 const GET_VIDEO_CONTENTS = gql`
   query GetVideoContents($category: String!) {
     video_contents_master(
@@ -152,6 +153,43 @@ const GET_VIDEO_CONTENTS = gql`
     }
   }
 `
+// おすすめ動画抽出1
+const GET_RECOMMENDED_CONTENTS1 = gql`
+  query GetRecommendedContents {
+    video_recommended_contents{
+      recommended_id
+      video_contents_master {
+        id
+        contents_id
+        url
+        src
+        title
+        tmb
+        previewsize
+      }
+    }
+  }
+`
+// おすすめ動画抽出2(where句を利用)
+const GET_RECOMMENDED_CONTENTS2 = gql`
+  query GetRecommendedContents {    
+      video_contents_master(
+        where: { 
+          video_recommended_contents: {recommended_id: {_is_null: false}}
+        }
+      ) 
+      {
+        id
+        contents_id
+        url
+        src
+        title
+        tmb
+        previewsize
+      }
+  }
+`
+// テスト用query
 const QUERY1 = gql`
   query {
     video_contents_master(
@@ -184,26 +222,16 @@ export default {
     cards: [
       {
         title: '開設',
-        // title: '',
         id: 'ZoXdmxYa90c',
         src: 'https://www.youtube.com/embed/ZoXdmxYa90c',
         tmb: 'https://img.youtube.com/vi/ZoXdmxYa90c/default.jpg',
         previewImageSize: 'default',
         flex: 12,
       },
-      // maxresdefault
-      // {
-      //   title: 'Favorite road trips',
-      //   id: '4JS70KB9GS0',
-      //   src: 'https://www.youtube.com/embed/4JS70KB9GS0',
-      //   previewImageSize: 'hqdefault',
-      //   flex: 6,
-      // },
       {
         title: '腿上げ',
         id: 'C9nzVgyEvRU',
         src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
-        //https://www.youtube.com/watch?v=C9nzVgyEvRU
         tmb: 'https://img.youtube.com/vi/C9nzVgyEvRU/default.jpg',
         previewImageSize: 'default',
         flex: 6,
@@ -259,20 +287,17 @@ export default {
   },
   methods: {
     foo() {
-      console.log('bar')
+      // console.log('bar')
     },
     click() {
       alert('click')
     },
     onAfterSlideChange(index) {
-      console.log(
-        '@onAfterSlideChange Callback Triggered',
-        'Slide Index ' + index
-      )
+      // console.log(
+      //   '@onAfterSlideChange Callback Triggered',
+      //   'Slide Index ' + index
+      // )
       this.slideIndex = index
-
-      //Test
-      //console.log(print(QUERY1))
     },
     // 動画コンテンツ情報配列の更新
     // vpc(video primary category)
@@ -284,18 +309,40 @@ export default {
           category: `${cat}`,
         },
       })
-      //console.log(data)
-
-      //this.video_contents_array.splice(0, this.video_contents_array.length)
-      //this.$refs.slide.splice(0, this.$refs.slide.length)
-      //this.video_contents_array.pop()
-      //this.$refs.slide.pop()      
       this.video_contents_array = data.video_contents_master
       this.$refs.carousel.goSlide(0)
+      this.slideIndex = 0
+    },
+    async updateRecommendedContens() {
+
+      // POST to Hasura パターン2
+      const { data } = await this.$hasura({
+        query: print(GET_RECOMMENDED_CONTENTS2),
+      })
+      console.log(data)
+      //this.video_contents_array.splice(0, this.video_contents_array.length)
+      this.video_contents_array = data.video_contents_master
+      /*
+      // POST to Hasura  パターン1
+      const { data } = await this.$hasura({
+       query: print(GET_RECOMMENDED_CONTENTS1),
+      })
+      //console.log(data)
+      //console.log(data.video_recommended_contents)
+      // 配列クリア
+      this.video_contents_array.splice(0, this.video_contents_array.length)
+      // オブジェクト配列のアクセス方法
+      for (let key in data.video_recommended_contents) {
+        //console.log(data.video_recommended_contents[key])
+        let obj = data.video_recommended_contents[key].video_contents_master
+        this.video_contents_array.push(obj)
+      }
+      */
+
+
+      // 共通
       //this.video_contents_array = data.video_contents_master
-      //
-      //this.video_contents_array.pop()
-      //this.$refs.carousel.goSlide(0)
+      this.$refs.carousel.goSlide(0)
       this.slideIndex = 0
     },
   },
