@@ -1,36 +1,49 @@
 <template>
   <div>
-    <div></div>
     <v-container>
       <v-row justify="center" align="center" class="pa-0 mb-6">
         <v-card-title class="justify-center ma-0 pa-0">
           Welcome to SAM's Video Library
         </v-card-title>
       </v-row>
+      <div v-show="!loading" class="justify-center text-right">
+        <v-btn color="primary" v-on:click="updateVideoContens(101)"
+          >おすすめ</v-btn
+        >
+        <v-btn color="primary" v-on:click="updateVideoContens(1004)"
+          >ストレッチ</v-btn
+        >
+        <v-btn color="primary" v-on:click="updateVideoContens(1002)"
+          >上半身</v-btn
+        >
+        <v-btn color="primary" v-on:click="updateVideoContens(1003)"
+          >下半身</v-btn
+        >
+        <!-- <v-btn color="primary" v-on:click="updateVideoContens(0)">更新</v-btn> -->
+      </div>
     </v-container>
     <div>
+      <!-- <div class="justify-center text-center"> -->
+      <div
+        v-show="loading"
+        style="
+          width: 100%;
+          height: 216px;
+          margin: 20px 0;
+          z-index: 10;
+          opacity: 0.3;
+        "
+        class="justify-center text-center pa-0"
+      >
+        <img width="320" height="216" :src="require('assets/images/0.jpg')" />
+      </div>
+      <!-- </div> -->
       <client-only>
         <div class="justify-center text-center">
-          <div
-            v-show="loading"
-            style="
-              width: 100%;
-              height: 216px;
-              margin: 20px 0;
-              z-index: 10;
-              opacity: 0.3;
-            "
-            class="justify-center text-center pa-0"
-          >
-            <img
-              width="320"
-              height="216"
-              :src="require('assets/images/0.jpg')"
-            />
-          </div>
-
           <carousel-3d
             v-show="!loading"
+            ref="carousel"
+            :count="video_contents_array.length"
             :controls-visible="false"
             :clickable="false"
             :controls-prev-html="'&#10092;'"
@@ -50,8 +63,9 @@
               :key="i"
             > -->
             <slide
+              ref="slide"
               class="text-center ma-0 pa-0 black"
-              v-for="(card, i) in video_contents_master"
+              v-for="(card, i) in video_contents_array"
               :index="i"
               :key="i"
             >
@@ -90,7 +104,7 @@
           </carousel-3d>
         </div>
       </client-only>
-      <v-row class="mr-4 mt-10">
+      <v-row v-show="!loading" class="mr-4 mt-10">
         <v-spacer />
         <v-btn color="primary" nuxt to="/gallery">次のページ</v-btn>
       </v-row>
@@ -105,6 +119,56 @@ import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
+
+// Hasura QUERY
+const QUERY = gql`
+  query {
+    video_contents_master(limit: 4, order_by: { id: asc }) {
+      id
+      contents_id
+      url
+      src
+      title
+      tmb
+      previewsize
+    }
+  }
+`
+
+const GET_VIDEO_CONTENTS = gql`
+  query GetVideoContents($category: String!) {
+    video_contents_master(
+      where: { category: { _eq: $category } }
+      limit: 3
+      order_by: { id: desc }
+    ) {
+      id
+      contents_id
+      url
+      src
+      title
+      tmb
+      previewsize
+    }
+  }
+`
+const QUERY1 = gql`
+  query {
+    video_contents_master(
+      where: { category: { _eq: "1004" } }
+      limit: 3
+      order_by: { id: desc }
+    ) {
+      id
+      contents_id
+      url
+      src
+      title
+      tmb
+      previewsize
+    }
+  }
+`
 
 export default {
   components: {
@@ -169,6 +233,7 @@ export default {
         flex: 6,
       },
     ],
+    video_contents_array: [],
   }),
   async asyncData({ app }) {
     // ここではdataすらも利用不可能である
@@ -179,28 +244,13 @@ export default {
     //const image0 = await $axios.$get(url_tmb)
     //console.log(image0)
     //return { image0 }
-
-    const QUERY = gql`
-      query {
-        video_contents_master {
-          id
-          contents_id
-          url
-          src
-          title
-          tmb
-          previewsize
-        }
-      }
-    `
     // 取得
     const { data } = await app.$hasura({
       query: print(QUERY),
     })
     return {
-      video_contents_master: data.video_contents_master
+      video_contents_array: data.video_contents_master,
     }
-
   },
   mounted() {
     setTimeout(() => {
@@ -220,6 +270,33 @@ export default {
         'Slide Index ' + index
       )
       this.slideIndex = index
+
+      //Test
+      //console.log(print(QUERY1))
+    },
+    // 動画コンテンツ情報配列の更新
+    // vpc(video primary category)
+    async updateVideoContens(cat) {
+      // POST to Hasura
+      const { data } = await this.$hasura({
+        query: print(GET_VIDEO_CONTENTS),
+        variables: {
+          category: `${cat}`,
+        },
+      })
+      //console.log(data)
+
+      //this.video_contents_array.splice(0, this.video_contents_array.length)
+      //this.$refs.slide.splice(0, this.$refs.slide.length)
+      //this.video_contents_array.pop()
+      //this.$refs.slide.pop()      
+      this.video_contents_array = data.video_contents_master
+      this.$refs.carousel.goSlide(0)
+      //this.video_contents_array = data.video_contents_master
+      //
+      //this.video_contents_array.pop()
+      //this.$refs.carousel.goSlide(0)
+      this.slideIndex = 0
     },
   },
 }
