@@ -88,6 +88,12 @@ export default {
   },
   
   generate: {
-    fallback: true
-  }
+    fallback: false,
+    routes: [
+      '/upper',
+      '/lower',
+      '/stretch',
+      '/topics'
+    ],  
+  },
 }

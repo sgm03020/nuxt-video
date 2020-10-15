@@ -72,6 +72,9 @@ export default {
   components: {
     LazyYoutubeVideo,
   },
+  mounted() {
+    // console.log('mounted')
+  },
   data: () => ({
     cards: [
       {
@@ -111,8 +114,19 @@ export default {
   }),
   methods: {
     foo() {
-      console.log('bar')
+      // console.log('bar')
     },
   },
+  // わざとエラーを起こさせるayancData
+  // async asyncData({ error, redirect, app, params }) {
+  //   return app.$axios
+  //     .get(`http://mysiteabcd.com/articles`)
+  //     .then((res) => {
+  //       return { error: false }
+  //     })
+  //     .catch((err) => {
+  //       error({ statusCode: 404, message: err.message })
+  //     })
+  // },
 }
 </script>

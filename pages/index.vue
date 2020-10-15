@@ -6,7 +6,7 @@
           Welcome to SAM's Video Library
         </v-card-title>
       </v-row>
-      <div v-show="!loading" class="justify-center text-right">
+      <div v-if="0" v-show="!loading" class="justify-center text-right">
         <v-btn color="primary" v-on:click="updateRecommendedContens()"
           >おすすめ</v-btn
         >
@@ -20,6 +20,9 @@
           >下半身</v-btn
         >
         <!-- <v-btn color="primary" v-on:click="updateVideoContens(0)">更新</v-btn> -->
+      </div>
+      <div v-else v-show="!loading" class="justify-center text-right">
+        <v-banner single-line sticky>ダイジェスト</v-banner>
       </div>
     </v-container>
     <div>
@@ -283,7 +286,11 @@ export default {
   mounted() {
     setTimeout(() => {
       this.loading = false
-    }, 2000)
+    }, 1000)
+    // エラー時にApp Barを非表示にするようにしたので
+    // index読み込み時には必ず表示するように以下
+    console.log('index.vue mounted')
+    this.$store.commit('setHideBar', false)
   },
   methods: {
     foo() {

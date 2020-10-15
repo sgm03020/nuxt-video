@@ -24,7 +24,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :hidden="this.$store.state.isHideBar" :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
@@ -148,10 +148,10 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      // title: "SAM Online",
       title: "SAM's Video Library",
       picker: new Date().toISOString().substr(0, 10),
       arrayEvents: null,
+      isHideBar: false,
     }
   },
   mounted() {
@@ -161,6 +161,12 @@ export default {
       d.setDate(day)
       return d.toISOString().substr(0, 10)
     })
+    // AppBarの表示制御
+    // this.isHideBar = this.$store.state.isHideBar
+    console.log('default.vue mounted')
+    //this.$store.commit('setHideBar', false)
+    //this.$store.commit('setHideBar', true)    
+
   },
   methods: {
     functionEvents(date) {

@@ -32,6 +32,13 @@ export default {
       title,
     }
   },
+  mounted() {
+    console.log('error.vue mounted')
+    this.$store.commit('setHideBar', true)
+  },
+  destroyed() {
+    this.$store.commit('setHideBar', false)
+  }
 }
 </script>
 

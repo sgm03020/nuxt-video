@@ -1,6 +1,7 @@
 <template>
   <div v-if="!notfound">
-    <h2>{{ this.slug }}</h2>
+    <!-- <h2>{{ this.slug }}</h2> -->
+    <h2>{{ page_name }}</h2>
     <v-container fluid>
       <!-- <h1>Gallery</h1> -->
       <!-- <h2>おすすめの動画</h2> -->
@@ -39,9 +40,7 @@
       </v-row>
     </v-container>
   </div>
-  <div v-else>
-      Not Found
-  </div>
+  <div v-else>Not Found</div>
 </template>
 
 <script>
@@ -106,20 +105,32 @@ export default {
   components: {
     LazyYoutubeVideo,
   },
-  async asyncData({ app, params }) {
+  async asyncData({ error, redirect, app, params }) {
+    /* わざとエラーにする場合に使う
+    return app.$axios
+      .get(`http://mysiteabcd.com/articles`)
+      .then((res) => {
+        return { error: false }
+      })
+      .catch((err) => {
+        error({ statusCode: 404, message: err.message })
+      })
+    */
     if (params == undefined) {
       console.log('params is undefined.')
-      return
     }
-    console.log('params=', params)
+    //console.log('params=', params)
     const slug = await params.slug // When calling /abc the slug will be "abc"
-    // console.log('slug=', slug)
-    // return { slug }
-    if (slug == undefined || slug == '') {
-      console.log('slug is undefined.')
-    }
     if (['upper', 'lower', 'stretch', 'topics'].indexOf(slug) < 0) {
-      return { notfound: true }
+    // TODO
+    // 404エラー
+    // throw new Error('Not Found');
+    //redirect('/')
+    //throw new Error('server error')
+    //return true
+    //error({ statusCode: 404, message: 'Not Found' })
+    // return redirect('/error')
+    //  return { notfound: true, slug: '', page_name: 'Not Found' }
     }
 
     const { data } = await app.$hasura({
@@ -129,7 +140,7 @@ export default {
       },
     })
 
-    console.log('data=', data)
+    //console.log('data=', data)
     //let pageName = undefined
     //console.log('page= ', data.video_pages['0'])
     //pageContents = data.video_pages['0'].video_contents_master
@@ -143,11 +154,14 @@ export default {
     //   }
     // オブジェクトアクセスでとりあえず['0']決め打ちにしておく
     return {
+      notfound: false,
       slug: data.video_pages['0'].page_name,
+      page_name: data.video_pages['0'].page_name,
       video_contents_array: data.video_pages['0'].video_contents_master, //data.video_contents_master,
     }
   },
   data: () => ({
+    page_name: '',
     video_contents_array: [],
   }),
 }
