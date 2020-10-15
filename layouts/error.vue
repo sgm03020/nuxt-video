@@ -1,4 +1,19 @@
 <template>
+  <v-container class="ma-4 pa-4">
+    <v-row>
+      <h3>Error Not Found.</h3>
+    </v-row>
+    <NuxtLink to="/"> Home page </NuxtLink>
+  </v-container>
+</template>
+<script>
+export default {
+  layout: 'nothing',
+  // ページコンポーネントの定義
+}
+</script>
+<!--
+<template>
   <v-app dark>
     <h1 v-if="error.statusCode === 404">
       {{ pageNotFound }}
@@ -47,3 +62,4 @@ h1 {
   font-size: 20px;
 }
 </style>
+-->

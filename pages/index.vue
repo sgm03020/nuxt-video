@@ -109,7 +109,7 @@
       </client-only>
       <v-row v-show="!loading" class="mr-4 mt-10">
         <v-spacer />
-        <v-btn color="primary" nuxt to="/gallery">次のページ</v-btn>
+        <v-btn color="primary" nuxt to="/topics">トピックス</v-btn>
       </v-row>
     </div>
   </div>

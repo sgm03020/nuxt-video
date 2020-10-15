@@ -34,9 +34,13 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
-        <v-spacer />
+      <v-row class="ma-2 justify-space-between">
+        <!-- <v-spacer /> -->
         <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
+        <!-- <v-btn color="primary" nuxt to="/upper">上半身</v-btn> -->
+        <v-btn color="primary" nuxt :to="{ path: `${next_route}` }">{{
+          next_page_name
+        }}</v-btn>
       </v-row>
     </v-container>
   </div>
@@ -122,37 +126,81 @@ export default {
     //console.log('params=', params)
     const slug = await params.slug // When calling /abc the slug will be "abc"
     if (['upper', 'lower', 'stretch', 'topics'].indexOf(slug) < 0) {
-    // TODO
-    // 404エラー
-    // throw new Error('Not Found');
-    //redirect('/')
-    //throw new Error('server error')
-    //return true
-    //error({ statusCode: 404, message: 'Not Found' })
-    // return redirect('/error')
-    //  return { notfound: true, slug: '', page_name: 'Not Found' }
+      // TODO
+      // 404エラー
+      // throw new Error('Not Found');
+      //redirect('/')
+      //throw new Error('server error')
+      //return true
+      //error({ statusCode: 404, message: 'Not Found' })
+      // return redirect('/error')
+      //  return { notfound: true, slug: '', page_name: 'Not Found' }
+    }
+    try {
+      const { data } = await app.$hasura({
+        query: print(GET_VIDEO_BY_PAGE),
+        variables: {
+          tag_name: `${slug}`,
+        },
+      })
+
+      //console.log('data=', data)
+      //let pageName = undefined
+      //console.log('page= ', data.video_pages['0'])
+      //pageContents = data.video_pages['0'].video_contents_master
+      //pageName = data.video_pages['0'].page_name
+
+      //   for (let key in data.video_pages) {
+      //       console.log(key)
+      //       pageContents = data.video_pages[key].video_contents_master
+      //       pageName = data.video_pages[key].page_name
+      //       break
+      //   }
+      // オブジェクトアクセスでとりあえず['0']決め打ちにしておく
+
+      // 次のページ先を算出
+      // TODO 以下の配列はhasuraから取得するのが理想
+      const pageNameArray = [
+        { topics: 'トピックス' },
+        { upper: '上半身' },
+        { lower: '下半身' },
+        { stretch: 'ストレッチ他' },
+      ]
+      if (data.video_pages['0'].page_name) {
+        const pagename = data.video_pages['0'].page_name
+        // console.log('pagename: ', pagename);
+        let findIndex = -1
+        for (let i = 0; i < pageNameArray.length; i++) {
+          // console.log('pageNameArray[i]: ', pageNameArray[i]);
+          // オブジェクト型にしてしまったので、route名はkeyになってしまった
+          let key = Object.keys(pageNameArray[i])[0]
+          if (key == slug) {
+            findIndex = i
+            break
+          }
+        }
+        // console.log('pagenum: ', findIndex)
+        if (findIndex >= 0) {
+          const pageindex = (findIndex + 1) % pageNameArray.length
+          const nextroute = '/' + Object.keys(pageNameArray[pageindex])[0]
+          const nextpagename = Object.values(pageNameArray[pageindex])[0]
+          console.log(nextroute)
+          return {
+            notfound: false,
+            slug,
+            page_name: pagename,
+            next_route: nextroute,
+            next_page_name: nextpagename,
+            video_contents_array: data.video_pages['0'].video_contents_master, //data.video_contents_master,
+          }
+        }
+      }
+      //
+    } catch (err) {
+      error({ statusCode: 404, message: 'Server Error' })
+      return
     }
 
-    const { data } = await app.$hasura({
-      query: print(GET_VIDEO_BY_PAGE),
-      variables: {
-        tag_name: `${slug}`,
-      },
-    })
-
-    //console.log('data=', data)
-    //let pageName = undefined
-    //console.log('page= ', data.video_pages['0'])
-    //pageContents = data.video_pages['0'].video_contents_master
-    //pageName = data.video_pages['0'].page_name
-
-    //   for (let key in data.video_pages) {
-    //       console.log(key)
-    //       pageContents = data.video_pages[key].video_contents_master
-    //       pageName = data.video_pages[key].page_name
-    //       break
-    //   }
-    // オブジェクトアクセスでとりあえず['0']決め打ちにしておく
     return {
       notfound: false,
       slug: data.video_pages['0'].page_name,
@@ -162,7 +210,14 @@ export default {
   },
   data: () => ({
     page_name: '',
+    page_index: 0,
+    next_route: '',
+    page_array: ['topics', 'upper', 'lower', 'stretch'],
     video_contents_array: [],
   }),
+  mounted() {
+    // ページ順(ここでは取得しないこちらはクライアント側)
+    //console.log('page_name=', this.page_name)
+  },
 }
 </script>

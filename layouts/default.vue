@@ -24,7 +24,13 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :hidden="this.$store.state.isHideBar" :clipped-left="clipped" fixed app>
+    <!-- v-app-barの表示制御を行う場合  -->
+    <!-- :hidden="this.$store.state.isHideBar" -->
+    <v-app-bar
+      :clipped-left="clipped"
+      fixed
+      app
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
@@ -47,7 +53,9 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <nuxt />
+        <transition name="page">
+          <nuxt />
+        </transition>
       </v-container>
     </v-main>
     <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed> -->
@@ -77,7 +85,8 @@
                 :month-format="timestamp => ('')"
               ></v-calendar>
               -->
-              <v-date-picker v-if="0"
+              <v-date-picker
+                v-if="0"
                 v-model="picker"
                 locale="jp-ja"
                 color="green lighten-1"
@@ -165,8 +174,7 @@ export default {
     // this.isHideBar = this.$store.state.isHideBar
     console.log('default.vue mounted')
     //this.$store.commit('setHideBar', false)
-    //this.$store.commit('setHideBar', true)    
-
+    //this.$store.commit('setHideBar', true)
   },
   methods: {
     functionEvents(date) {
@@ -194,5 +202,13 @@ export default {
 //   left: auto;
 //   width: auto;
 // }
-
+//
+// transition
+//
+.page-enter {
+  opacity: 0;
+}
+.page-enter-active {
+  transition: opacity 2s;
+}
 </style>
