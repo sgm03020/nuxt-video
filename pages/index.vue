@@ -137,9 +137,9 @@ const QUERY = gql`
 `
 // カテゴリ選択動画
 const GET_VIDEO_CONTENTS = gql`
-  query GetVideoContents($category: String!) {
+  query GetVideoContents($category_id: String!) {
     video_contents_master(
-      where: { category: { _eq: $category } }
+      where: { category_id: { _eq: $category_id } }
       limit: 3
       order_by: { id: desc }
     ) {
@@ -193,7 +193,7 @@ const GET_RECOMMENDED_CONTENTS2 = gql`
 const QUERY1 = gql`
   query {
     video_contents_master(
-      where: { category: { _eq: "1004" } }
+      where: { category_id: { _eq: "1004" } }
       limit: 3
       order_by: { id: desc }
     ) {
@@ -306,9 +306,10 @@ export default {
       const { data } = await this.$hasura({
         query: print(GET_VIDEO_CONTENTS),
         variables: {
-          category: `${cat}`,
+          category_id: `${cat}`,
         },
       })
+      //console.log('data=', data)
       this.video_contents_array = data.video_contents_master
       this.$refs.carousel.goSlide(0)
       this.slideIndex = 0
