@@ -1,15 +1,40 @@
 <template>
   <v-container class="ma-4 pa-4">
     <v-row>
-      <h3>Error Not Found.</h3>
+      <h3 v-if="error.statusCode === 404">
+        {{ pageNotFound }}
+      </h3>
+      <h3 v-else>
+        {{ otherError }}
+      </h3>
     </v-row>
     <NuxtLink to="/"> Home page </NuxtLink>
   </v-container>
 </template>
+
 <script>
 export default {
   layout: 'nothing',
   // ページコンポーネントの定義
+  props: {
+    error: {
+      type: Object,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      pageNotFound: '404 Not Found',
+      otherError: 'An error occurred',
+    }
+  },
+  head() {
+    const title =
+      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+    return {
+      title,
+    }
+  },
 }
 </script>
 <!--
