@@ -1,10 +1,7 @@
 <template>
   <div v-if="!notfound">
-    <!-- <h2>{{ this.slug }}</h2> -->
     <h2>{{ page_name }}</h2>
     <v-container fluid>
-      <!-- <h1>Gallery</h1> -->
-      <!-- <h2>おすすめの動画</h2> -->
       <v-row dense>
         <v-col
           v-for="(card, index) in video_contents_array"
@@ -12,32 +9,21 @@
           :cols="card.flex"
         >
           <v-card>
-            <!-- <v-img
-            :src="card.src"
-            class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="200px"
-          > -->
             <LazyYoutubeVideo
               :src="card.src"
               :preview-image-size="card.previewImageSize"
               :aspect-ratio="card.aspectRatio"
               :thumbnail-listeners="{ load: () => {} }"
             />
-
-            <!-- <v-card-title v-text="card.title"></v-card-title> -->
             <v-card-subtitle
               class="text-center ma-2 pa-0"
               v-text="card.title"
             ></v-card-subtitle>
-            <!-- </v-img> -->
           </v-card>
         </v-col>
       </v-row>
       <v-row class="ma-2 justify-space-between">
-        <!-- <v-spacer /> -->
         <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
-        <!-- <v-btn color="primary" nuxt to="/upper">上半身</v-btn> -->
         <v-btn color="primary" nuxt :to="{ path: `${next_route}` }">{{
           next_page_name
         }}</v-btn>
@@ -101,7 +87,7 @@ const GET_VIDEO_PAGES = gql`
   }
 `
 
-// category_idによるコンテンツ
+// category_idによるコンテンツ(利用中)
 const GET_VIDEO_BY_CAT = gql`
   query GetVideoByCat($category_id: String!) {
     video_contents_master(where: { category_id: { _eq: $category_id } }) {
@@ -115,7 +101,7 @@ const GET_VIDEO_BY_CAT = gql`
   }
 `
 
-// ページ名によるコンテンツ
+// ページ名によるコンテンツ(現在不使用)
 const GET_VIDEO_BY_PAGE = gql`
   query GetVideoByPage($page_tag: String!) {
     video_pages(where: { page_tag: { _eq: $page_tag } }) {
@@ -141,27 +127,18 @@ export default {
   },
   async asyncData({ error, redirect, app, params, route }) {
     /* わざとエラーにする場合に使う
-    return app.$axios
-      .get(`http://mysiteabcd.com/articles`)
-      .then((res) => {
-        return { error: false }
-      })
-      .catch((err) => {
-        error({ statusCode: 404, message: err.message })
-      })
+      error({ statusCode: 404, message: err.message })
     */
     if (params == undefined) {
       console.log('params is undefined.')
       error({ statusCode: 404, message: 'Error Not Found' })
     }
-    console.log('params=', params)
-    //console.log('route params=', route.params)
 
     const slugs = await params.slugs // When calling /abc the slug will be "abc"
     // TODO 現在ハードコーディング
-    if (['upper', 'lower', 'stretch', 'topics'].indexOf(slugs) < 0) {
-      error({ statusCode: 404, message: 'Error Not Found' })
-    }
+    // if (['upper', 'lower', 'stretch', 'topics'].indexOf(slugs) < 0) {
+    //   error({ statusCode: 404, message: 'Error Not Found' })
+    // }
 
     try {
       console.log('start')
@@ -169,7 +146,6 @@ export default {
         query: print(GET_VIDEO_PAGES),
       })
       const pages = GetVideoPages.data.video_pages
-      // console.log('pages: ', pages)
       // タグ名から配列のインデックスを取得
       const cat_index = pages.findIndex((v) => v.page_tag == slugs)
       const currentPage = pages[cat_index]
@@ -190,9 +166,7 @@ export default {
       // console.log('data: ', data)
       if (data) {
         video_contents_array = data.video_contents_master
-        // console.log('video_contents_array: ', video_contents_array);
       }
-      // return {}
 
       /* OK パターン1
       const { data } = await app.$hasura({
@@ -202,54 +176,6 @@ export default {
         },
       })
       */
-
-      // オブジェクトアクセスでとりあえず['0']決め打ちにしておく
-      // 次のページ先を算出
-      // TODO 以下の配列はhasuraから取得する
-      // const pageNameArray = [
-      //   { topics: 'トピックス' },
-      //   { upper: '上半身' },
-      //   { lower: '下半身' },
-      //   { stretch: 'ストレッチ他' },
-      // ]
-      //console.log('data.video_pages: ', data.video_pages);
-      //console.log('data.video_pages: ', data.video_pages[0]);
-
-      /*
-      if (data.video_pages['0'].page_name) {
-        const pagename = data.video_pages['0'].page_name
-        console.log('pagename: ', pagename);
-        // 
-        let findIndex = -1
-        for (el in pagesNameArray) {
-          if (el['page_tag'] == slugs){
-            findIndex = index
-            break
-          }
-        }
-
-        // console.log('pagenum: ', findIndex)
-        if (findIndex >= 0) {
-          const pageindex = (findIndex + 1) % pagesNameArray.length
-          // next path = /videos/next
-          //const nextroute = basePath + '/' + Object.keys(pageNameArray[pageindex])[0]
-          const nextroute = basePath + '/' + (pagesNameArray[pageindex])['page_tag']
-          //const nextpagename = Object.values(pageNameArray[pageindex])[0]
-          const nextpagename = (pageNameArray[pageindex])['page_name']
-          console.log(nextroute)
-          return {
-            notfound: false,
-            slugs,
-            page_name: pagename,
-            next_route: nextroute,
-            next_page_name: nextpagename,
-            video_contents_array: data.video_pages['0'].video_contents_master, //data.video_contents_master,
-          }
-        }
-      }
-      */
-      //
-
       return {
         notfound: false,
         slugs,
@@ -262,13 +188,6 @@ export default {
       error({ statusCode: 404, message: 'Server Error' })
       //error({ statusCode: 404, message: err.message })
     }
-
-    // return {
-    //   notfound: false,
-    //   slug: data.video_pages['0'].page_name,
-    //   page_name: data.video_pages['0'].page_name,
-    //   video_contents_array: data.video_pages['0'].video_contents_master, //data.video_contents_master,
-    // }
   },
   data: () => ({
     page_name: '',
