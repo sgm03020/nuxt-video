@@ -7,6 +7,7 @@
     "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
+    "start2": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=3000 nuxt start",
     "generate": "nuxt-ts generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
@@ -36,7 +37,8 @@
     "nuxt": "^2.14.5",
     "rimraf": "^3.0.2",
     "vue-carousel-3d": "^1.0.1",
-    "vue-lazy-youtube-video": "^2.2.1"
+    "vue-lazy-youtube-video": "^2.2.1",
+    "vue-slick-carousel": "^1.0.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
