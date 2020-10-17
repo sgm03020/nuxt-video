@@ -74,7 +74,7 @@ const GET_VIDEO_CONTENTS = gql`
   }
 `
 
-// ページ名によるコンテンツ
+// ページ情報テーブル
 const GET_VIDEO_PAGES = gql`
   query GetVideoPages {
     video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
@@ -125,7 +125,7 @@ export default {
   components: {
     LazyYoutubeVideo,
   },
-  async asyncData({ error, redirect, app, params, route }) {
+  async asyncData({ error, redirect, app, params, route, store }) {
     /* わざとエラーにする場合に使う
       error({ statusCode: 404, message: err.message })
     */
@@ -134,7 +134,7 @@ export default {
       error({ statusCode: 404, message: 'Error Not Found' })
     }
 
-    const slugs = await params.slugs // When calling /abc the slug will be "abc"
+    const id = await params.id // When calling /abc the slug will be "abc"
     // TODO 現在ハードコーディング
     // if (['upper', 'lower', 'stretch', 'topics'].indexOf(slugs) < 0) {
     //   error({ statusCode: 404, message: 'Error Not Found' })
@@ -147,7 +147,7 @@ export default {
       })
       const pages = GetVideoPages.data.video_pages
       // タグ名から配列のインデックスを取得
-      const cat_index = pages.findIndex((v) => v.page_tag == slugs)
+      const cat_index = pages.findIndex((v) => v.page_tag == id)
       const currentPage = pages[cat_index]
       const page_id = currentPage.page_id
       const page_name = currentPage.page_name
@@ -178,7 +178,7 @@ export default {
       */
       return {
         notfound: false,
-        slugs,
+        id,
         page_name,
         next_route,
         next_page_name,
@@ -199,6 +199,8 @@ export default {
   mounted() {
     // ページ順(ここでは取得しないこちらはクライアント側)
     //console.log('page_name=', this.page_name)
+    //store.state.pages
+    //console.log('store.state.pages: ', store.state.pages);
   },
 }
 </script>

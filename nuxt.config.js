@@ -22,6 +22,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src: '~/plugins/Carousel3d', mode:'client'},
+    // {src: '~/plugins/Carousel3d', mode:'server'},
     '@/plugins/Hasura.js',
     '@/plugins/SetInterval.js',
   ],
@@ -90,10 +91,18 @@ export default {
   generate: {
     fallback: false,
     routes: [
-      '/upper',
-      '/lower',
-      '/stretch',
-      '/topics'
+      // '/video/_slugs/upper',
+      // '/video/_slugs/lower',
+      // '/video/_slugs/stretch',
+      // '/video/_slugs/topics'
+      // '/video/upper',
+      // '/video/lower',
+      // '/video/stretch',
+      // '/video/topics'
     ],  
+  },
+
+  router: {
+    middleware: 'CollectionMiddleware'
   },
 }

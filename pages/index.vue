@@ -6,6 +6,7 @@
           Welcome to SAM's Video Library
         </v-card-title>
       </v-row>
+      <!-- <v-btn color="primary" v-on:click="click">TEST</v-btn> -->
       <div v-if="0" v-show="!loading" class="justify-center text-right">
         <v-btn color="primary" v-on:click="updateRecommendedContens()"
           >おすすめ</v-btn
@@ -109,7 +110,7 @@
       </client-only>
       <v-row v-show="!loading" class="mr-4 mt-10">
         <v-spacer />
-        <v-btn color="primary" nuxt to="/topics">トピックス</v-btn>
+        <v-btn color="primary" nuxt to="/videos/topics">トピックス</v-btn>
       </v-row>
     </div>
   </div>
@@ -159,7 +160,7 @@ const GET_VIDEO_CONTENTS = gql`
 // おすすめ動画抽出1
 const GET_RECOMMENDED_CONTENTS1 = gql`
   query GetRecommendedContents {
-    video_recommended_contents{
+    video_recommended_contents {
       recommended_id
       video_contents_master {
         id
@@ -175,21 +176,20 @@ const GET_RECOMMENDED_CONTENTS1 = gql`
 `
 // おすすめ動画抽出2(where句を利用)
 const GET_RECOMMENDED_CONTENTS2 = gql`
-  query GetRecommendedContents {    
-      video_contents_master(
-        where: { 
-          video_recommended_contents: {recommended_id: {_is_null: false}}
-        }
-      ) 
-      {
-        id
-        contents_id
-        url
-        src
-        title
-        tmb
-        previewsize
+  query GetRecommendedContents {
+    video_contents_master(
+      where: {
+        video_recommended_contents: { recommended_id: { _is_null: false } }
       }
+    ) {
+      id
+      contents_id
+      url
+      src
+      title
+      tmb
+      previewsize
+    }
   }
 `
 // テスト用query
@@ -207,6 +207,18 @@ const QUERY1 = gql`
       title
       tmb
       previewsize
+    }
+  }
+`
+// ページ名によるコンテンツ
+const GET_VIDEO_PAGES = gql`
+  query GetVideoPages {
+    video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
+      page_id
+      page_tag
+      page_name
+      base_path
+      full_path
     }
   }
 `
@@ -283,14 +295,31 @@ export default {
       video_contents_array: data.video_contents_master,
     }
   },
+  async fetch({ app, store }) {
+    // ページ情報をストアへ登録する(fetchの役割)
+    // const GetVideoPages = await app.$hasura({
+    //   query: print(GET_VIDEO_PAGES),
+    // })
+    // const pages = GetVideoPages.data.video_pages
+    // if (pages) store.commit('pages', pages)
+  },
+  computed: {
+  },
   mounted() {
     setTimeout(() => {
       this.loading = false
     }, 1000)
     // エラー時にApp Barを非表示にするようにしたので
     // index読み込み時には必ず表示するように以下
-    console.log('index.vue mounted')
-    this.$store.commit('setHideBar', false)
+    // console.log('index.vue mounted')
+    // this.$store.commit('setHideBar', false)
+
+    // モジュールモードindex.js
+    // console.log('pages=', this.$store.state.pages)
+
+    // モジュールモードでindex以外はgettersが使える
+    //console.log(this.$store.getters['collection/hoge'])
+
   },
   methods: {
     foo() {
@@ -298,6 +327,8 @@ export default {
     },
     click() {
       alert('click')
+      let counter = this.$store.getters['counter']
+      console.log('counter: ', counter)
     },
     onAfterSlideChange(index) {
       // console.log(
@@ -322,7 +353,6 @@ export default {
       this.slideIndex = 0
     },
     async updateRecommendedContens() {
-
       // POST to Hasura パターン2
       const { data } = await this.$hasura({
         query: print(GET_RECOMMENDED_CONTENTS2),
@@ -346,7 +376,6 @@ export default {
         this.video_contents_array.push(obj)
       }
       */
-
 
       // 共通
       //this.video_contents_array = data.video_contents_master

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "clean:dist": "rimraf dist",
     "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
@@ -33,6 +34,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "nuxt": "^2.14.5",
+    "rimraf": "^3.0.2",
     "vue-carousel-3d": "^1.0.1",
     "vue-lazy-youtube-video": "^2.2.1"
   },

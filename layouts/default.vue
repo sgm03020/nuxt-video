@@ -107,6 +107,7 @@
 
 <script>
 export default {
+  middleware: ['CollectionMiddleware'],
   data() {
     return {
       clipped: false,
@@ -136,22 +137,22 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'トピックス',
-          to: '/topics',
+          to: '/videos/topics',
         },
         {
           icon: 'mdi-chart-bubble',
           title: '上半身',
-          to: '/upper',
+          to: '/videos/upper',
         },
         {
           icon: 'mdi-chart-bubble',
           title: '下半身',
-          to: '/lower',
+          to: '/videos/lower',
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'ストレッチ',
-          to: '/stretch',
+          to: '/videos/stretch',
         },
       ],
       miniVariant: false,
