@@ -9,9 +9,9 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in storeitems"
           :key="i"
-          :to="item.to"
+          :to="item.full_path"
           router
           exact
         >
@@ -19,7 +19,7 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="item.page_name" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -49,6 +49,7 @@
     </v-app-bar>
     <v-main>
       <v-container>
+        <!-- <div>{{pages}}</div> -->
         <transition name="page">
           <nuxt />
         </transition>
@@ -104,17 +105,41 @@
 <script>
 export default {
   middleware: ['CollectionMiddleware'],
+  computed: {
+    // ストアの状態から item を表示します
+    storeitems () {
+      //return this.$store.state.items[this.$route.params.id]
+      console.log('default.vue computed')
+      // minimalItemsと結合
+      const storeitems = this.minimalItems.concat(this.$store.state.pages)
+      console.log('storeitems: ', storeitems)
+      // return this.$store.state.pages
+      return storeitems
+    }
+  },  
   data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
+      minimalItems: [
+        {
+          page_name: 'Welcome Page',
+          icon: 'mdi-apps',          
+          full_path: '/',
+        },
+      ],
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
+          page_name: 'Welcome Page',
+          icon: 'mdi-apps',          
+          full_path: '/',
         },
+        // {
+        //   icon: 'mdi-apps',
+        //   title: 'Welcome',
+        //   to: '/',
+        // },
         // {
         //   icon: 'mdi-chart-bubble',
         //   title: 'Inspire',
@@ -130,26 +155,26 @@ export default {
         //   title: 'Hasura',
         //   to: '/hasura',
         // },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'トピックス',
-          to: '/videos/topics',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: '上半身',
-          to: '/videos/upper',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: '下半身',
-          to: '/videos/lower',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'ストレッチ',
-          to: '/videos/stretch',
-        },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'トピックス',
+        //   to: '/videos/topics',
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: '上半身',
+        //   to: '/videos/upper',
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: '下半身',
+        //   to: '/videos/lower',
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'ストレッチ',
+        //   to: '/videos/stretch',
+        // },
       ],
       miniVariant: false,
       right: true,

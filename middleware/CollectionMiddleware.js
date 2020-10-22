@@ -12,6 +12,7 @@ export default async function ({ app, store, $http, $hasura }) {
         page_id
         page_tag
         page_name
+        icon
         base_path
         full_path
       }
@@ -23,7 +24,7 @@ export default async function ({ app, store, $http, $hasura }) {
   }
   // const { ip } = await app.$axios.$get('http://icanhazip.com')
   // console.log('ip: ', ip);
-  /*
+  
   try {
     const GetVideoPages = await app.$hasura({
       query: print(GET_VIDEO_PAGES),
@@ -36,5 +37,5 @@ export default async function ({ app, store, $http, $hasura }) {
     // この場合、storeにpages情報がないことになる
     // (indexは稼働する)
   }
-  */
+  
 }
