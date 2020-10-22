@@ -85,7 +85,7 @@ export default {
   // env
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    API_HASURA_URL: process.env.API_HASURA_URL || 'http://vcollectionbackendtest.tk:8080/v1/graphql',
+    API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi1.tk:4430/v1/graphql',
   },
   
   generate: {

@@ -13,7 +13,11 @@
       <div class="text-right mx-4 pa-2">
         <span>ダイジェスト</span>
       </div>
-      <div v-show="!loading" class="my-2 mx-4 pa-2">
+      <div
+        v-show="!loading"
+        v-if="video_contents_array.length > 0"
+        class="my-2 mx-4 pa-2"
+      >
         <VueSlickCarousel :arrows="true" :dots="true">
           <div
             :centerMode="true"
@@ -76,7 +80,7 @@ export default {
     VueSlickCarousel,
     LazyYoutubeVideo,
   },
-  async asyncData({ app }) {
+  async asyncData({ app, $axios, $http }) {
     // ここではdataすらも利用不可能である
     // FMSsAXLJ7i0
     // https://img.youtube.com/vi/FMSsAXLJ7i0/default.jpg
@@ -85,14 +89,43 @@ export default {
     //const image0 = await $axios.$get(url_tmb)
     //console.log(image0)
     //return { image0 }
-    // 取得
-    const { data } = await app.$hasura({
-      query: print(QUERY),
-    })
+    const minimalData = [
+      {
+        title: '開設',
+        contents_id: 'ZoXdmxYa90c',
+        id: 'ZoXdmxYa90c',
+        url: 'https://www.youtube.com/embed/ZoXdmxYa90c',
+        src: 'https://www.youtube.com/embed/ZoXdmxYa90c',
+        tmb: 'https://img.youtube.com/vi/ZoXdmxYa90c/default.jpg',
+        previewImageSize: 'default',
+        flex: 12,
+      },
+    ]
+    
+    // try {
+    //   const ip = await $http.$get('http://icanhazip1.com')
+    //   console.log(ip)
+    // } catch (err) {
+    //   console.log('err: ', err)
+    // }
+
+    try {
+      // 取得
+      const { data } = await app.$hasura({
+        query: print(QUERY),
+      })
+    } catch (err) {
+      console.log('err: ', err)
+      return {
+        loading: true,
+        video_contents_array: minimalData,
+      }
+    }
     // console.log(data)
     return {
       loading: true,
       video_contents_array: data.video_contents_master,
+      // video_contents_array: [],
     }
   },
   data: () => {},
@@ -100,7 +133,7 @@ export default {
     setTimeout(() => {
       this.loading = false
     }, 500)
-  }
+  },
 }
 </script>
 
