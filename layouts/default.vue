@@ -26,11 +26,7 @@
     </v-navigation-drawer>
     <!-- v-app-barの表示制御を行う場合  -->
     <!-- :hidden="this.$store.state.isHideBar" -->
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-    >
+    <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>

@@ -23,6 +23,7 @@ export default async function ({ app, store, $http, $hasura }) {
   }
   // const { ip } = await app.$axios.$get('http://icanhazip.com')
   // console.log('ip: ', ip);
+  /*
   try {
     const GetVideoPages = await app.$hasura({
       query: print(GET_VIDEO_PAGES),
@@ -30,11 +31,10 @@ export default async function ({ app, store, $http, $hasura }) {
     const pages = GetVideoPages.data.video_pages
     if (pages) store.commit('setPages', pages)
     // console.log('store commit pages: ', pages)
-    //
-    //
   } catch (err) {
     console.log('CollectionMiddleware http query error: ', err)
     // この場合、storeにpages情報がないことになる
     // (indexは稼働する)
   }
+  */
 }

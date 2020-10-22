@@ -1,4 +1,7 @@
+require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
+
+const { API_HASURA_URL } = process.env;
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -85,7 +88,7 @@ export default {
   // env
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi1.tk:4430/v1/graphql',
+    API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
   },
   
   generate: {
@@ -105,4 +108,13 @@ export default {
   router: {
     middleware: 'CollectionMiddleware'
   },
+
+  privateRuntimeConfig: {
+    api_url: API_HASURA_URL
+  },
+  
+  publicRuntimeConfig: {
+    api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
+  },  
+
 }

@@ -81,6 +81,7 @@ export default {
     LazyYoutubeVideo,
   },
   async asyncData({ app, $axios, $http }) {
+    console.log('index.vue async asyncData')
     // ここではdataすらも利用不可能である
     // FMSsAXLJ7i0
     // https://img.youtube.com/vi/FMSsAXLJ7i0/default.jpg
@@ -101,7 +102,7 @@ export default {
         flex: 12,
       },
     ]
-    
+
     // try {
     //   const ip = await $http.$get('http://icanhazip1.com')
     //   console.log(ip)
@@ -114,18 +115,18 @@ export default {
       const { data } = await app.$hasura({
         query: print(QUERY),
       })
+      // console.log(data)
+      return {
+        loading: true,
+        video_contents_array: data.video_contents_master,
+        // video_contents_array: [],
+      }
     } catch (err) {
       console.log('err: ', err)
       return {
         loading: true,
         video_contents_array: minimalData,
       }
-    }
-    // console.log(data)
-    return {
-      loading: true,
-      video_contents_array: data.video_contents_master,
-      // video_contents_array: [],
     }
   },
   data: () => {},
