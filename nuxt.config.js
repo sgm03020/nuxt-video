@@ -104,7 +104,7 @@ export default {
       // '/videos/upper',
       // '/videos/lower',
       // '/videos/stretch',
-      '/videos/topics',
+      // '/videos/topics',
       // '/inspire',
       // '/hasura',      
       // '/transitions',      
