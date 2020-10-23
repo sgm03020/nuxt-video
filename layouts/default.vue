@@ -112,7 +112,7 @@ export default {
       console.log('default.vue computed')
       // minimalItemsと結合
       const storeitems = this.minimalItems.concat(this.$store.state.pages)
-      console.log('storeitems: ', storeitems)
+      // console.log('storeitems: ', storeitems)
       // return this.$store.state.pages
       return storeitems
     }
