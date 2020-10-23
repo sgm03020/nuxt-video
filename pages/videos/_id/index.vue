@@ -141,7 +141,7 @@ export default {
     // }
 
     try {
-      console.log('start')
+      // console.log('start')
       const GetVideoPages = await app.$hasura({
         query: print(GET_VIDEO_PAGES),
       })
