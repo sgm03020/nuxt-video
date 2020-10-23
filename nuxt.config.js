@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
 
 const { API_HASURA_URL } = process.env;
@@ -101,10 +101,13 @@ export default {
       // '/video/_slugs/lower',
       // '/video/_slugs/stretch',
       // '/video/_slugs/topics'
-      // '/video/upper',
-      // '/video/lower',
-      // '/video/stretch',
-      // '/video/topics'
+      // '/videos/upper',
+      // '/videos/lower',
+      // '/videos/stretch',
+      // '/videos/topics',
+      // '/inspire',
+      // '/hasura',      
+      // '/transitions',      
     ],  
   },
 
@@ -112,12 +115,12 @@ export default {
     middleware: 'CollectionMiddleware'
   },
 
-  privateRuntimeConfig: {
-    api_url: API_HASURA_URL
-  },
+  // privateRuntimeConfig: {
+  //   api_url: API_HASURA_URL
+  // },
   
-  publicRuntimeConfig: {
-    api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
-  },  
+  // publicRuntimeConfig: {
+  //   api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
+  // },  
 
 }

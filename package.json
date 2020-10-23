@@ -9,6 +9,7 @@
     "start": "nuxt-ts start",
     "start2": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=3000 nuxt start",
     "generate": "nuxt-ts generate",
+    "generate2": "cross-env NODE_ENV=production nuxt-ts generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style"
