@@ -1,7 +1,7 @@
-require('dotenv').config()
+// require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
 
-const { API_HASURA_URL } = process.env;
+// const { API_HASURA_URL } = process.env;
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -104,7 +104,7 @@ export default {
       // '/videos/upper',
       // '/videos/lower',
       // '/videos/stretch',
-      // '/videos/topics',
+      '/videos/topics',
       // '/inspire',
       // '/hasura',      
       // '/transitions',      
@@ -115,12 +115,12 @@ export default {
     middleware: 'CollectionMiddleware'
   },
 
-  publicRuntimeConfig: {
-    api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
-  },  
+  // publicRuntimeConfig: {
+  //   api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
+  // },  
 
-  privateRuntimeConfig: {
-    api_url: API_HASURA_URL
-  }
+  // privateRuntimeConfig: {
+  //   api_url: API_HASURA_URL
+  // }
   
 }

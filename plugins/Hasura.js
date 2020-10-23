@@ -1,5 +1,5 @@
 //export default function ({ $http, env }, inject) {
-export default function ({ $http, $config, env }, inject) {
+export default function ({ $http, env }, inject) {
   // console.log(env.API_HASURA_URL)
   // console.log('config.api_url:', $config.api_url)
   const $hasura = $http.create({
