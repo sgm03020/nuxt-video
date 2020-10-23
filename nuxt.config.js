@@ -115,12 +115,12 @@ export default {
     middleware: 'CollectionMiddleware'
   },
 
-  privateRuntimeConfig: {
-    api_url: API_HASURA_URL
-  },
-  
   publicRuntimeConfig: {
     api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
   },  
 
+  privateRuntimeConfig: {
+    api_url: API_HASURA_URL
+  }
+  
 }

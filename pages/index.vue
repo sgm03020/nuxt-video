@@ -80,6 +80,9 @@ export default {
     VueSlickCarousel,
     LazyYoutubeVideo,
   },
+  created() {
+    // console.log('process.env: ', process.env);
+  },
   async asyncData({ app, $axios, $http }) {
     console.log('index.vue async asyncData')
     // ここではdataすらも利用不可能である

@@ -1,7 +1,7 @@
 //export default function ({ $http, env }, inject) {
 export default function ({ $http, $config, env }, inject) {
-  //console.log(env.API_HASURA_URL)
-  //console.log($config.api_url)
+  // console.log(env.API_HASURA_URL)
+  // console.log('config.api_url:', $config.api_url)
   const $hasura = $http.create({
     //prefixUrl: env.API_HASURA_URL,
     prefixUrl: $config.api_url,

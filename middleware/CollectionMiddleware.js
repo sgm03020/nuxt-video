@@ -1,8 +1,10 @@
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
 
-export default async function ({ app, store, $http, $hasura }) {
+export default async function ({ app, store, $config }) {
   // do something
+  // console.log('config.api_url:', $config.api_url)
+
   const GET_VIDEO_PAGES = gql`
     query GetVideoPages {
       video_pages(
