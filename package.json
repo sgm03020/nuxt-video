@@ -40,7 +40,8 @@
     "rimraf": "^3.0.2",
     "vue-carousel-3d": "^1.0.1",
     "vue-lazy-youtube-video": "^2.2.1",
-    "vue-slick-carousel": "^1.0.6"
+    "vue-slick-carousel": "^1.0.6",
+    "@nuxtjs/vuetify": "^1.11.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^9.1.2",
@@ -51,7 +52,6 @@
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
-    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
