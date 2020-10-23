@@ -1,4 +1,4 @@
-// require('dotenv').config()
+require('dotenv').config()
 import colors from 'vuetify/es5/util/colors'
 
 const { API_HASURA_URL } = process.env;
@@ -115,12 +115,12 @@ export default {
     middleware: 'CollectionMiddleware'
   },
 
-  // privateRuntimeConfig: {
-  //   api_url: API_HASURA_URL
-  // },
+  privateRuntimeConfig: {
+    api_url: API_HASURA_URL
+  },
   
-  // publicRuntimeConfig: {
-  //   api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
-  // },  
+  publicRuntimeConfig: {
+    api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
+  },  
 
 }
