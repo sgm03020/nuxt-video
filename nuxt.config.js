@@ -91,7 +91,7 @@ export default {
   // env
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
+    // API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
   },
   
   generate: {
@@ -115,12 +115,15 @@ export default {
     middleware: 'CollectionMiddleware'
   },
 
-  // publicRuntimeConfig: {
-  //   api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
-  // },  
+  publicRuntimeConfig: {
+    // api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
+    // api_url: 'https://11vcollectionbackendtestapi.tk:4430/v1/graphql'
+    api_url: process.env.NODE_ENV !== 'production' ? 'http://abcdefg1234.com' : 'http://xxxyyyzzzggg.com'
+  },  
 
-  // privateRuntimeConfig: {
-  //   api_url: API_HASURA_URL
-  // }
+  privateRuntimeConfig: {
+    // api_url: API_HASURA_URL
+    api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+  }
   
 }
