@@ -1,3 +1,39 @@
+query GetVideoPages {
+  video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
+    page_id
+    page_order
+    page_tag
+    page_name
+    icon
+    base_path
+    full_path
+  }
+}
+
+# ページ情報(有効なもののみ)
+query GetVideoPagesBack {
+  video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
+    page_id
+    page_tag
+    page_name
+    base_path
+    full_path
+  }
+}
+
+# 25個分
+query GetVideoTransitions {
+  video_contents_master(limit: 25, order_by: { id: asc }) {
+    id
+    contents_id
+    category_id
+    url
+    src
+    title
+    tmb
+    previewsize
+  }
+}
 
 # index.vueの最初に利用する動画情報(カテゴリ:1001=topics)
 query GetRootTopics {
@@ -32,3 +68,33 @@ query GetRootTopics2 {
   }
 }
 
+# カテゴリ絞りの動画情報
+query GetVideoByCat($category_id: String!) {
+  video_contents_master(where: { category_id: { _eq: $category_id } }) {
+    id
+    title
+    url
+    src
+    tmb
+    previewsize
+    flex
+  }
+}
+
+# ページ名によるコンテンツ(現在不使用)
+query GetVideoByPage($page_tag: String!) {
+  video_pages(where: { page_tag: { _eq: $page_tag } }) {
+    page_id
+    page_name
+    base_path
+    full_path
+    video_contents_master {
+      title
+      url
+      src
+      tmb
+      previewsize
+      flex
+    }
+  }
+}

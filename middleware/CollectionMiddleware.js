@@ -1,26 +1,11 @@
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
+import { GetVideoPages } from '../queries/index.gql'
 
-export default async function ({ app, store, $config }) {
+export default async function ({ app, store }) {
   // do something
   // console.log('config.api_url:', $config.api_url)
 
-  const GET_VIDEO_PAGES = gql`
-    query GetVideoPages {
-      video_pages(
-        where: { enabled: { _eq: "1" } }
-        order_by: { page_id: asc }
-      ) {
-        page_id
-        page_order
-        page_tag
-        page_name
-        icon
-        base_path
-        full_path
-      }
-    }
-  `
   if (process.server) {
     // const { req, res, beforeNuxtRender } = context
     console.log('process.server')
@@ -30,10 +15,10 @@ export default async function ({ app, store, $config }) {
   
   // ページ情報取得・ストアへの登録
   try {
-    const GetVideoPages = await app.$hasura({
-      query: print(GET_VIDEO_PAGES),
+    const response_pages = await app.$hasura({
+      query: print(GetVideoPages),
     })
-    const pages = GetVideoPages.data.video_pages
+    const pages = response_pages.data.video_pages
     if (pages) store.commit('setPages', pages)
     // console.log('store commit pages: ', pages)
   } catch (err) {

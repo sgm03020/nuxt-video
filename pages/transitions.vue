@@ -67,6 +67,7 @@
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
+import { GetVideoTransitions } from '../queries/index.gql'
 const basePath = '/videos'
 
 // Hasura QUERY
@@ -86,72 +87,6 @@ const QUERY = gql`
   }
 `
 
-// カテゴリ選択動画
-const GET_VIDEO_CONTENTS = gql`
-  query GetVideoContents($category: String!) {
-    video_contents_master(
-      where: { category: { _eq: $category } }
-      limit: 8
-      order_by: { id: desc }
-    ) {
-      id
-      contents_id
-      url
-      src
-      title
-      tmb
-      previewsize
-    }
-  }
-`
-
-// ページ情報テーブル
-const GET_VIDEO_PAGES = gql`
-  query GetVideoPages {
-    video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
-      page_id
-      page_tag
-      page_name
-      base_path
-      full_path
-    }
-  }
-`
-
-// category_idによるコンテンツ(利用中)
-const GET_VIDEO_BY_CAT = gql`
-  query GetVideoByCat($category_id: String!) {
-    video_contents_master(where: { category_id: { _eq: $category_id } }) {
-      title
-      url
-      src
-      tmb
-      previewsize
-      flex
-    }
-  }
-`
-
-// ページ名によるコンテンツ(現在不使用)
-const GET_VIDEO_BY_PAGE = gql`
-  query GetVideoByPage($page_tag: String!) {
-    video_pages(where: { page_tag: { _eq: $page_tag } }) {
-      page_id
-      page_name
-      base_path
-      full_path
-      video_contents_master {
-        title
-        url
-        src
-        tmb
-        previewsize
-        flex
-      }
-    }
-  }
-`
-
 export default {
   components: {
     LazyYoutubeVideo,
@@ -159,7 +94,7 @@ export default {
   async asyncData({ error, redirect, app, params, route, store }) {
     try {
       const { data } = await app.$hasura({
-        query: print(QUERY),
+        query: print(GetVideoTransitions),
       })
       return {
         category_id: 0,

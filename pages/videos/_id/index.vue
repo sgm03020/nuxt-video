@@ -37,89 +37,8 @@
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
+import { GetVideoByCat, GetVideoPages } from '../../../queries/index.gql'
 const basePath = '/videos'
-
-// Hasura QUERY
-// 基本の4つ取りクエリ
-const QUERY = gql`
-  query {
-    video_contents_master(limit: 4, order_by: { id: asc }) {
-      id
-      contents_id
-      url
-      src
-      title
-      tmb
-      previewsize
-    }
-  }
-`
-
-// カテゴリ選択動画
-const GET_VIDEO_CONTENTS = gql`
-  query GetVideoContents($category: String!) {
-    video_contents_master(
-      limit: 8,
-      where: { category: { _eq: $category } },
-      order_by: { id: desc }
-    ) {
-      id
-      contents_id
-      url
-      src
-      title
-      tmb
-      previewsize
-    }
-  }
-`
-
-// ページ情報テーブル
-const GET_VIDEO_PAGES = gql`
-  query GetVideoPages {
-    video_pages(where: { enabled: { _eq: "1" } }, order_by: { page_id: asc }) {
-      page_id
-      page_tag
-      page_name
-      base_path
-      full_path
-    }
-  }
-`
-
-// category_idによるコンテンツ(利用中)
-const GET_VIDEO_BY_CAT = gql`
-  query GetVideoByCat($category_id: String!) {
-    video_contents_master(where: { category_id: { _eq: $category_id } }) {
-      title
-      url
-      src
-      tmb
-      previewsize
-      flex
-    }
-  }
-`
-
-// ページ名によるコンテンツ(現在不使用)
-const GET_VIDEO_BY_PAGE = gql`
-  query GetVideoByPage($page_tag: String!) {
-    video_pages(where: { page_tag: { _eq: $page_tag } }) {
-      page_id
-      page_name
-      base_path
-      full_path
-      video_contents_master {
-        title
-        url
-        src
-        tmb
-        previewsize
-        flex
-      }
-    }
-  }
-`
 
 export default {
   components: {
@@ -142,23 +61,29 @@ export default {
 
     try {
       // console.log('start')
-      const GetVideoPages = await app.$hasura({
-        query: print(GET_VIDEO_PAGES),
+      // const GetVideoPages = await app.$hasura({
+      //   query: print(GET_VIDEO_PAGES),
+      // })
+      // ここは、GetVideoPagesと違う名前にしないと取得できない
+      // しかし、{data}は下で使うので別名にする
+      const response_pages = await app.$hasura({
+        query: print(GetVideoPages),
       })
-      const pages = GetVideoPages.data.video_pages
+
+      const pages = response_pages.data.video_pages
       // タグ名から配列のインデックスを取得
       const cat_index = pages.findIndex((v) => v.page_tag == id)
       const currentPage = pages[cat_index]
       const page_id = currentPage.page_id
       const page_name = currentPage.page_name
-      let video_contents_array = undefined
+      let video_contents_array = []
       // For next
       const nextPage = pages[(cat_index + 1) % pages.length]
       const next_route = nextPage.full_path
       const next_page_name = nextPage.page_name
 
       const { data } = await app.$hasura({
-        query: print(GET_VIDEO_BY_CAT),
+        query: print(GetVideoByCat),
         variables: {
           category_id: `${page_id}`,
         },
