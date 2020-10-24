@@ -106,14 +106,15 @@
 export default {
   middleware: ['CollectionMiddleware'],
   computed: {
-    // ストアの状態から item を表示します
+    // ストアの状態から storeitems を表示
     storeitems () {
-      //return this.$store.state.items[this.$route.params.id]
       console.log('default.vue computed')
-      // minimalItemsと結合
-      const storeitems = this.minimalItems.concat(this.$store.state.pages)
+      // minimalItemsと結合してpage_orderでソート
+      // console.log('this.$store.state.pages: ', this.$store.state.pages);
+      const storeitems = this.minimalItems.concat(this.$store.state.pages).sort((a,b) => {
+        return (a.page_order - b.page_order)
+      })
       // console.log('storeitems: ', storeitems)
-      // return this.$store.state.pages
       return storeitems
     }
   },  
@@ -125,8 +126,15 @@ export default {
       minimalItems: [
         {
           page_name: 'Welcome Page',
+          page_order: 0,
           icon: 'mdi-apps',          
           full_path: '/',
+        },
+        {
+          page_name: 'Testing',
+          page_order: 9999,
+          icon: ' mdi-vector-arrange-above',          
+          full_path: '/transitions',
         },
       ],
       items: [
@@ -186,25 +194,21 @@ export default {
     }
   },
   mounted() {
-    this.arrayEvents = [...Array(6)].map(() => {
-      const day = Math.floor(Math.random() * 30)
-      const d = new Date()
-      d.setDate(day)
-      return d.toISOString().substr(0, 10)
-    })
-    // AppBarの表示制御
-    // this.isHideBar = this.$store.state.isHideBar
+    // this.arrayEvents = [...Array(6)].map(() => {
+    //   const day = Math.floor(Math.random() * 30)
+    //   const d = new Date()
+    //   d.setDate(day)
+    //   return d.toISOString().substr(0, 10)
+    // })
     console.log('default.vue mounted')
-    //this.$store.commit('setHideBar', false)
-    //this.$store.commit('setHideBar', true)
   },
   methods: {
-    functionEvents(date) {
-      const [, , day] = date.split('-')
-      if ([12, 17, 28].includes(parseInt(day, 10))) return true
-      if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
-      return false
-    },
+    // functionEvents(date) {
+    //   const [, , day] = date.split('-')
+    //   if ([12, 17, 28].includes(parseInt(day, 10))) return true
+    //   if ([1, 19, 22].includes(parseInt(day, 10))) return ['red', '#00f']
+    //   return false
+    // },
   },
 }
 </script>

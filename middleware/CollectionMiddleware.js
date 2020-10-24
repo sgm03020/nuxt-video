@@ -12,6 +12,7 @@ export default async function ({ app, store, $config }) {
         order_by: { page_id: asc }
       ) {
         page_id
+        page_order
         page_tag
         page_name
         icon
@@ -27,6 +28,7 @@ export default async function ({ app, store, $config }) {
   // const { ip } = await app.$axios.$get('http://icanhazip.com')
   // console.log('ip: ', ip);
   
+  // ページ情報取得・ストアへの登録
   try {
     const GetVideoPages = await app.$hasura({
       query: print(GET_VIDEO_PAGES),

@@ -61,7 +61,11 @@ import 'vue-lazy-youtube-video/dist/style.simplified.css'
 
 const QUERY = gql`
   query {
-    video_contents_master(limit: 4, order_by: { id: asc }) {
+    video_contents_master(
+      limit: 4
+      where: { category_id: { _eq: "1001" } }
+      order_by: { id: asc }
+    ) {
       id
       contents_id
       url
@@ -83,8 +87,8 @@ export default {
   created() {
     // console.log('process.env: ', process.env);
   },
-  async asyncData({ app, $axios, $http }) {
-    console.log('index.vue async asyncData')
+  async asyncData({ app }) {
+    // console.log('index.vue async asyncData')
     // ここではdataすらも利用不可能である
     // FMSsAXLJ7i0
     // https://img.youtube.com/vi/FMSsAXLJ7i0/default.jpg
@@ -113,6 +117,7 @@ export default {
     //   console.log('err: ', err)
     // }
 
+    // video情報取得処理
     try {
       // 取得
       const { data } = await app.$hasura({
@@ -122,7 +127,6 @@ export default {
       return {
         loading: true,
         video_contents_array: data.video_contents_master,
-        // video_contents_array: [],
       }
     } catch (err) {
       console.log('err: ', err)

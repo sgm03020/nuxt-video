@@ -30,16 +30,27 @@
       </v-row>
     </v-container>
     <p>
-      <v-btn @click="current = 0">0</v-btn>
+      <v-btn
+        v-for="(item, index) in filteredList.pages"
+        v-on:click="category_id = item.page_id"
+        rounded
+        class="indigo darken-3 mx-2 my-2"
+        :key="index"
+      >
+        {{item.page_name}}
+      </v-btn>
+      <!-- <v-btn @click="category_id = 0">0</v-btn>
       <v-btn @click="current = 1">1</v-btn>
       <v-btn @click="current = 2">2</v-btn>
+      <v-btn @click="category_id = 1003">1003</v-btn> -->
     </p>
 
+    <!-- v-for="(card, index) in filteredList" -->
     <div class="videos">
       　<transition-group tag="ul" class="videos__list">
         <li
           class="videos__item"
-          v-for="(card, index) in filteredList"
+          v-for="(card, index) in filteredList.list"
           :data-index="index"
           :key="card.id"
         >
@@ -62,9 +73,10 @@ const basePath = '/videos'
 // 基本の4つ取りクエリ
 const QUERY = gql`
   query {
-    video_contents_master(limit: 4, order_by: { id: asc }) {
+    video_contents_master(limit: 25, order_by: { id: asc }) {
       id
       contents_id
+      category_id
       url
       src
       title
@@ -144,7 +156,22 @@ export default {
   components: {
     LazyYoutubeVideo,
   },
-  async asyncData({ error, redirect, app, params, route, store }) {},
+  async asyncData({ error, redirect, app, params, route, store }) {
+    try {
+      const { data } = await app.$hasura({
+        query: print(QUERY),
+      })
+      return {
+        category_id: 0,
+        video_contents_array: data.video_contents_master,
+      }
+    } catch (err) {
+      return {
+        category_id: 0,
+        video_contents_array: [],
+      }
+    }
+  },
   data: () => ({
     page_name: '',
     page_index: 0,
@@ -152,6 +179,7 @@ export default {
     page_array: ['topics', 'upper', 'lower', 'stretch'],
     video_contents_array: [],
     // 以下transitionテスト
+    category_id: 0,
     current: 0,
     list: [
       {
@@ -191,7 +219,14 @@ export default {
   }),
   computed: {
     filteredList() {
-      return this.list.filter((el) => this.current === 0 || el.category_id === `${this.current}`)
+      const pages = this.$store.state.pages
+      return {
+        pages,
+        list: this.video_contents_array.filter(
+          (el) =>
+            this.category_id === 0 || el.category_id === `${this.category_id}`
+        ),
+      }
     },
   },
   mounted() {

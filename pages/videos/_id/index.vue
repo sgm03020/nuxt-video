@@ -59,8 +59,8 @@ const QUERY = gql`
 const GET_VIDEO_CONTENTS = gql`
   query GetVideoContents($category: String!) {
     video_contents_master(
-      where: { category: { _eq: $category } }
-      limit: 8
+      limit: 8,
+      where: { category: { _eq: $category } },
       order_by: { id: desc }
     ) {
       id
