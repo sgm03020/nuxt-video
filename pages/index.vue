@@ -58,24 +58,7 @@ import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import 'vue-lazy-youtube-video/dist/style.simplified.css'
-
-const QUERY = gql`
-  query {
-    video_contents_master(
-      limit: 4
-      where: { category_id: { _eq: "1001" } }
-      order_by: { id: asc }
-    ) {
-      id
-      contents_id
-      url
-      src
-      title
-      tmb
-      previewsize
-    }
-  }
-`
+import { GetRootTopics } from '../queries/index.gql'
 
 export default {
   components: {
@@ -86,6 +69,8 @@ export default {
   },
   created() {
     // console.log('process.env: ', process.env);
+    // console.log('GetRootTopics:', print(GetRootTopics));
+    // console.log('GetRootTopics2:', print(GetRootTopics2));
   },
   async asyncData({ app }) {
     // console.log('index.vue async asyncData')
@@ -121,7 +106,7 @@ export default {
     try {
       // 取得
       const { data } = await app.$hasura({
-        query: print(QUERY),
+        query: print(GetRootTopics),
       })
       // console.log(data)
       return {

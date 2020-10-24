@@ -86,7 +86,20 @@ export default {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extend(config, { isDev, isClient }) {
+      // ..
+      config.module.rules.push({
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        use: 'graphql-tag/loader'        
+      })
+      // isDev が true の場合、webpack を開発モードに設定します
+      if (isDev) {
+        //config.mode = 'development'
+      }
+    }    
+  },
 
   // env
   env: {
@@ -118,7 +131,7 @@ export default {
   publicRuntimeConfig: {
     // api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
     // api_url: 'https://11vcollectionbackendtestapi.tk:4430/v1/graphql'
-    api_url: process.env.NODE_ENV !== 'production' ? 'http://abcdefg1234.com' : 'http://xxxyyyzzzggg.com'
+    api_url: process.env.NODE_ENV !== 'production' ? 'https://vcollectionbackendtestapi.tk:4430/v1/graphql' : 'http://xxxyyyzzzggg.com'
   },  
 
   privateRuntimeConfig: {

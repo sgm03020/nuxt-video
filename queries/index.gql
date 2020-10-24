@@ -1,0 +1,34 @@
+
+# index.vueの最初に利用する動画情報(カテゴリ:1001=topics)
+query GetRootTopics {
+  video_contents_master(
+    limit: 4
+    where: { category_id: { _eq: "1001" } }
+    order_by: { id: asc }
+  ) {
+    id
+    contents_id
+    url
+    src
+    title
+    tmb
+    previewsize
+  }
+}
+
+query GetRootTopics2 {
+  video_contents_master(
+    limit: 4
+    where: { category_id: { _eq: "1001" } }
+    order_by: { id: asc }
+  ) {
+    id
+    contents_id
+    url
+    src
+    title
+    tmb
+    previewsize
+  }
+}
+
