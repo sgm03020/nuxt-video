@@ -131,7 +131,7 @@ export default {
   publicRuntimeConfig: {
     // api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
     // api_url: 'https://11vcollectionbackendtestapi.tk:4430/v1/graphql'
-    api_url: process.env.NODE_ENV !== 'production' ? 'https://vcollectionbackendtestapi.tk:4430/v1/graphql' : 'http://xxxyyyzzzggg.com'
+    api_url: process.env.NODE_ENV !== 'production' ? 'https://vcollectionbackendtestapi.tk:4430/v1/graphql' : undefined
   },  
 
   privateRuntimeConfig: {
