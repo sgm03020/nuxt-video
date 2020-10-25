@@ -57,8 +57,13 @@
           <!-- <LazyYoutubeVideo src="https://www.youtube.com/embed/4JS70KB9GS0" /> -->
           <!-- <LazyYoutubeVideo :src="card.src" /> -->
           <!-- src="https://cdn.vuetifyjs.com/images/cards/cooking.png" -->
+          <!-- <v-img height="250" :src="card.heroImage.url + '?fm=jpg&fl=progressive'"></v-img> -->
+          <!-- <v-img height="250" :src="card.heroImage.url"></v-img> -->
           <v-card>
-            <v-img height="250" :src="card.heroImage.url"></v-img>
+            <v-img
+              height="250"
+              :src="card.heroImage.url + '?fm=jpg&fl=progressive'"
+            ></v-img>
             <v-card-text>
               {{ card.heroImage.title }}
             </v-card-text>
