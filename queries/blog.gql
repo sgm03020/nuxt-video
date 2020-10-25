@@ -1,0 +1,33 @@
+query GetPersonCollection {
+  personCollection {
+    items {
+      company
+      email
+      name
+    }
+  }
+}
+
+query GetBlogPostCollection {
+  blogPostCollection {
+    items {
+      sys {
+        id
+      }
+      title
+      description
+      body
+      author {
+        ... on Person {
+          company
+          email
+          name
+        }
+      }
+      heroImage {
+        title
+        url
+      }
+    }
+  }
+}
