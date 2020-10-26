@@ -123,7 +123,7 @@ export default {
 
     // id としないと取れない(slugとかはダメだった)
     const id = route.query.id || ''
-    console.log('id: ', id)
+    // console.log('id: ', id)
 
     const getperson = await app.$hasura({
       query: print(GetPersonCollection),
@@ -158,7 +158,7 @@ export default {
         (el) => this.company === '' || el.author.company === `${this.company}`
       )
       const selected_size = selectedList.length
-      console.log('selected_size: ', selected_size)
+      // console.log('selected_size: ', selected_size)
       const selectedShowList = Array(selected_size).fill(false)
       // 配列更新時には一旦spliceで全部消してから
       this.show.splice(0, this.show.length)
