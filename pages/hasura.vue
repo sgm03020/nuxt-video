@@ -45,7 +45,7 @@ export default {
   // import '@nuxtjs/axios'を加える
   // またはimport '@nuxt/http'
   async asyncData({ app }) {
-    console.log(print(QUERY))
+    // console.log(print(QUERY))
     // $hasuraはプラグインとして登録しており
     // asyncData内ではthis.が使えないことから
     // 引数をappとして、app.$hasuraとアクセスする
@@ -70,8 +70,8 @@ export default {
       // 保留(今はボタンでの更新)
       // asyncDataで作られたhtmlが
       // ここでdataとして取得してマージされる
-      console.log('updateConferences')
-      console.log(this.conferences)
+      // console.log('updateConferences')
+      // console.log(this.conferences)
       const { data } = await this.$hasura({
         query: print(QUERY),
       })
