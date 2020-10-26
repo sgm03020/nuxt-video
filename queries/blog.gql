@@ -11,6 +11,7 @@ query GetPersonCollection {
 query GetBlogPostCollection {
   blogPostCollection {
     items {
+      slug
       sys {
         id
       }

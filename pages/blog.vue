@@ -23,7 +23,11 @@
     </v-container>
     <p>
       <v-btn
-        v-on:click="company = ''"
+        v-on:click="
+          company = ''
+          selected_id = ''
+          selected_slug = ''
+        "
         rounded
         class="indigo darken-3 mx-2 my-2"
       >
@@ -44,8 +48,19 @@
       <v-btn @click="category_id = 1003">1003</v-btn> -->
     </p>
 
-    <!-- v-for="(card, index) in filteredList" -->
-    <div class="videos">
+    <div v-if="selected_id !== ''">
+      <!-- {{ selectedBlog }} -->
+      <v-card class="ma-1">
+        <v-card-title class="subtitle-1">{{ selectedBlog.title }}</v-card-title>
+        <v-img
+          contain
+          :src="selectedBlog.heroImage.url + '?fm=jpg&fl=progressive'"
+        ></v-img>
+        <v-spacer></v-spacer>
+        <v-card-text class="mx-1 my-2">{{ selectedBlog.body }}</v-card-text>
+      </v-card>
+    </div>
+    <div v-else class="videos">
       　<transition-group tag="ul" class="videos__list">
         <li
           class="videos__item"
@@ -59,26 +74,68 @@
           <!-- src="https://cdn.vuetifyjs.com/images/cards/cooking.png" -->
           <!-- <v-img height="250" :src="card.heroImage.url + '?fm=jpg&fl=progressive'"></v-img> -->
           <!-- <v-img height="250" :src="card.heroImage.url"></v-img> -->
-          <v-card>
-            <v-img
-              height="250"
-              :src="card.heroImage.url + '?fm=jpg&fl=progressive'"
-            ></v-img>
+          <!-- height="250" -->
+
+          <!-- <v-card>
+            <v-img contain :src="card.heroImage.url + '?fm=jpg&fl=progressive'"></v-img>
             <v-card-text>
               {{ card.heroImage.title }}
             </v-card-text>
-            <!-- <v-card-subtitle>
-              <div class="my-2 subtitle-1">{{ card.title }}</div>
-            </v-card-subtitle> -->
-            <!-- <v-card-text>
-              <div>
-                Small plates, salads & sandwiches - an intimate setting with 12
-                indoor seats plus patio seating.
-              </div>
-            </v-card-text> -->
-            <!-- <v-divider class="mx-4"></v-divider> -->
-            <!-- <v-card-title>Tonight's availability</v-card-title> -->
             <v-card-text>{{ card.body.substring(0, 24) || '' }}...</v-card-text>
+          </v-card> -->
+          <v-card>
+            <!-- <v-img
+              contain
+              src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+            ></v-img> -->
+            <v-img
+              contain
+              :src="card.heroImage.url + '?fm=jpg&fl=progressive'"
+            ></v-img>
+            <v-card-title class="">
+              {{ card.title }}
+              <v-btn
+                v-show="1"
+                color="orange lighten-2"
+                text
+                @click="
+                  selected_id = card.sys.id
+                  selected_slug = card.slug
+                "
+              >
+                SELECT
+              </v-btn>
+            </v-card-title>
+            <v-card-subtitle class="">
+              {{ card.description }}
+            </v-card-subtitle>
+            <v-card-actions :key="card.sys.id">
+              <!-- <v-btn color="orange lighten-2" text> Explore </v-btn> -->
+              <span class="ml-4 grey--text subtitle-2">本文...</span>
+              <v-spacer></v-spacer>
+              <!-- 1) v-btnにはキーを与えないと、複数のcardが反応する -->
+              <!-- 2) show配列はshow[index]=trueとやっても反応しないspliceを使って入れ替える -->
+              <v-btn icon @click="show.splice(index, 1, !show[index])">
+                <!-- {{index}}-{{show[index]}}<br /> -->
+                <v-icon>{{
+                  show[index] ? 'mdi-chevron-up' : 'mdi-chevron-down'
+                }}</v-icon>
+              </v-btn>
+            </v-card-actions>
+            <v-expand-transition>
+              <div v-show="show[index]">
+                <v-divider></v-divider>
+                <v-card-text>
+                  <!-- I'm a thing. But, like most politicians, he promised more than
+                he could deliver. You won't have time for sleeping, soldier, not
+                with all the bed making you'll be doing. Then we'll go with that
+                data file! Hey, you add a one and two zeros to that or we walk!
+                You're going to do his laundry? I've got to find a way to
+                escape. -->
+                  {{ card.body }}
+                </v-card-text>
+              </div>
+            </v-expand-transition>
           </v-card>
         </li>
       </transition-group>
@@ -115,6 +172,10 @@ export default {
   //   },
   async asyncData({ error, redirect, app, params, route, store }) {
     try {
+
+      console.log('params:', params)
+      console.log('route:', route)
+
       const getperson = await app.$hasura({
         query: print(GetPersonCollection),
       })
@@ -122,8 +183,14 @@ export default {
       const getblog = await app.$hasura({
         query: print(GetBlogPostCollection),
       })
+
+      const items_size = getblog.data.blogPostCollection.items.length
+      //const array = Array(items_size).fill(false)
       //console.log(getblog.data.blogPostCollection.items)
       return {
+        show: Array(items_size).fill(false),
+        selected_id: '',
+        selected_slug: '',
         author_email: '',
         company: '',
         blog_persons_array: getperson.data.personCollection.items,
@@ -132,6 +199,9 @@ export default {
     } catch (err) {
       console.log(err)
       return {
+        show: [],
+        selected_id: '',
+        selected_slug: '',
         author_email: '',
         company: '',
         blog_persons_array: [],
@@ -140,6 +210,9 @@ export default {
     }
   },
   data: () => ({
+    show: [],
+    selected_id: '',
+    selected_slug: '',
     company: '',
     blog_contents_array: [],
     // list: [],
@@ -154,6 +227,32 @@ export default {
           (el) => this.company === '' || el.author.company === `${this.company}`
         ),
       }
+    },
+    // これではparamsは取れなかった
+    // selectedBlog: function ({ params }) {
+    //   self = this
+    //   console.log(self.context)
+    //   return this.blog_contents_array.find(
+    //     (el) => el.sys.id === `${this.selected_id}`
+    //   )
+    // },
+    selectedBlog() {
+      // 無理やりurlにパラメータを付ける(contextからは無理だった)
+      //this.$router.push({path: this.$route.path, query: { id: 'bar' }})
+      console.log('this.$route.query : ', this.$route.query );
+      if (this.$route.query) {
+
+      }
+
+    //   this.$router.push({
+    //     path: this.$route.path,
+    //     query: { id: this.selected_slug },
+    //   })
+    //   //console.log(this.$route.query)
+    //   //console.log(this.$nuxt.context)
+    //   return this.blog_contents_array.find(
+    //     (el) => el.sys.id === `${this.selected_id}`
+    //   )
     },
   },
   mounted() {

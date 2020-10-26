@@ -131,12 +131,15 @@ export default {
   publicRuntimeConfig: {
     // api_url: process.env.NODE_ENV !== 'production' ? API_HASURA_URL : undefined
     // api_url: 'https://11vcollectionbackendtestapi.tk:4430/v1/graphql'
-    api_url: process.env.NODE_ENV !== 'production' ? 'https://vcollectionbackendtestapi.tk:4430/v1/graphql' : undefined
+    // api_url: process.env.NODE_ENV !== 'production' ? 'https://vcollectionbackendtestapi.tk:4430/v1/graphql' : undefined
+    // api_url: process.env.API_HASURA_URL
+    api_url: process.env.NODE_ENV !== 'production' ? process.env.API_HASURA_URL:''
   },  
 
   privateRuntimeConfig: {
     // api_url: API_HASURA_URL
-    api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+    // api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+    api_url: process.env.API_HASURA_URL
   }
   
 }
