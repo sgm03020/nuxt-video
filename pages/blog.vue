@@ -173,8 +173,8 @@ export default {
   async asyncData({ error, redirect, app, params, route, store }) {
     try {
 
-      console.log('params:', params)
-      console.log('route:', route)
+      // console.log('params:', params)
+      // console.log('route:', route)
 
       const getperson = await app.$hasura({
         query: print(GetPersonCollection),
