@@ -5,7 +5,8 @@ export default function ({ $http, env, $config }, inject) {
   // console.log('config.api_url:', $config.api_url)
   const $hasura = $http.create({
     // prefixUrl: env.API_HASURA_URL,
-    prefixUrl: $config.api_url,
+    // prefixUrl: $config.api_url,
+    prefixUrl: process.env.API_HASURA_URL,
   })
   // 以下はなるべく設定しないようにする
   //$hasura.setHeader('X-Hasura-Admin-Secret','password')
