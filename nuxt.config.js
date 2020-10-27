@@ -58,6 +58,8 @@ export default {
     '@nuxtjs/proxy',
     // add
     '@nuxt/http',
+    // add 2020.10.27
+    '@nuxtjs/markdownit',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -152,4 +154,11 @@ export default {
     // api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
     api_url: process.env.API_HASURA_URL,
   },
+
+  // Markdown
+  markdownit: {
+    injected: true,
+    breaks: true,
+  }
+
 }

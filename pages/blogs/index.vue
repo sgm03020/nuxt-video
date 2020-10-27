@@ -120,36 +120,45 @@ export default {
   async asyncData({ error, redirect, app, params, route, store }) {
     //console.log('params', params)
     //console.log('route', route)
+    try {
+      // id としないと取れない(slugとかはダメだった)
+      const id = route.query.id || ''
+      // console.log('id: ', id)
 
-    // id としないと取れない(slugとかはダメだった)
-    const id = route.query.id || ''
-    // console.log('id: ', id)
-
-    const getperson = await app.$hasura({
-      query: print(GetPersonCollection),
-    })
-
-    const getblog = await app.$hasura({
-      query: print(GetBlogPostCollection),
-    })
-
-    if (id !== '') {
-      const findBlog = getblog.data.blogPostCollection.items.find((el) => {
-        return el.slug === id
+      const getperson = await app.$hasura({
+        query: print(GetPersonCollection),
       })
-      if (!findBlog) {
-        error({ statusCode: 404, message: 'Not Found Blog Contents' })
+
+      const getblog = await app.$hasura({
+        query: print(GetBlogPostCollection),
+      })
+
+      if (id !== '') {
+        const findBlog = await getblog.data.blogPostCollection.items.find((el) => {
+          return el.slug === id
+        })
+        if (!findBlog) {
+          error({ statusCode: 404, message: 'Not Found Blog Contents' })
+        }
       }
-    }
 
-    // 記事の総数
-    const items_size = getblog.data.blogPostCollection.items.length
+      // 記事の総数
+      const items_size = await getblog.data.blogPostCollection.items.length
 
-    return {
-      show: Array(items_size).fill(false),
-      company: '',
-      blog_persons_array: getperson.data.personCollection.items,
-      blog_contents_array: getblog.data.blogPostCollection.items,
+      return {
+        show: Array(items_size).fill(false),
+        company: '',
+        blog_persons_array: getperson.data.personCollection.items,
+        blog_contents_array: getblog.data.blogPostCollection.items,
+      }
+    } catch (err) {
+      console.log('asyncData err')
+      return {
+        show: [],
+        company: '',
+        blog_persons_array: [],
+        blog_contents_array: [],
+      }
     }
   },
   computed: {

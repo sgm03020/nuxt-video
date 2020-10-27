@@ -12,19 +12,21 @@ export default async function ({ app, store }) {
   }
   // const { ip } = await app.$axios.$get('http://icanhazip.com')
   // console.log('ip: ', ip);
-  
+
   // ページ情報取得・ストアへの登録
   try {
     const response_pages = await app.$hasura({
       query: print(GetVideoPages),
     })
-    const pages = response_pages.data.video_pages
-    if (pages) store.commit('setPages', pages)
+    const pages = await response_pages.data.video_pages
+    if (pages) {
+      // 以下にもawait必要
+      await store.commit('setPages', pages)
+    }
     // console.log('store commit pages: ', pages)
   } catch (err) {
     console.log('CollectionMiddleware http query error: ', err)
     // この場合、storeにpages情報がないことになる
     // (indexは稼働する)
   }
-  
 }
