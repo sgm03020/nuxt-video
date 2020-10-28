@@ -56,18 +56,15 @@
       hoge
     </v-btn>
 
-    <div v-show="this.getIndex !== -1">
-    </div>
-      <v-btn
-        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-        rounded
-        class="indigo darken-3 mx-2 my-2"
-      >
-        色変更
-      </v-btn>
-      <v-btn to="/blog" rounded class="indigo darken-3 mx-2 my-2">
-        戻る
-      </v-btn>
+    <div v-show="this.getIndex !== -1"></div>
+    <v-btn
+      @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+      rounded
+      class="indigo darken-3 mx-2 my-2"
+    >
+      色変更
+    </v-btn>
+    <v-btn to="/blog" rounded class="indigo darken-3 mx-2 my-2"> 戻る </v-btn>
 
     <div v-show="this.getIndex === -1">
       <v-btn
@@ -148,6 +145,20 @@
                     SELECT
                   </v-btn>
                 </v-card-title>
+                <div class="ma-1" v-if="card.category">
+                  <div v-if="card.category['genre']">
+                    <!-- {{ card.category['genre'] }} -->
+                    <v-chip
+                      class="mx-2 my-0"
+                      rounded
+                      color="blue-grey darken-2"
+                      v-for="(el, index) in card.category['genre']"
+                      :key="index"
+                    >
+                      <span class="caption">{{ el }}</span>
+                    </v-chip>
+                  </div>
+                </div>
               </v-card>
             </li>
           </transition-group>
