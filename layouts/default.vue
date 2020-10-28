@@ -70,6 +70,14 @@
           </v-list-item-action>
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
         </v-list-item>
+        <v-list-item to="/blog" router exact>
+          <v-list-item-action>
+            <v-icon> mdi-application </v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>ブログ機能</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <br />
         <v-row justify="center" align-content="center" no-gutters>
           <v-col cols="12">
@@ -107,17 +115,19 @@ export default {
   middleware: ['CollectionMiddleware'],
   computed: {
     // ストアの状態から storeitems を表示
-    storeitems () {
+    storeitems() {
       console.log('default.vue computed')
       // minimalItemsと結合してpage_orderでソート
       // console.log('this.$store.state.pages: ', this.$store.state.pages);
-      const storeitems = this.minimalItems.concat(this.$store.state.pages).sort((a,b) => {
-        return (a.page_order - b.page_order)
-      })
+      const storeitems = this.minimalItems
+        .concat(this.$store.state.pages)
+        .sort((a, b) => {
+          return a.page_order - b.page_order
+        })
       // console.log('storeitems: ', storeitems)
       return storeitems
-    }
-  },  
+    },
+  },
   data() {
     return {
       clipped: false,
@@ -127,20 +137,20 @@ export default {
         {
           page_name: 'Welcome Page',
           page_order: 0,
-          icon: 'mdi-apps',          
+          icon: 'mdi-apps',
           full_path: '/',
         },
         {
           page_name: 'Testing',
           page_order: 9999,
-          icon: ' mdi-vector-arrange-above',          
+          icon: ' mdi-vector-arrange-above',
           full_path: '/transitions',
         },
       ],
       items: [
         {
           page_name: 'Welcome Page',
-          icon: 'mdi-apps',          
+          icon: 'mdi-apps',
           full_path: '/',
         },
         // {

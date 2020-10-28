@@ -56,15 +56,16 @@
       hoge
     </v-btn>
 
-    <div v-show="this.getIndex !== -1"></div>
-    <v-btn
-      @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-      rounded
-      class="indigo darken-3 mx-2 my-2"
-    >
-      色変更
-    </v-btn>
-    <v-btn to="/blog" rounded class="indigo darken-3 mx-2 my-2"> 戻る </v-btn>
+    <div v-show="this.getIndex !== -1">
+      <v-btn
+        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+        rounded
+        class="indigo darken-3 mx-2 my-2"
+      >
+        色変更
+      </v-btn>
+      <v-btn to="/blog" rounded class="indigo darken-3 mx-2 my-2"> 戻る </v-btn>
+    </div>
 
     <div v-show="this.getIndex === -1">
       <v-btn

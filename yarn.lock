@@ -2106,6 +2106,13 @@
   optionalDependencies:
     prettier "^1.18.2"
 
+"@vuetify/cli-plugin-utils@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@vuetify/cli-plugin-utils/-/cli-plugin-utils-0.0.7.tgz#103e0ce504253dbe87bc7fe7e096992beac9bf9b"
+  integrity sha512-34INe4rcsus6ByNgrpIPAyJaTRt1j+5YaMWt2Lh3iDZLn9h69tEp83Imqefze7weRbg+qukJYdnaWDFjFUAf2g==
+  dependencies:
+    semver "^7.1.2"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -9433,7 +9440,7 @@ semver@7.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
 
-semver@7.3.2, semver@^7.2.1, semver@^7.3.2:
+semver@7.3.2, semver@^7.1.2, semver@^7.2.1, semver@^7.3.2:
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.2.tgz#604962b052b81ed0786aae84389ffba70ffd3938"
   integrity sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
@@ -10871,6 +10878,13 @@ vue-carousel-3d@^1.0.1:
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
+
+vue-cli-plugin-vuetify-preset-rally@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify-preset-rally/-/vue-cli-plugin-vuetify-preset-rally-1.0.4.tgz#d2dc553f11391e4f59cab9460a4cd42a8d0b733c"
+  integrity sha512-0l+8Nokn1TgBgw4MYwfwDj9D1ZSEWIC5RkZahCWikRANwt3mxP5RwOBfGF/e8QL8CZQigx6Qf6VqWlmu1AufVg==
+  dependencies:
+    "@vuetify/cli-plugin-utils" "^0.0.7"
 
 vue-client-only@^2.0.0:
   version "2.0.0"
