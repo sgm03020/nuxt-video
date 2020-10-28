@@ -18,6 +18,7 @@ query GetBlogPostCollection {
       title
       description
       body
+      category
       author {
         ... on Person {
           company

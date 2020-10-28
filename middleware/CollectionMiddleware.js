@@ -15,6 +15,11 @@ export default async function ({ app, store }) {
 
   // ページ情報取得・ストアへの登録
   try {
+    // 何かしら登録してある場合はもう登録しない
+    if (store.state.pages && store.state.pages.length > 0) {
+      // console.log('CollectionMiddleware return')
+      return 
+    }
     const response_pages = await app.$hasura({
       query: print(GetVideoPages),
     })

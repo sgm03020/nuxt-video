@@ -25,7 +25,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    { src: '~/plugins/Carousel3d', mode: 'client' },
+    // { src: '~/plugins/Carousel3d', mode: 'client' },
     // {src: '~/plugins/Carousel3d', mode:'server'},
     '@/plugins/Hasura.js',
     '@/plugins/SetInterval.js',
@@ -159,6 +159,9 @@ export default {
   markdownit: {
     injected: true,
     breaks: true,
+    html: true,
+    linkify: true,
+    typography: true,
   }
 
 }
