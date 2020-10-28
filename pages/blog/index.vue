@@ -284,7 +284,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$gap: 20px;
+$gap: 10px;
 p {
   text-align: center;
 }
