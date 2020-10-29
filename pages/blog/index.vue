@@ -60,18 +60,18 @@
       <v-btn
         @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         rounded
-        class="indigo darken-3 mx-2 my-2"
+        class="primary mx-2 my-2"
       >
         色変更
       </v-btn>
-      <v-btn to="/blog" rounded class="indigo darken-3 mx-2 my-2"> 戻る </v-btn>
+      <v-btn to="/blog" rounded class="primary mx-2 my-2"> 戻る </v-btn>
     </div>
 
     <div v-show="this.getIndex === -1">
       <v-btn
         v-on:click="company = ''"
         rounded
-        class="indigo darken-3 mx-2 my-2"
+        class="primary mx-2 my-2"
       >
         全て
       </v-btn>
@@ -79,7 +79,7 @@
         v-for="(item, index) in this.persons"
         v-on:click="company = item.company"
         rounded
-        class="indigo darken-3 mx-2 my-2"
+        class="primary mx-2 my-2"
         :key="index"
       >
         {{ item.company }}
@@ -110,7 +110,7 @@
             blogs[this.getIndex].body
           }}</v-card-text> -->
           <div
-            class="mx-1 my-2"
+            class="mx-1 my-2 px-2 py-2"
             v-html="$md.render(blogs[this.getIndex].body)"
           ></div>
         </v-card>
@@ -149,10 +149,11 @@
                 <div class="ma-1" v-if="card.category">
                   <div v-if="card.category['genre']">
                     <!-- {{ card.category['genre'] }} -->
+                    <!-- color="blue-grey darken-2" -->
                     <v-chip
-                      class="mx-2 my-0"
+                      class="mx-2 mt-1"
                       rounded
-                      color="blue-grey darken-2"
+                      color="secondary"
                       v-for="(el, index) in card.category['genre']"
                       :key="index"
                     >

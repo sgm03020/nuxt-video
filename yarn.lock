@@ -10886,6 +10886,13 @@ vue-cli-plugin-vuetify-preset-rally@^1.0.4:
   dependencies:
     "@vuetify/cli-plugin-utils" "^0.0.7"
 
+vue-cli-plugin-vuetify-preset-reply@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify-preset-reply/-/vue-cli-plugin-vuetify-preset-reply-1.0.4.tgz#32025e0a54dee9452e88331ee4366cdcfb75c5e8"
+  integrity sha512-4d1Sdad6kAcRc2MPWyY9LESsD3rTz2xNmZDVDizczRmSfeRf2V4p4UpFOnAd0AAGYL1tA4OBm0+UfteH0o55+Q==
+  dependencies:
+    "@vuetify/cli-plugin-utils" "^0.0.7"
+
 vue-client-only@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"

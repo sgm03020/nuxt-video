@@ -70,9 +70,14 @@ export default {
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
-    // customVariables: ['~/assets/variables.scss'],
-    customVariables: ["vue-cli-plugin-vuetify-preset-rally/preset/variables.scss"],
-    preset: "vue-cli-plugin-vuetify-preset-rally/preset",
+    customVariables: ['~/assets/variables.scss'],
+    // customVariables: ["vue-cli-plugin-vuetify-preset-rally/preset/variables.scss"],
+    // preset: "vue-cli-plugin-vuetify-preset-rally/preset",
+    // customVariables: [
+    //   'vue-cli-plugin-vuetify-preset-reply/preset/variables.scss',
+    // ],
+    // preset: 'vue-cli-plugin-vuetify-preset-reply/preset',
+
     // theme: {
     //   dark: true,
     //   themes: {
@@ -96,6 +101,27 @@ export default {
     //     },
     //   },
     // },
+    theme: {
+      dark: true,
+      themes: {
+        dark: {
+          // primary: '#1EB980',
+          primary: '#546E7A',
+          secondary: '#045D56',
+          tertiary: '#FF6859',
+          quaternary: '#FFCF44',
+          quinary: '#B15DFF',
+          senary: '#72DEFF',
+        },
+        light: {
+          primary: '#344955',
+          secondary: '#F9AA33',
+          tertiary: '#232F34',
+          quaternary: '#4A6572',
+        },
+      },
+    },
+
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -112,7 +138,8 @@ export default {
         //config.mode = 'development'
       }
     },
-    transpile: ["vue-cli-plugin-vuetify-preset-rally"],
+    // transpile: ["vue-cli-plugin-vuetify-preset-rally"],
+    // transpile: ['vue-cli-plugin-vuetify-preset-reply'],
   },
 
   // env
