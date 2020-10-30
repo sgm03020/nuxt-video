@@ -71,6 +71,7 @@ export default {
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    treeShake: true,
     // customVariables: ["vue-cli-plugin-vuetify-preset-rally/preset/variables.scss"],
     // preset: "vue-cli-plugin-vuetify-preset-rally/preset",
     // customVariables: [
