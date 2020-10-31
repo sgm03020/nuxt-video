@@ -63,12 +63,17 @@
       temporary
       fixed
     >
-      <v-list>
+      <!-- <v-list-item
+          @click.native="$vuetify.theme.dark = !$vuetify.theme.dark"
+          exact
+        > -->
+
+      <v-list v-if="0">
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
             <v-icon light> mdi-repeat </v-icon>
           </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+          <v-list-item-title>Switch Theme</v-list-item-title>
         </v-list-item>
         <v-list-item to="/blog" router exact>
           <v-list-item-action>
@@ -79,7 +84,7 @@
           </v-list-item-content>
         </v-list-item>
         <br />
-        <v-row justify="center" align-content="center" no-gutters>
+        <v-row v-if="0" justify="center" align-content="center" no-gutters>
           <v-col cols="12">
             <v-list-item class="">
               <!-- <v-date-picker v-model="picker" color="green lighten-1">
@@ -102,6 +107,31 @@
             </v-list-item>
           </v-col>
         </v-row>
+      </v-list>
+
+      <!-- v-model="selectedItem" -->
+      <v-list>
+        <v-subheader>FEATURE</v-subheader>
+        <v-list-item-group color="primary">
+          <v-list-item
+            @click.native="$vuetify.theme.dark = !$vuetify.theme.dark"
+          >
+            <v-list-item-icon>
+              <v-icon> mdi-repeat </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Switch Theme</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item to="/blog" router exact>
+            <v-list-item-action>
+              <v-icon> mdi-application </v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>ブログ機能</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>

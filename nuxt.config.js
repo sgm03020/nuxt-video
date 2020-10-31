@@ -113,16 +113,30 @@ export default {
           quaternary: '#FFCF44',
           quinary: '#B15DFF',
           senary: '#72DEFF',
+          accent: '#FF9E80',
+          info: '#2196F3',
+          warning: '#FB8C00',
         },
         light: {
-          primary: '#344955',
-          secondary: '#F9AA33',
-          tertiary: '#232F34',
-          quaternary: '#4A6572',
+          // primary: '#344955',ccc8b4
+          // primary: '#ccc8b4',
+          // secondary: '#F9AA33',
+          // tertiary: '#232F34',
+          // quaternary: '#4A6572',
+          primary: '#1976D2',
+          accent: '#FB8C00',
+          secondary: '#30b1dc',
+          success: '#4CAF50',
+          info: '#2196F3',
+          warning: '#FB8C00',
+          error: '#FF5252',
         },
       },
+      /*以下追加*/
+      options: {
+        customProperties: true,
+      },
     },
-
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

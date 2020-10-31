@@ -30,7 +30,7 @@
             <!-- <v-img :src="card.tmb" class="slick-img" /> -->
             <!-- :thumbnail-listeners="{ load: foo }" -->
             <!-- :preview-image-size="card.previewsize" -->
-            <v-row dense class="justify-center py-2 grey darken-4">
+            <v-row dense class="justify-center py-1 primary">
               {{ card.title }}
             </v-row>
             <LazyYoutubeVideo :src="card.src" preview-image-size="hqdefault" />
@@ -130,7 +130,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 /* .slick_track {
   position: relative;
   top: 0;
@@ -152,7 +152,7 @@ export default {
 button.slick-prev::before,
 button.slick-next::before {
   font-size: 30px !important;
-
+  color: var(--v-secondary-base)
   /* background-color: red !important; */
 }
 
@@ -168,10 +168,12 @@ button.slick-next::before {
 .slick-dots li button::before {
   font-size: 20px;
   line-height: 20px;
-  color: cyan;
+  // color: cyan;
+  color: var(--v-info-base)
 }
 .slick-dots li.slick-active button::before {
-  color: white;
+  // color: white;
+  color: var(--v-info-base)
 }
 .slick-box {
   width: 200px;
@@ -185,5 +187,6 @@ button.slick-next::before {
   color: red;
 }
 </style>
+
 
 

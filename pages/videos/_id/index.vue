@@ -1,34 +1,88 @@
 <template>
   <div v-if="!notfound">
     <h2>{{ page_name }}</h2>
-    <v-container fluid>
-      <v-row dense>
-        <v-col
-          v-for="(card, index) in video_contents_array"
-          :key="index"
-          :cols="card.flex"
-        >
-          <v-card>
-            <LazyYoutubeVideo
+    <!-- <p>contents_id:{{ $route.query.id }}</p> -->
+    <transition-group>
+      <v-container
+        v-if="$route.query.id && $route.query.id !== ''"
+        key="1"
+        fluid
+      >
+        <!-- <p>{{ $route.query.id }}</p> -->
+        <!-- <p>{{ getIndex }}</p> -->
+        <div>
+          <v-btn :to="$route.path" rounded class="primary mx-2 my-2">
+            戻る
+          </v-btn>
+        </div>
+        <v-card>
+          <LazyYoutubeVideo
+            :src="this.video_contents_array[getIndex].src"
+            :preview-image-size="
+              this.video_contents_array[getIndex].previewImageSize
+            "
+            :aspect-ratio="this.video_contents_array[getIndex].aspectRatio"
+            :thumbnail-listeners="{ load: () => {} }"
+          />
+          <v-card-subtitle
+            class="text-center ma-0 py-3"
+            v-text="this.video_contents_array[getIndex].title"
+          ></v-card-subtitle>
+        </v-card>
+      </v-container>
+
+      <v-container v-show="!$route.query.id" fluid key="0">
+        <v-row dense>
+          <v-col
+            v-for="(card, index) in video_contents_array"
+            :key="index"
+            :cols="card.flex"
+          >
+            <v-card elevation="3">
+              <!-- <LazyYoutubeVideo
               :src="card.src"
               :preview-image-size="card.previewImageSize"
               :aspect-ratio="card.aspectRatio"
               :thumbnail-listeners="{ load: () => {} }"
-            />
-            <v-card-subtitle
+            /> -->
+              <!-- <v-img :src="card.tmb"> </v-img> -->
+              <router-link class="py-0 my-0" :to="'?id=' + card.contents_id">
+                <v-img :src="card.tmb" :lazy-src="card.tmb.replace('maxresdefault','default')"></v-img>
+              </router-link>
+              <!-- <nuxt-link tag="img" :src="card.tmb" to="/locations"> </nuxt-link> -->
+              <!-- <v-card-subtitle
               class="text-center ma-2 pa-0"
               v-text="card.title"
-            ></v-card-subtitle>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-row class="ma-2 justify-space-between">
-        <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
-        <v-btn color="primary" nuxt :to="{ path: `${next_route}` }">{{
-          next_page_name
-        }}</v-btn>
-      </v-row>
-    </v-container>
+            ></v-card-subtitle> -->
+                <!-- <v-btn
+                  v-show="1"
+                  color="orange lighten-2"
+                  class="ma-0 py-1"
+                  text
+                  :to="'?id=' + card.contents_id"
+                > -->
+              <v-card-title class="justify-center subtitle-1 ma-0 py-0">
+                <v-btn
+                  v-show="1"
+                  color="warning"
+                  class="ma-0 py-1"
+                  text
+                  :to="'?id=' + card.contents_id"
+                >
+                  {{ card.title }}
+                </v-btn>
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row class="ma-2 justify-space-between">
+          <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
+          <v-btn color="primary" nuxt :to="{ path: `${next_route}` }">{{
+            next_page_name
+          }}</v-btn>
+        </v-row>
+      </v-container>
+    </transition-group>
   </div>
   <div v-else>Not Found</div>
 </template>
@@ -104,6 +158,7 @@ export default {
       return {
         notfound: false,
         id,
+        page_id,
         page_name,
         next_route,
         next_page_name,
@@ -120,7 +175,21 @@ export default {
     next_route: '',
     page_array: ['topics', 'upper', 'lower', 'stretch'],
     video_contents_array: [],
+    selectedIndex: -1,
   }),
+  computed: {
+    getIndex() {
+      const { id } = this.$route.query
+      // console.log('getIndex $route.query.id: ', id)
+      const find = this.video_contents_array.findIndex(
+        (el) => el.contents_id === id
+      )
+      if (find >= 0) {
+        this.selectedIndex = find
+        return find
+      } else return -1
+    },
+  },
   mounted() {
     // ページ順(ここでは取得しないこちらはクライアント側)
     //console.log('page_name=', this.page_name)
@@ -129,3 +198,27 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+/* トランジション用スタイル */
+.v-enter-active,
+.v-leave-active,
+.v-move {
+  transition: opacity 1s, transform 1s;
+}
+.v-leave-active {
+  position: absolute;
+}
+.v-enter {
+  opacity: 0;
+
+  // transform: translateY(-20px);
+  transform: translateX(-50px);
+}
+.v-leave-to {
+  opacity: 0;
+
+  // transform: translateY(20px);
+  transform: translateX(50px);
+}
+</style>
