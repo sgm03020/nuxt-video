@@ -16,7 +16,7 @@
       <div
         v-show="!loading"
         v-if="video_contents_array.length > 0"
-        class="my-2 mx-4 pa-2"
+        class="my-2 pa-2 xmgin30"
       >
         <VueSlickCarousel :arrows="true" :dots="true">
           <div
@@ -164,6 +164,23 @@ button.slick-next::before {
   /* background-color: red !important; */
 }
 
+.theme--dark .custom-dots button::before {
+  // 以下でドットの大きさ指定
+  font-size: 20px;
+  line-height: 20px;
+  // color: var(--v-info-base) !important;
+  color: var(--v-secondary-lighten4) !important;
+}
+
+.theme--light .custom-dots button::before {
+  // 以下でドットの大きさ指定
+  font-size: 20px;
+  line-height: 20px;
+  // color: var(--v-info-base) !important;
+  color: var(--v-secondary-darken1) !important;
+  opacity: 0.35;
+}
+
 .slick-dots {
   bottom: -30px;
   width: 100%;
@@ -173,22 +190,24 @@ button.slick-next::before {
   text-align: center;
 }
 
-.slick-dots li button::before {
-  font-size: 20px !important;
-  line-height: 20px;
-  color: cyan;
-  // color: var(--v-info-base);
-}
+// .slick-dots li button::before {
+//   font-size: 20px !important;
+//   line-height: 20px;
+//   color: cyan;
+// }
+
 // .slick-dots li button::before {
 //   font-size: 20px;
 //   line-height: 20px;
 //   // color: cyan;
 //   color: var(--v-info-base);
 // }
-.slick-dots li.slick-active button::before {
-  // color: white;
-  color: var(--v-info-base);
-}
+
+// .slick-dots li.slick-active button::before {
+//   // color: white;
+//   color: var(--v-info-base);
+// }
+
 .slick-box {
   width: 200px;
 }
@@ -211,28 +230,9 @@ button.slick-next::before {
   }
 }
 
-.theme--dark .custom-dots button::before {
-  // 以下でドットの大きさ指定
-  font-size: 20px;
-  line-height: 20px;
-  // color: var(--v-info-base) !important;
-  color: var(--v-secondary-lighten4) !important;
-}
-.theme--light .custom-dots button::before {
-  // 以下でドットの大きさ指定
-  font-size: 20px;
-  line-height: 20px;
-  // color: var(--v-info-base) !important;
-  color: var(--v-secondary-darken1) !important;
-  opacity: 0.35;
-}
-.theme--light .custom-dots button::before {
-  // 以下でドットの大きさ指定
-  font-size: 20px;
-  line-height: 20px;
-  // color: var(--v-info-base) !important;
-  color: var(--v-secondary-darken1) !important;
-  opacity: 0.35;
+.xmgin30 {
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 // .custom-dots button{
