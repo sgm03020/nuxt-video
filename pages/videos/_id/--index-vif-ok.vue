@@ -1,79 +1,23 @@
 <template>
   <div>
-    <!-- <div>{{ this.$route.query.id }}</div> -->
+    <div>{{ this.$route.query.id }}</div>
     <transition-group>
-      <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0">
-        <!-- <div><v-card-text>container-0</v-card-text></div> -->
+      <v-container v-if="this.getIndex !== -1" key="0">
+        <div><v-card-text>container-0</v-card-text></div>
         <v-btn
           @click="$router.push({ name: '', query: {} })"
           rounded
           class="primary mx-2 my-2"
-          >戻る</v-btn
+          >PUSH</v-btn
         >
-        <v-card class="mx-0 px-0">
-          <LazyYoutubeVideo
-            :src="this.video_contents_array[getIndex].src"
-            :preview-image-size="
-              this.video_contents_array[getIndex].previewImageSize
-            "
-            :aspect-ratio="this.video_contents_array[getIndex].aspectRatio"
-            :thumbnail-listeners="{ load: () => {} }"
-          />
-          <v-card-subtitle
-            class="text-center ma-0 py-3"
-            v-text="this.video_contents_array[getIndex].title"
-          ></v-card-subtitle>
-        </v-card>
       </v-container>
-      <!-- 以下はダミー(これがないとブラウザでappendChildエラー) -->
       <v-container v-else key="1" class="ma-0 pa-0">
         <!-- <div><v-card-text>container-1</v-card-text></div> -->
         <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
       </v-container>
-      <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0">
-        <!-- <div><v-card-text>container-2</v-card-text></div> -->
-        <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
-        <v-row no-gutters>
-          <v-col
-            class="ma-0 pa-0"
-            v-for="(card, index) in video_contents_array"
-            :key="index"
-            :cols="card.flex"
-          >
-            <v-card
-              elevation="3"
-              class="mb-3 px-0"
-              v-bind:class="{
-                mginright: index % 2 === 0 && card.flex < 7,
-                mginleft: index % 2 !== 0 && card.flex < 7,
-              }"
-            >
-              <router-link class="py-0 my-0" :to="'?id=' + card.contents_id">
-                <v-img
-                  :src="card.tmb"
-                  :lazy-src="card.tmb.replace('maxresdefault', 'default')"
-                ></v-img>
-              </router-link>
-              <v-card-title class="justify-center subtitle-1 ma-0 py-0">
-                <v-btn
-                  v-show="1"
-                  color="warning"
-                  class="ma-0 py-1"
-                  text
-                  :to="'?id=' + card.contents_id"
-                >
-                  {{ card.title }}
-                </v-btn>
-              </v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row class="ma-2 justify-space-between">
-          <v-btn color="primary" nuxt to="/"> 最初のページ </v-btn>
-          <v-btn color="primary" nuxt :to="{ path: `${next_route}` }">{{
-            next_page_name
-          }}</v-btn>
-        </v-row>
+      <v-container v-show="this.getIndex === -1" key="2">
+        <div><v-card-text>container-2</v-card-text></div>
+        <v-btn @click="$router.go(-1)">BACK</v-btn>
       </v-container>
     </transition-group>
   </div>

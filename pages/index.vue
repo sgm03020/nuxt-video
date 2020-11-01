@@ -37,6 +37,14 @@
             <v-row dense class="justify-center"> </v-row>
             <!-- </div> -->
           </div>
+          <!-- {{ page }} -->
+          <template #customPaging>
+            <div class="custom-dots">
+              <button type="button">
+                <i class="mdi mdi-circle" />
+              </button>
+            </div>
+          </template>
         </VueSlickCarousel>
       </div>
       <v-row v-show="!loading" class="mr-4 mt-10">
@@ -152,7 +160,7 @@ export default {
 button.slick-prev::before,
 button.slick-next::before {
   font-size: 30px !important;
-  color: var(--v-secondary-base)
+  color: var(--v-secondary-base);
   /* background-color: red !important; */
 }
 
@@ -166,14 +174,20 @@ button.slick-next::before {
 }
 
 .slick-dots li button::before {
-  font-size: 20px;
+  font-size: 20px !important;
   line-height: 20px;
-  // color: cyan;
-  color: var(--v-info-base)
+  color: cyan;
+  // color: var(--v-info-base);
 }
+// .slick-dots li button::before {
+//   font-size: 20px;
+//   line-height: 20px;
+//   // color: cyan;
+//   color: var(--v-info-base);
+// }
 .slick-dots li.slick-active button::before {
   // color: white;
-  color: var(--v-info-base)
+  color: var(--v-info-base);
 }
 .slick-box {
   width: 200px;
@@ -186,6 +200,44 @@ button.slick-next::before {
 .test {
   color: red;
 }
+
+.custom-arrow {
+  // position: absolute;
+  // top: 100%;
+  font-size: 30px;
+  color: red;
+  &:hover {
+    color: blue;
+  }
+}
+
+.theme--dark .custom-dots button::before {
+  // 以下でドットの大きさ指定
+  font-size: 20px;
+  line-height: 20px;
+  // color: var(--v-info-base) !important;
+  color: var(--v-secondary-lighten4) !important;
+}
+.theme--light .custom-dots button::before {
+  // 以下でドットの大きさ指定
+  font-size: 20px;
+  line-height: 20px;
+  // color: var(--v-info-base) !important;
+  color: var(--v-secondary-darken1) !important;
+  opacity: 0.35;
+}
+.theme--light .custom-dots button::before {
+  // 以下でドットの大きさ指定
+  font-size: 20px;
+  line-height: 20px;
+  // color: var(--v-info-base) !important;
+  color: var(--v-secondary-darken1) !important;
+  opacity: 0.35;
+}
+
+// .custom-dots button{
+//   color: var(--v-info-base) !important;
+// }
 </style>
 
 

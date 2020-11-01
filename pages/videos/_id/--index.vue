@@ -1,15 +1,31 @@
 <template>
-  <div>
-    <!-- <div>{{ this.$route.query.id }}</div> -->
-    <transition-group>
-      <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0">
-        <!-- <div><v-card-text>container-0</v-card-text></div> -->
-        <v-btn
-          @click="$router.push({ name: '', query: {} })"
-          rounded
-          class="primary mx-2 my-2"
-          >戻る</v-btn
-        >
+  <!-- <div v-if="!notfound" class="ma-0 pa-0"> -->
+  <div class="ma-0 pa-0">
+    <h2>{{ page_name }}</h2>
+    <p>contents_id:{{ $route.query.id }}</p>
+    <p>length:{{video_contents_array.length}}</p>
+
+    <!-- <transition class="ma-0 pa-0"> -->
+    <!-- v-if="$route.query && $route.query.id && $route.query.id !== ''" -->
+    <!-- v-if="$route.query.id && $route.query.id !== ''" -->
+      <v-container
+        v-if="this.getIndex !== -1"
+        fluid
+        class="mx-0 px-0"
+        key="container-0"
+      >
+        <!-- <p>{{ $route.query.id }}</p> -->
+        <!-- <p>{{ getIndex }}</p> -->
+        <div>
+          <v-btn @click="$router.go(-1)" rounded class="primary mx-2 my-2">
+          <!-- <v-btn
+            :to="{ path: '', query: {} }"
+            rounded
+            class="primary mx-2 my-2"
+          > -->
+            戻る
+          </v-btn>
+        </div>
         <v-card class="mx-0 px-0">
           <LazyYoutubeVideo
             :src="this.video_contents_array[getIndex].src"
@@ -25,14 +41,13 @@
           ></v-card-subtitle>
         </v-card>
       </v-container>
-      <!-- 以下はダミー(これがないとブラウザでappendChildエラー) -->
-      <v-container v-else key="1" class="ma-0 pa-0">
-        <!-- <div><v-card-text>container-1</v-card-text></div> -->
-        <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
-      </v-container>
-      <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0">
-        <!-- <div><v-card-text>container-2</v-card-text></div> -->
-        <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
+
+        <!-- v-show="$route.query.id === ''" -->
+      <v-container
+        v-show="!$route.query.id || $route.query.id === ''"
+        fluid
+        class="mx-0 px-0"
+      >
         <v-row no-gutters>
           <v-col
             class="ma-0 pa-0"
@@ -48,12 +63,31 @@
                 mginleft: index % 2 !== 0 && card.flex < 7,
               }"
             >
+              <!-- <LazyYoutubeVideo
+              :src="card.src"
+              :preview-image-size="card.previewImageSize"
+              :aspect-ratio="card.aspectRatio"
+              :thumbnail-listeners="{ load: () => {} }"
+            /> -->
+              <!-- <v-img :src="card.tmb"> </v-img> -->
               <router-link class="py-0 my-0" :to="'?id=' + card.contents_id">
                 <v-img
                   :src="card.tmb"
                   :lazy-src="card.tmb.replace('maxresdefault', 'default')"
                 ></v-img>
               </router-link>
+              <!-- <nuxt-link tag="img" :src="card.tmb" to="/locations"> </nuxt-link> -->
+              <!-- <v-card-subtitle
+              class="text-center ma-2 pa-0"
+              v-text="card.title"
+            ></v-card-subtitle> -->
+              <!-- <v-btn
+                  v-show="1"
+                  color="orange lighten-2"
+                  class="ma-0 py-1"
+                  text
+                  :to="'?id=' + card.contents_id"
+                > -->
               <v-card-title class="justify-center subtitle-1 ma-0 py-0">
                 <v-btn
                   v-show="1"
@@ -75,8 +109,9 @@
           }}</v-btn>
         </v-row>
       </v-container>
-    </transition-group>
+    <!-- </transition> -->
   </div>
+  <!-- <div v-else>Not Found</div> -->
 </template>
 
 <script>
