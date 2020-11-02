@@ -26,11 +26,12 @@
         </v-card>
       </v-container>
       <!-- 以下はダミー(これがないとブラウザでappendChildエラー) -->
-      <v-container v-else key="1" class="ma-0 pa-0">
+      <!-- <v-container v-else key="1" class="ma-0 pa-0"> -->
         <!-- <div><v-card-text>container-1</v-card-text></div> -->
         <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
-      </v-container>
-      <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0">
+      <!-- </v-container> -->
+      <!-- <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0"> -->
+      <v-container v-else key="1" class="ma-0 pa-0">
         <!-- <div><v-card-text>container-2</v-card-text></div> -->
         <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
         <!-- v-bind:class="{
@@ -265,14 +266,16 @@ export default {
 .v-enter {
   opacity: 0;
 
+  transform: translateY(20px);
   // transform: translateY(-20px);
-  transform: translateX(-50px);
+  // transform: translateX(-50px);
 }
 .v-leave-to {
   opacity: 0;
 
+  transform: translateY(-20px);
   // transform: translateY(20px);
-  transform: translateX(50px);
+  // transform: translateX(50px);
 }
 
 .mginleft {
