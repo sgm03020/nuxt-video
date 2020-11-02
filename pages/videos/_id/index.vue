@@ -33,6 +33,10 @@
       <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0">
         <!-- <div><v-card-text>container-2</v-card-text></div> -->
         <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
+        <!-- v-bind:class="{
+                mginright: index % 2 === 0 && card.flex < 7,
+                mginleft: index % 2 !== 0 && card.flex < 7,
+              }" -->
         <v-row no-gutters>
           <v-col
             class="ma-0 pa-0"
@@ -42,10 +46,12 @@
           >
             <v-card
               elevation="3"
-              class="mb-3 px-0"
+              class="mb-3"
               v-bind:class="{
-                mginright: index % 2 === 0 && card.flex < 7,
-                mginleft: index % 2 !== 0 && card.flex < 7,
+                mginright:
+                  spacingPatturn[index] === 1 || spacingPatturn[index] === 3,
+                mginleft:
+                  spacingPatturn[index] === 2 || spacingPatturn[index] === 3,
               }"
             >
               <router-link class="py-0 my-0" :to="'?id=' + card.contents_id">
@@ -123,6 +129,9 @@ export default {
       const page_id = currentPage.page_id
       const page_name = currentPage.page_name
       let video_contents_array = []
+      // 以下を各v-cardの間のみpaddingを付けるために加える
+      let spacingPatturn = [] // cols(flex)の値を合計12以下のグループ配列
+
       // For next
       const nextPage = pages[(cat_index + 1) % pages.length]
       const next_route = nextPage.full_path
@@ -137,6 +146,43 @@ export default {
       // console.log('data: ', data)
       if (data) {
         video_contents_array = data.video_contents_master
+
+        // 表示間隔のための処理
+        // methodsへ移動したい所だが、asyncDataからはアクセスできない
+        // 外へ出すとしたらcomputedかstore
+        const colsGroup = video_contents_array.reduce((acc, item, index) => {
+          if (acc.length > 0) {
+            const sum = acc[acc.length - 1].reduce(
+              (rcc, item) => rcc + parseInt(item.flex)
+            )
+            if (sum + parseInt(item.flex) <= 12) {
+              acc[acc.length - 1].push(parseInt(item.flex))
+            } else {
+              acc.push(new Array(1).fill(parseInt(item.flex)))
+            }
+          } else {
+            acc.push(new Array(1).fill(parseInt(item.flex)))
+          }
+          return [...acc]
+        }, [])
+        spacingPatturn = colsGroup.reduce((acc, line, index) => {
+          // console.log('line:', line, ' index:', index)
+          const lineSize = line.length
+          const mapLine = line.map((value, index, array) => {
+            if (index === 0 && lineSize === 1) {
+              return 0
+            } else if (index === 0 && lineSize > 1) {
+              return 1
+            } else if (index === lineSize - 1 && lineSize > 1) {
+              return 2
+            } else {
+              return 3
+            }
+          })
+          return acc.concat(mapLine)
+        }, [])
+
+        // console.log('colsGroup: ', colsGroup);
       }
 
       /* OK パターン1
@@ -155,6 +201,7 @@ export default {
         next_route,
         next_page_name,
         video_contents_array,
+        spacingPatturn,
       }
     } catch (err) {
       error({ statusCode: 404, message: 'Server Error' })
@@ -167,6 +214,7 @@ export default {
     next_route: '',
     page_array: ['topics', 'upper', 'lower', 'stretch'],
     video_contents_array: [],
+    spacingPatturn: [],
     selectedIndex: -1,
   }),
   computed: {
@@ -198,6 +246,8 @@ export default {
     //console.log('page_name=', this.page_name)
     //store.state.pages
     //console.log('store.state.pages: ', store.state.pages);
+  },
+  methods: {
   },
 }
 </script>
