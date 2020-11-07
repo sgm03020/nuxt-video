@@ -61,6 +61,7 @@ export default createStore
 export const state = () => ({
   isHideBar: false,
   pages: [],
+  topics: [],
 })
 
 export const mutations = {
@@ -69,5 +70,8 @@ export const mutations = {
   },
   setPages(state, pages) {
     state.pages = pages
+  },
+  setTopics(state, topics) {
+    state.topics = topics
   },
 }

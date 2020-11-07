@@ -75,7 +75,7 @@
           </v-list-item-action>
           <v-list-item-title>Switch Theme</v-list-item-title>
         </v-list-item>
-        <v-list-item to="/blog" router exact>
+        <v-list-item v-if="0" to="/blog" router exact>
           <v-list-item-action>
             <v-icon> mdi-application </v-icon>
           </v-list-item-action>
@@ -123,7 +123,7 @@
               <v-list-item-title>Switch Theme</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item to="/blog" router exact>
+          <v-list-item v-if="0" to="/blog" router exact>
             <v-list-item-action>
               <v-icon> mdi-application </v-icon>
             </v-list-item-action>
@@ -170,12 +170,12 @@ export default {
           icon: 'mdi-apps',
           full_path: '/',
         },
-        {
-          page_name: 'Testing',
-          page_order: 9999,
-          icon: ' mdi-vector-arrange-above',
-          full_path: '/transitions',
-        },
+        // {
+        //   page_name: 'Testing',
+        //   page_order: 9999,
+        //   icon: ' mdi-vector-arrange-above',
+        //   full_path: '/transitions',
+        // },
       ],
       items: [
         {

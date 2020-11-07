@@ -1,78 +1,97 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <div v-if="0" class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card v-if="1" class="justify-center transparent">
-        <v-card-title class="justify-center transparent">
-          Welcome to the SAM's Movies
-        </v-card-title>
-      </v-card>
-      <div class="text-right mx-4 pa-2">
-        <span>ダイジェスト</span>
-      </div>
+  <div class="ma-0 pa-0">
+    <v-btn color="primary" @click="gather()">{{ show }}</v-btn>
+    <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
+    <div class="parent ma-0 pa-0">
+      <!-- 以下のdivへは -->
+      <!-- justify-center text-center -->
+      <!-- を入れない方がよい(ちゃんと升目にならないから) -->
+      <!-- :style="{
+        'z-index': show ? 100 : 1}" -->
+
       <div
-        v-show="!loading"
-        v-if="video_contents_array.length > 0"
-        class="my-2 pa-2 xmgin30"
+        class="base mt-10"
+        @click="show = !show"
+        :style="{
+          'pointer-events': show ? 'auto' : 'none',
+        }"
       >
-        <VueSlickCarousel :arrows="true" :dots="true">
+        <transition-group
+          tag="div"
+          class="textbox mt-6"
+          @before-enter="beforeEnter"
+          @enter="enter"
+          @before-leave="beforeEnter"
+          @leave="leave"
+        >
           <div
-            :centerMode="true"
-            v-for="(card, i) in video_contents_array"
-            :index="i"
-            :key="i"
-            class=""
+            v-for="(datas, index) in textModel"
+            v-show="show === true"
+            :key="'datas' + index"
+            class="text-square"
           >
-            <!-- <div> -->
-            <!-- <v-img :src="card.tmb" class="slick-img" /> -->
-            <!-- :thumbnail-listeners="{ load: foo }" -->
-            <!-- :preview-image-size="card.previewsize" -->
-            <v-row dense class="justify-center py-1 primary">
-              {{ card.title }}
-            </v-row>
-            <LazyYoutubeVideo :src="card.src" preview-image-size="hqdefault" />
-            <v-row dense class="justify-center"> </v-row>
-            <!-- </div> -->
+            <h2>{{ datas }}</h2>
           </div>
-          <!-- {{ page }} -->
-          <template #customPaging>
-            <div class="custom-dots">
-              <button type="button">
-                <i class="mdi mdi-circle" />
-              </button>
-            </div>
-          </template>
-        </VueSlickCarousel>
+        </transition-group>
       </div>
-      <v-row v-show="!loading" class="mr-4 mt-10">
-        <v-spacer />
-        <v-btn color="primary" nuxt to="/videos/topics">トピックス</v-btn>
-      </v-row>
-    </v-col>
-  </v-row>
+
+      <!-- <LazyYoutubeVideo src="https://www.youtube.com/embed/SsUg86Q22tE" /> -->
+      <!-- :style="{ 'z-index': show ? 50 : 50 }" -->
+      <div class="videos mx-0 px-0">
+        <transition-group
+          tag="ul"
+          class="videos__list mx-0 px-0"
+          @before-enter="beforeEnter"
+          @enter="enter"
+          @before-leave="beforeEnter"
+          @leave="leave"
+        >
+          <!-- <div class="videos__list"> -->
+          <!-- LazyYoutubeVideoに食わせる場合、配列はストア->computedを通したものでないと表示できない -->
+          <li
+            v-show="show === false"
+            v-for="card in storetopics"
+            :key="card.id"
+            class="videos__item justify-center text-center"
+            :class="'col-' + card.flex"
+          >
+            <!-- 一気にYoutubeを表示する場合 -->
+            <!-- {{ card.id }} -->
+            <!-- <LazyYoutubeVideo src="https://www.youtube.com/embed/SsUg86Q22tE" /> -->
+            <!-- <LazyYoutubeVideo :src="card.src" previewImageSize="sddefault" /> -->
+            <!-- パターン(1) -->
+            <!-- <v-img
+              :src="card.tmb"
+              @click="() => $router.push('videos/topics')"
+            /> -->
+            <!-- パターン(2) -->
+            <v-card>
+            <v-img
+            rounded
+              :src="card.tmb"
+              @click="show = !show"
+            />
+            </v-card>
+            <!-- 以下だと、col-6などが効かなくなる -->
+            <!-- <router-link to="/videos/topics"><img :src="card.tmb" /></router-link> -->
+            <!-- <nuxt-link :src="card.tmb" tag="img" to="/videos/topics"></nuxt-link> -->
+          </li>
+          <!-- </div> -->
+        </transition-group>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
-import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-// optional style for arrows & dots
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import 'vue-lazy-youtube-video/dist/style.simplified.css'
 import { GetRootTopics } from '../queries/index.gql'
 
 export default {
   components: {
-    Logo,
-    VuetifyLogo,
-    VueSlickCarousel,
     LazyYoutubeVideo,
   },
   created() {
@@ -101,7 +120,32 @@ export default {
         previewImageSize: 'default',
         flex: 12,
       },
+      {
+        title: '腿上げ',
+        contents_id: '4JS70KB9GS0',
+        id: '4JS70KB9GS0',
+        url: 'https://www.youtube.com/embed/4JS70KB9GS0',
+        src: 'https://www.youtube.com/embed/4JS70KB9GS0',
+        tmb: 'https://img.youtube.com/vi/4JS70KB9GS0/default.jpg',
+        previewImageSize: 'default',
+        flex: 6,
+      },
+      {
+        title: '腹筋',
+        contents_id: 'BQJmBtIqYtU',
+        id: 'BQJmBtIqYtU',
+        url: 'https://www.youtube.com/embed/BQJmBtIqYtU',
+        src: 'https://www.youtube.com/embed/BQJmBtIqYtU',
+        tmb: 'https://img.youtube.com/vi/BQJmBtIqYtU/default.jpg',
+        previewImageSize: 'default',
+        flex: 6,
+      },
     ]
+
+    // ADD
+    // const mainText = 'Hello world this is Vue!'
+    const mainText = " SAM  ONLINE     Video    L I B R A R Y"
+    const textModel = mainText.split('')
 
     // try {
     //   const ip = await $http.$get('http://icanhazip1.com')
@@ -119,124 +163,298 @@ export default {
       // console.log(data)
       return {
         loading: true,
+        show: true,
+        textModel: textModel,
         video_contents_array: data.video_contents_master,
+        // video_contents_array: minimalData,
       }
     } catch (err) {
       console.log('err: ', err)
       return {
         loading: true,
+        show: true,
+        textModel: textModel,
         video_contents_array: minimalData,
       }
     }
   },
-  data: () => {},
   async mounted() {
     setTimeout(() => {
       this.loading = false
     }, 500)
+    //
+    // this.textModel = this.text.split('')
+  },
+  data: () => {},
+  // data() {
+  //   return {
+  //     show: false,
+  //     // text: 'Hello world this is Vue!',
+  //     // textModel: [],
+  //     cards: [
+  //       {
+  //         title: '開設',
+  //         id: 'ZoXdmxYa90c',
+  //         src: 'https://www.youtube.com/embed/ZoXdmxYa90c',
+  //         previewImageSize: 'maxresdefault',
+  //         flex: 12,
+  //       },
+  //       {
+  //         title: '腿上げ',
+  //         id: '4JS70KB9GS0',
+  //         src: 'https://www.youtube.com/embed/C9nzVgyEvRU',
+  //         // https://www.youtube.com/watch?v=C9nzVgyEvRU
+  //         previewImageSize: 'sddefault',
+  //         flex: 6,
+  //       },
+  //       {
+  //         title: '腹筋',
+  //         id: 'BQJmBtIqYtU',
+  //         src: 'https://www.youtube.com/embed/BQJmBtIqYtU',
+  //         previewImageSize: 'sddefault',
+  //         flex: 6,
+  //       },
+  //     ],
+  //   }
+  // },
+  // computed: {
+  //   textShow() {
+  //     const text = this.show ? 'Remove' : 'Show'
+  //     return text
+  //   },
+  // },
+  computed: {
+    textShow() {
+      const text = this.show ? 'Remove' : 'Show'
+      return text
+    },
+    // ストアの状態から storeitems を表示
+    storetopics() {
+      // console.log('default.vue computed topics:', this.$store.state.topics)
+      // console.log('this.$store.state.pages: ', this.$store.state.pages);
+      return this.$store.state.topics
+    },
+  },
+  methods: {
+    beforeEnter(el) {
+      const x = (Math.random() - 0.5) * 1600
+      const y = (Math.random() - 0.5) * 1600
+      const ss = Math.random() + 1
+      const rr = (Math.random() - 0.5) * 200
+
+      el.style.opacity = 0
+      el.style.transform =
+        'translate(' +
+        x +
+        'px,' +
+        y +
+        'px)rotate(' +
+        rr +
+        'deg)scale(' +
+        ss +
+        ')'
+    },
+    enter(el) {
+      setTimeout(() => {
+        el.style.opacity = 1
+        // el.style.transform = 'translate(0px,20px)'
+        el.style.transform = 'translate(0px,0px)'
+      }, 0)
+    },
+    beforeLeave(el) {
+      el.style.opacity = 1
+      // el.style.transform = 'translate(0px,20px)'
+      el.style.transform = 'translate(0px,0px)'
+    },
+    leave(el) {
+      setTimeout(() => {
+        const x = (Math.random() - 0.5) * 400
+        const y = (Math.random() - 0.5) * 400
+        const ss = Math.random() + 1
+        const rr = (Math.random() - 0.5) * 200
+        el.style.opacity = 0
+        el.style.transform =
+          'translate(' +
+          x +
+          'px,' +
+          y +
+          'px)rotate(' +
+          rr +
+          'deg)scale(' +
+          ss +
+          ')'
+      }, 0)
+    },
+    gather() {
+      // control the gather or scatter
+      this.show = !this.show
+    },
   },
 }
 </script>
 
-<style lang="scss">
-/* .slick_track {
+<style lang="scss" scoped>
+.parent {
   position: relative;
-  top: 0;
-  left: 0;
+}
+.textbox {
+  // pointer-events: auto;
+  //.v-navigation-drawer--fixed { z-index: 6 }
+  // navigationなどは6になっており、100とかだと上に来てしまう
+  z-index: 0;
+  display: grid;
+  // justify-content: center;
+  // grid-template-columns: 48px 48px 48px 48px 48px 48px 48px 48px 48px 48px 48px;
+  // grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
+  grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
+  grid-template-columns: 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px;
+  // grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
+  // TEST
+  // background-color: yellowgreen;
+  // padding: 10px 0 10px 0;
+  // height: 240px;
+  // margin-top: 0;
+  // padding-top: 0;
+}
+.text-square {
+  // height: 32px;
+  height: 34px;
+  // border: 1px solid grey;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-} */
 
-.slick-prev {
-  left: -35px !important;
+  // transition: 0.4s cubic-bezier(0, 0.08, 0.05, 1);
+  transition: 0.7s cubic-bezier(0, 0.08, 0.05, 1);
+  // animation: gapping 0.6s ease-in-out;
+  animation: gapping 0.2s ease-in-out;
+  animation-delay: 1s;
+  // animation-delay: 0.1s;
+  animation-fill-mode: forwards;
+}
+@keyframes gapping {
+  from {
+    margin: 0;
+  }
+  to {
+    margin: 0;
+    // margin: 4px;
+    // margin: 0 0 4px 0;
+  }
+}
+.text-square:nth-child(3n-2) {
+  // background-color: rgba(192, 0, 0, 0.4);
+  // background-color: rgba(0, 0, 0, 0.1);
+  // background-color: rgba(0, 0, 0, 1);
+  // font-size: 24px;
+  padding: 0;
+}
+.text-square:nth-child(6n-3) {
+  // background-color: rgba(0, 0, 0, 0.2);
+  // background-color: rgba(100, 0, 0, 0.3);
+  padding: 0;
+}
+.textbox div {
+  // transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+  transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+  // padding: 2px;
+  // font-size: 24px;
+}
+h2 {
+  // font-size: 24px;
+  // font-size: 20px;
+  // font-size: 20px;
+  // color: rgba(100, 100, 100, 1);
+  color: rgba(192, 192, 192, 1);
 }
 
-.slick-next {
-  right: -25px;
-}
-
-button.slick-prev::before,
-button.slick-next::before {
-  font-size: 30px !important;
-  color: var(--v-secondary-base);
-  /* background-color: red !important; */
-}
-
-.theme--dark .custom-dots button::before {
-  // 以下でドットの大きさ指定
-  font-size: 20px;
-  line-height: 20px;
-  // color: var(--v-info-base) !important;
-  color: var(--v-secondary-lighten4) !important;
-}
-
-.theme--light .custom-dots button::before {
-  // 以下でドットの大きさ指定
-  font-size: 20px;
-  line-height: 20px;
-  // color: var(--v-info-base) !important;
-  color: var(--v-secondary-darken1) !important;
-  opacity: 0.35;
-}
-
-.slick-dots {
-  bottom: -30px;
-  width: 100%;
-  padding: 0 !important;
-  margin: 0;
-  list-style: none;
-  text-align: center;
-}
-
-// .slick-dots li button::before {
-//   font-size: 20px !important;
-//   line-height: 20px;
-//   color: cyan;
-// }
-
-// .slick-dots li button::before {
-//   font-size: 20px;
-//   line-height: 20px;
-//   // color: cyan;
-//   color: var(--v-info-base);
-// }
-
-// .slick-dots li.slick-active button::before {
-//   // color: white;
-//   color: var(--v-info-base);
-// }
-
-.slick-box {
-  width: 200px;
-}
-
-.slick-img {
-  margin: auto;
-}
-
-.test {
-  color: red;
-}
-
-.custom-arrow {
-  // position: absolute;
-  // top: 100%;
-  font-size: 30px;
-  color: red;
-  &:hover {
-    color: blue;
+//
+// TEST ADD
+//
+@keyframes gapvideo {
+  from {
+    margin: 0;
+  }
+  to {
+    // margin: 4px;
+    margin: 0;
   }
 }
 
-.xmgin30 {
-  margin-left: 30px;
-  margin-right: 30px;
+$gap1: 10px;
+p {
+  text-align: center;
+}
+.videos {
+  // pointer-events: auto;
+  // pointer-events: none;
+  // background-color: rgba(0, 192, 192, 0.6);
+  // position: relative;
+  position: absolute;
+  // top: -160px;
+  top: 0;
+  width: 100%;
+  // height: 240px;
+  // margin: 0 0 0 0;
+  // padding: 20px 0 20px 0;
+  // padding-bottom: 100px;
+  &__list {
+    // z-index追加
+    // z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 0;
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+
+    list-style: none;
+
+    /** ↑の行でlintエラーとなるためstylelint.config.jsへルール追加 */
+  }
+
+  &__item {
+    // vuetifyのcol-[数字]を使う場合は以下からコメント化
+    // ここからコメント化
+    // width: calc(50% - #{$gap1 / 2});
+
+    // &:first-child {
+    //   width: 100%;
+    //   // padding-bottom: 10px;
+    // }
+
+    // &:nth-child(n + 3) {
+    //   margin-top: $gap1;
+    // }
+    // ここまでコメント化
+
+    // transition: 0.4s cubic-bezier(0, 0.08, 0.05, 1);
+    transition: 0.7s cubic-bezier(0, 0.08, 0.05, 1);
+    // animation: gapvideo 0.6s ease-in-out;
+    animation: gapvideo 0.2s ease-in-out;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+  }
+}
+// 追加
+.videos__list li {
+  transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+  box-shadow: 0 0 20px #000;
 }
 
-// .custom-dots button{
-//   color: var(--v-info-base) !important;
+.base {
+  // background-color: violet;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 160px;
+}
+// .container {
+//   padding-left: 4px;
+//   padding-right: 4px;
 // }
 </style>
 

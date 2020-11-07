@@ -49,6 +49,7 @@ query GetRootTopics {
     title
     tmb
     previewsize
+    flex
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-3">
     <!-- <div>{{ this.$route.query.id }}</div> -->
     <transition-group>
       <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0">
