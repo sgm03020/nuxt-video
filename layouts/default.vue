@@ -48,7 +48,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container class="mx-0 px-0">
+      <v-container class="ma-0 pa-0">
         <!-- <div>{{pages}}</div> -->
         <transition name="page">
           <nuxt />

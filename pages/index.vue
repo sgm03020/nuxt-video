@@ -1,24 +1,25 @@
 <template>
-  <div class="ma-0 pa-0">
-    <v-btn color="primary" @click="gather()">{{ show }}</v-btn>
-    <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
-    <div class="parent ma-0 pa-0">
+  <div class="">
+    <div :style="{ position: 'absolute', top: 0 }">
+      <v-btn color="primary" @click="gather()">{{ show }}</v-btn>
+      <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
+    </div>
+    <div class="parent ma-0 pa-0 justify-center text-center">
       <!-- 以下のdivへは -->
       <!-- justify-center text-center -->
       <!-- を入れない方がよい(ちゃんと升目にならないから) -->
       <!-- :style="{
         'z-index': show ? 100 : 1}" -->
+        <!-- :style="baseStyles" -->
 
       <div
-        class="base mt-10"
+        class="base"
         @click="show = !show"
-        :style="{
-          'pointer-events': show ? 'auto' : 'none',
-        }"
+        :style="baseStyles"
       >
         <transition-group
           tag="div"
-          class="textbox mt-6"
+          class="textbox"
           @before-enter="beforeEnter"
           @enter="enter"
           @before-leave="beforeEnter"
@@ -66,11 +67,7 @@
             /> -->
             <!-- パターン(2) -->
             <v-card>
-            <v-img
-            rounded
-              :src="card.tmb"
-              @click="show = !show"
-            />
+              <v-img rounded :src="card.tmb" @click="show = !show" />
             </v-card>
             <!-- 以下だと、col-6などが効かなくなる -->
             <!-- <router-link to="/videos/topics"><img :src="card.tmb" /></router-link> -->
@@ -89,8 +86,10 @@ import { print } from 'graphql/language/printer'
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import 'vue-lazy-youtube-video/dist/style.simplified.css'
 import { GetRootTopics } from '../queries/index.gql'
+import NuxtSSRScreenSize from 'nuxt-ssr-screen-size'
 
 export default {
+  mixins: [NuxtSSRScreenSize.NuxtSSRScreenSizeMixin],
   components: {
     LazyYoutubeVideo,
   },
@@ -144,7 +143,7 @@ export default {
 
     // ADD
     // const mainText = 'Hello world this is Vue!'
-    const mainText = " SAM  ONLINE     Video    L I B R A R Y"
+    const mainText = ' SAM  ONLINE     Video    L I B R A R Y'
     const textModel = mainText.split('')
 
     // try {
@@ -184,6 +183,16 @@ export default {
     }, 500)
     //
     // this.textModel = this.text.split('')
+  },
+  props: {
+    position: {
+      type: String,
+      default: 'absolute',
+    },
+    top: {
+      type: String,
+      default: '50px',
+    },
   },
   data: () => {},
   // data() {
@@ -234,6 +243,16 @@ export default {
       // console.log('this.$store.state.pages: ', this.$store.state.pages);
       return this.$store.state.topics
     },
+    baseStyles() {
+      return {
+        position: 'absolute',
+        top: `${this.$vssHeight/3 - 40 - 56}px`,
+        // top: `0px`,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        'background-color': 'blue',
+      };
+    }
   },
   methods: {
     beforeEnter(el) {
@@ -296,6 +315,14 @@ export default {
 <style lang="scss" scoped>
 .parent {
   position: relative;
+  // top: 0;
+  // 以下の3つで左右中央
+  // left: 0;
+  // right: 0;
+  // margin: 0 auto;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
 }
 .textbox {
   // pointer-events: auto;
@@ -390,10 +417,18 @@ p {
   // pointer-events: none;
   // background-color: rgba(0, 192, 192, 0.6);
   // position: relative;
+  // 現在、以下の3つを採用
+  // absoluteなのにはいろいろ理由がある
+  // absoluteにするとwidth:100%を付けないと
+  // 横へ広がってしまう
   position: absolute;
-  // top: -160px;
-  top: 0;
   width: 100%;
+  margin-top: 50px;
+  // ここまで採用
+  // top: -160px;
+  // top: 0;
+  // margin-top: 50px;
+
   // height: 240px;
   // margin: 0 0 0 0;
   // padding: 20px 0 20px 0;
@@ -445,16 +480,31 @@ p {
 }
 
 .base {
+  // ここの設定はprops->computedへ移す
+  // 以下の1つはcomputedへ転載
+  // position: absolute;
+  // ここから今は不採用
   // background-color: violet;
-  background-color: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // background-color: transparent;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   // height: 160px;
+  // left: 0;
+  // right: 0;
+  // margin: auto;
+  // ここまで今は不採用
+  // 以下の2つはcomputedへ転載
+  // left: 50%;
+  // transform: translateX(-50%);
 }
 // .container {
 //   padding-left: 4px;
 //   padding-right: 4px;
+// }
+// .grand {
+//   position: relative;
+//   top: 0;
 // }
 </style>
 
