@@ -41,7 +41,7 @@
       <div class="videos mx-0 px-0">
         <transition-group
           tag="ul"
-          class="videos__list mx-0 px-0"
+          class="videos__list mx-0 px-0 mt-12"
           @before-enter="beforeEnter"
           @enter="enter"
           @before-leave="beforeEnter"
@@ -421,9 +421,12 @@ p {
   // absoluteなのにはいろいろ理由がある
   // absoluteにするとwidth:100%を付けないと
   // 横へ広がってしまう
-  position: absolute;
-  width: 100%;
-  margin-top: 50px;
+  // 以下3行はいったん停止
+  // (footerの2020年の帯の下にvideosのエリアが表示されてしまうので)
+  // また幅が広がってしまう現象はなぜか大丈夫になった
+  // position: absolute;
+  // width: 100%;
+  // margin-top: 50px;
   // ここまで採用
   // top: -160px;
   // top: 0;
