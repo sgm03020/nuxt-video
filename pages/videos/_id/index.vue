@@ -1,34 +1,77 @@
 <template>
-  <div class="mt-3">
+  <div class="mt-1">
     <!-- <div>{{ this.$route.query.id }}</div> -->
     <transition-group>
-      <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0">
+      <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0 mt-0 pt-0">
         <!-- <div><v-card-text>container-0</v-card-text></div> -->
-        <v-row>
-          <v-col cols="12">
+        <v-row no-gutters>
+          <v-col cols="12" class="mt-0 pt-0">
             <v-btn
               @click="$router.push({ name: '', query: {} })"
               rounded
-              class="primary mx-2 my-2"
+              class="primary mx-2 my-0 pt-0"
               >戻る</v-btn
             >
             <v-card class="mx-0 px-0">
               <!-- <LazyYoutubeVideo
-            :src="this.video_contents_array[getIndex].src"
-            :preview-image-size="
-              this.video_contents_array[getIndex].previewImageSize
-            "
-            :aspect-ratio="this.video_contents_array[getIndex].aspectRatio"
-            :thumbnail-listeners="{ load: () => {} }"
-          /> -->
+                :src="this.video_contents_array[getIndex].src"
+                :preview-image-size="
+                  this.video_contents_array[getIndex].previewImageSize
+                "
+                :aspect-ratio="this.video_contents_array[getIndex].aspectRatio"
+                :thumbnail-listeners="{ load: () => {} }"
+              /> -->
               <client-only>
+                <div class="ma-2">
+                  <v-btn @click="$refs.youtube.player.playVideo()">PLAY</v-btn>
+                  <v-btn @click="$refs.youtube.player.pauseVideo()"
+                    >PAUSE</v-btn
+                  >
+                  <v-btn @click="$refs.youtube.player.seekTo(0, true)"
+                    >最初から</v-btn
+                  >
+                  <v-btn @click="$refs.youtube.player.setVolume(50)"
+                    >音量50%</v-btn
+                  >
+                </div>
+                <!-- https://www.youtube.com/embed/HIbAz29L-FA?modestbranding=1&playsinline=0&showinfo=0&enablejsapi=1&origin=https%3A%2F%2Fintercoin.org&widgetid=1 -->
+                <!-- &amp;showinfo=0&amp;rel=0&amp;modestbranding=1&mute=1&amp;wmode=transparent& -->
+                <!-- :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`" -->
+                <!-- <iframe
+                  v-if="1"
+                  frameborder="0"
+                  width="100%"
+                  height="315px"
+                  :src="`https://www.youtube.com/embed/${videoId}?playsinline=1&autoplay=1&enablejsapi=1&amp;showinfo=0&amp;rel=0&amp;modestbranding=1&mute=1&amp;wmode=transparent`"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                >
+                </iframe> -->
                 <youtube
                   ref="youtube"
                   width="100%"
                   :video-id="videoId"
                   :player-vars="playVars"
+                  @ready="ready"
                 />
                 <!-- :player-vars="{ origin: window.location.origin, autoplay: 1 }" -->
+
+                <!-- <LazyYoutubeVideo
+                  :src="this.video_contents_array[getIndex].src"
+                  :preview-image-size="
+                    this.video_contents_array[getIndex].previewImageSize
+                  "
+                  :aspect-ratio="
+                    this.video_contents_array[getIndex].aspectRatio
+                  "
+                  :thumbnail-listeners="{ load: () => {} }"
+                  enablejsapi
+                  @init:player="onPlayerInit"
+                  injectPlayerScript
+                  autoPlay
+                /> -->
+                <!-- @init:player="onPlayerInit" -->
+                <!-- @load:iframe="onIframeLoad" -->
               </client-only>
               <v-card-subtitle
                 class="text-center ma-0 py-3"
@@ -246,7 +289,9 @@ export default {
         )
         return {
           origin: window.location.origin,
-          autoplay: true,
+          enablejsapi: 1,
+          playsinline: 1,
+          autoplay: false,
         }
       }
     },
@@ -282,7 +327,22 @@ export default {
     //store.state.pages
     //console.log('store.state.pages: ', store.state.pages);
   },
-  methods: {},
+  methods: {
+    async fetchYoutube() {
+      await (this.isOpen = ture)
+      this.$refs.youtube.fetchData()
+    },
+    ready() {
+      const youtubePlayer = this.$refs.youtube.player
+      youtubePlayer.mute()
+      youtubePlayer.playVideo()
+      youtubePlayer.setVolume(20)
+      youtubePlayer.unMute()
+    },
+    // playVideo() {
+    //   this.player.playVideo()
+    // },
+  },
 }
 </script>
 
