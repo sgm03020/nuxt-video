@@ -29,6 +29,8 @@ export default {
     // {src: '~/plugins/Carousel3d', mode:'server'},
     '@/plugins/Hasura.js',
     '@/plugins/SetInterval.js',
+    // '@/plugins/Youtube.js',
+    {src: '~/plugins/Youtube', mode: 'client'},
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

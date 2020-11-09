@@ -4,31 +4,44 @@
     <transition-group>
       <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0">
         <!-- <div><v-card-text>container-0</v-card-text></div> -->
-        <v-btn
-          @click="$router.push({ name: '', query: {} })"
-          rounded
-          class="primary mx-2 my-2"
-          >戻る</v-btn
-        >
-        <v-card class="mx-0 px-0">
-          <LazyYoutubeVideo
+        <v-row>
+          <v-col cols="12">
+            <v-btn
+              @click="$router.push({ name: '', query: {} })"
+              rounded
+              class="primary mx-2 my-2"
+              >戻る</v-btn
+            >
+            <v-card class="mx-0 px-0">
+              <!-- <LazyYoutubeVideo
             :src="this.video_contents_array[getIndex].src"
             :preview-image-size="
               this.video_contents_array[getIndex].previewImageSize
             "
             :aspect-ratio="this.video_contents_array[getIndex].aspectRatio"
             :thumbnail-listeners="{ load: () => {} }"
-          />
-          <v-card-subtitle
-            class="text-center ma-0 py-3"
-            v-text="this.video_contents_array[getIndex].title"
-          ></v-card-subtitle>
-        </v-card>
+          /> -->
+              <client-only>
+                <youtube
+                  ref="youtube"
+                  width="100%"
+                  :video-id="videoId"
+                  :player-vars="playVars"
+                />
+                <!-- :player-vars="{ origin: window.location.origin, autoplay: 1 }" -->
+              </client-only>
+              <v-card-subtitle
+                class="text-center ma-0 py-3"
+                v-text="this.video_contents_array[getIndex].title"
+              ></v-card-subtitle>
+            </v-card>
+          </v-col>
+        </v-row>
       </v-container>
       <!-- 以下はダミー(これがないとブラウザでappendChildエラー) -->
       <!-- <v-container v-else key="1" class="ma-0 pa-0"> -->
-        <!-- <div><v-card-text>container-1</v-card-text></div> -->
-        <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
+      <!-- <div><v-card-text>container-1</v-card-text></div> -->
+      <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
       <!-- </v-container> -->
       <!-- <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0"> -->
       <v-container v-else key="1" class="ma-0 pa-0">
@@ -96,6 +109,11 @@ const basePath = '/videos'
 export default {
   components: {
     LazyYoutubeVideo,
+  },
+  created() {
+    if (process.browser) {
+      console.log('window.location:', window.location)
+    }
   },
   async asyncData({ error, redirect, app, params, route, store }) {
     /* わざとエラーにする場合に使う
@@ -217,8 +235,24 @@ export default {
     video_contents_array: [],
     spacingPatturn: [],
     selectedIndex: -1,
+    // videoId: '4JS70KB9GS0',
   }),
   computed: {
+    playVars() {
+      if (process.browser) {
+        console.log(
+          'computed playVars window.location.origin:',
+          window.location.origin
+        )
+        return {
+          origin: window.location.origin,
+          autoplay: true,
+        }
+      }
+    },
+    videoId() {
+      return '4JS70KB9GS0'
+    },
     getIndex() {
       const { id } = this.$route.query
       // console.log('getIndex $route.query.id: ', id)
@@ -248,8 +282,7 @@ export default {
     //store.state.pages
     //console.log('store.state.pages: ', store.state.pages);
   },
-  methods: {
-  },
+  methods: {},
 }
 </script>
 
