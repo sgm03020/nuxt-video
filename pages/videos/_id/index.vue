@@ -2,11 +2,16 @@
   <div class="mt-1">
     <!-- <div>{{ this.$route.query.id }}</div> -->
     <transition-group>
-      <v-container v-if="this.getIndex !== -1" key="0" class="mx-0 px-0 mt-0 pt-0">
+      <v-container
+        v-if="this.getIndex !== -1"
+        key="0"
+        class="mx-0 px-0 mt-0 pt-0"
+      >
         <!-- <div><v-card-text>container-0</v-card-text></div> -->
         <v-row no-gutters>
           <v-col cols="12" class="mt-0 pt-0">
             <v-btn
+              v-if="0"
               @click="$router.push({ name: '', query: {} })"
               rounded
               class="primary mx-2 my-0 pt-0"
@@ -22,37 +27,49 @@
                 :thumbnail-listeners="{ load: () => {} }"
               /> -->
               <client-only>
-                <div class="ma-2">
+                <div class="mt-2 mb-3">
+                  <!-- {{ userAgent }} -->
+                  <v-btn @click="$router.push({ name: '', query: {} })"
+                    >戻る</v-btn
+                  >
                   <v-btn @click="$refs.youtube.player.playVideo()">PLAY</v-btn>
                   <v-btn @click="$refs.youtube.player.pauseVideo()"
                     >PAUSE</v-btn
                   >
-                  <v-btn @click="$refs.youtube.player.seekTo(0, true)"
+                  <v-btn v-if="0" @click="$refs.youtube.player.seekTo(0, true)"
                     >最初から</v-btn
                   >
-                  <v-btn @click="$refs.youtube.player.setVolume(50)"
+                  <v-btn v-if="0" @click="$refs.youtube.player.setVolume(50)"
                     >音量50%</v-btn
                   >
+                  <v-btn v-if="0" @click="test">TEST</v-btn>
                 </div>
                 <!-- https://www.youtube.com/embed/HIbAz29L-FA?modestbranding=1&playsinline=0&showinfo=0&enablejsapi=1&origin=https%3A%2F%2Fintercoin.org&widgetid=1 -->
                 <!-- &amp;showinfo=0&amp;rel=0&amp;modestbranding=1&mute=1&amp;wmode=transparent& -->
                 <!-- :src="`https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1`" -->
+                <!-- :src="`https://www.youtube.com/embed/${videoId}?playsinline=1&autoplay=1&enablejsapi=1&amp;showinfo=0&amp;rel=0&amp;modestbranding=1&mute=1&amp;wmode=transparent`" -->
                 <!-- <iframe
                   v-if="1"
+                  id="youtube-video"
+                  ref="iframe"
                   frameborder="0"
                   width="100%"
                   height="315px"
-                  :src="`https://www.youtube.com/embed/${videoId}?playsinline=1&autoplay=1&enablejsapi=1&amp;showinfo=0&amp;rel=0&amp;modestbranding=1&mute=1&amp;wmode=transparent`"
+                  :src="`https://www.youtube.com/embed/${videoId}?version=3&enablejsapi=1&playerapiid=ytplayer`"
                   allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen
+                  allowscriptaccess: always
                 >
                 </iframe> -->
+
+                <!-- width="100%" -->
                 <youtube
                   ref="youtube"
-                  width="100%"
-                  :video-id="videoId"
+                  :video-id="this.video_contents_array[getIndex].contents_id"
                   :player-vars="playVars"
+                  width="100%"
                   @ready="ready"
+                  @ended="ended"
                 />
                 <!-- :player-vars="{ origin: window.location.origin, autoplay: 1 }" -->
 
@@ -155,7 +172,17 @@ export default {
   },
   created() {
     if (process.browser) {
-      console.log('window.location:', window.location)
+    }
+  },
+  watch: {},
+  mounted() {},
+  beforeDestroy() {
+    try {
+      if (this.player) {
+        this.player.destroy()
+      }
+    } catch (e) {
+      //
     }
   },
   async asyncData({ error, redirect, app, params, route, store }) {
@@ -279,8 +306,13 @@ export default {
     spacingPatturn: [],
     selectedIndex: -1,
     // videoId: '4JS70KB9GS0',
+    youtubeApiReady: false,
+    player: null,
   }),
   computed: {
+    userAgent() {
+      return navigator.userAgent
+    },
     playVars() {
       if (process.browser) {
         console.log(
@@ -288,10 +320,16 @@ export default {
           window.location.origin
         )
         return {
-          origin: window.location.origin,
+          Origin: window.location.origin,
+          modestbranding: 1,
+          // autohide: 1,
+          // controls: 0,
+          rel: 0,
+          showinfo: 0,
           enablejsapi: 1,
           playsinline: 1,
-          autoplay: false,
+          autoplay: 0,
+          // fitParent: 1,
         }
       }
     },
@@ -334,14 +372,34 @@ export default {
     },
     ready() {
       const youtubePlayer = this.$refs.youtube.player
-      youtubePlayer.mute()
-      youtubePlayer.playVideo()
-      youtubePlayer.setVolume(20)
-      youtubePlayer.unMute()
+      if (/iPhone|iPad|iPod|Android/i.test(this.userAgent)) {
+      }
+
+      if (this.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+        // console.log('match')
+        youtubePlayer.mute()
+        youtubePlayer.playVideo()
+        youtubePlayer.unMute()
+      } else {
+        youtubePlayer.setVolume(50)
+        youtubePlayer.playVideo()
+      }
+      // youtubePlayer.mute()
+      // youtubePlayer.playVideo()
+      // youtubePlayer.setVolume(30)
+      // youtubePlayer.unMute()
     },
-    // playVideo() {
-    //   this.player.playVideo()
-    // },
+    ended() {
+      console.log('ended')
+      this.$router.push({ name: '', query: {} })
+    },
+    onPlayerReady() {
+      console.log('onPlayerReady')
+    },
+    onPlayerStateChange() {
+      console.log('onPlayerStateChange')
+    },
+    test() {},
   },
 }
 </script>
