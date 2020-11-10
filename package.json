@@ -45,6 +45,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "nuxt": "^2.14.5",
+    "nuxt-ssr-screen-size": "^1.0.0",
     "rimraf": "^3.0.2",
     "vue-carousel-3d": "^1.0.1",
     "vue-cli-plugin-vuetify-preset-rally": "^1.0.4",

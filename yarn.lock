@@ -7400,6 +7400,11 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
+nuxt-ssr-screen-size@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nuxt-ssr-screen-size/-/nuxt-ssr-screen-size-1.0.0.tgz#fb6bfc6f989f6d049fb2085da5d55605d72f96b5"
+  integrity sha512-+VBFsAw5/6/07TaPTm2VFYZ/LjLqPL74fI4vmS/cjY1fXqtg5YHSwtiYPBmsNsx2Ny90TXIqOxfySF7oJxtRJA==
+
 nuxt@^2.14.5:
   version "2.14.6"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.6.tgz#56ba99cbd055ebdb33250a4d1ed09f084ad7fa14"
