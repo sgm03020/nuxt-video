@@ -1,7 +1,8 @@
 <template>
   <div class="">
-    <div :style="{ position: 'absolute', top: 0 }">
-      <v-btn color="primary" @click="gather()">{{ show }}</v-btn>
+    <div :style="{ position: 'absolute', top: 0 }" class="mt-4">
+      <v-btn v-if="0" color="primary" @click="gather()">{{ show }}</v-btn>
+      <!-- <div>now: {{ this.$vssHeight }} - mounted: {{ this.mountedHeight }}</div> -->
       <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
     </div>
     <div class="parent ma-0 pa-0 justify-center text-center">
@@ -10,13 +11,9 @@
       <!-- を入れない方がよい(ちゃんと升目にならないから) -->
       <!-- :style="{
         'z-index': show ? 100 : 1}" -->
-        <!-- :style="baseStyles" -->
+      <!-- :style="baseStyles" -->
 
-      <div
-        class="base"
-        @click="show = !show"
-        :style="baseStyles"
-      >
+      <div class="base" v-show="!loading && mountedHeight !==0 " @click="show = !show" :style="baseStyles">
         <transition-group
           tag="div"
           class="textbox"
@@ -41,7 +38,7 @@
       <div class="videos mx-0 px-0">
         <transition-group
           tag="ul"
-          class="videos__list mx-0 px-0 mt-12"
+          class="videos__list mx-0 px-0"
           @before-enter="beforeEnter"
           @enter="enter"
           @before-leave="beforeEnter"
@@ -163,6 +160,7 @@ export default {
       return {
         loading: true,
         show: true,
+        mountedHeight: 0,
         textModel: textModel,
         video_contents_array: data.video_contents_master,
         // video_contents_array: minimalData,
@@ -172,6 +170,7 @@ export default {
       return {
         loading: true,
         show: true,
+        mountedHeight: 0,
         textModel: textModel,
         video_contents_array: minimalData,
       }
@@ -183,6 +182,7 @@ export default {
     }, 500)
     //
     // this.textModel = this.text.split('')
+    this.mountedHeight = this.$vssHeight
   },
   props: {
     position: {
@@ -194,7 +194,11 @@ export default {
       default: '50px',
     },
   },
-  data: () => {},
+  data: () => {
+    return {
+      mountedHeight: 0
+    }
+  },
   // data() {
   //   return {
   //     show: false,
@@ -246,13 +250,14 @@ export default {
     baseStyles() {
       return {
         position: 'absolute',
-        top: `${this.$vssHeight/3 - 40 - 56}px`,
+        // top: `${this.$vssHeight / 3 - 40 - 56}px`,
+        top: `${this.mountedHeight / 3 - 40 - 56}px`,
         // top: `0px`,
         left: '50%',
         transform: 'translateX(-50%)',
-        'background-color': 'blue',
-      };
-    }
+        // 'background-color': 'blue',
+      }
+    },
   },
   methods: {
     beforeEnter(el) {
@@ -413,6 +418,7 @@ p {
   text-align: center;
 }
 .videos {
+  margin-top: 70px;
   // pointer-events: auto;
   // pointer-events: none;
   // background-color: rgba(0, 192, 192, 0.6);
@@ -483,6 +489,8 @@ p {
 }
 
 .base {
+  // 現在はcomputed->propsを経てscreenのサイズを見て計算してから
+  // 決めるように変更
   // ここの設定はprops->computedへ移す
   // 以下の1つはcomputedへ転載
   // position: absolute;
