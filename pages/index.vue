@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div :style="{ position: 'absolute', top: 0 }" class="mt-4">
+    <div :style="{ position: 'absolute', top: 0 }" class="ml-2 mt-4">
       <v-btn v-if="0" color="primary" @click="gather()">{{ show }}</v-btn>
       <!-- <div>now: {{ this.$vssHeight }} - mounted: {{ this.mountedHeight }}</div> -->
       <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
@@ -13,7 +13,12 @@
         'z-index': show ? 100 : 1}" -->
       <!-- :style="baseStyles" -->
 
-      <div class="base" v-show="!loading && mountedHeight !==0 " @click="show = !show" :style="baseStyles">
+      <div
+        class="base"
+        v-show="!loading && mountedHeight !== 0"
+        @click="show = !show"
+        :style="baseStyles"
+      >
         <transition-group
           tag="div"
           class="textbox"
@@ -177,12 +182,17 @@ export default {
     }
   },
   async mounted() {
-    setTimeout(() => {
-      this.loading = false
-    }, 500)
-    //
-    // this.textModel = this.text.split('')
-    this.mountedHeight = this.$vssHeight
+    this.$nextTick(() => {
+      if (process.client) {
+        // Loadingタイマー
+        setTimeout(() => {
+          this.loading = false
+        }, 500)
+        // 画面の高さ取得
+        // console.log('mounted vssHeight:', this.$vssHeight)
+        this.mountedHeight = this.$vssHeight
+      }
+    })
   },
   props: {
     position: {
@@ -194,11 +204,7 @@ export default {
       default: '50px',
     },
   },
-  data: () => {
-    return {
-      mountedHeight: 0
-    }
-  },
+  data: () => {},
   // data() {
   //   return {
   //     show: false,

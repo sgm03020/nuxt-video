@@ -314,11 +314,11 @@ export default {
       return navigator.userAgent
     },
     playVars() {
-      if (process.browser) {
-        console.log(
-          'computed playVars window.location.origin:',
-          window.location.origin
-        )
+      if (process.client) {
+        // console.log(
+        //   'computed playVars window.location.origin:',
+        //   window.location.origin
+        // )
         return {
           Origin: window.location.origin,
           modestbranding: 1,
