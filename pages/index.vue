@@ -2,8 +2,16 @@
   <div class="">
     <div :style="{ position: 'absolute', top: 0 }" class="ml-2 mt-4">
       <v-btn v-if="0" color="primary" @click="gather()">{{ show }}</v-btn>
-      <!-- <div>now: {{ this.$vssHeight }} - mounted: {{ this.mountedHeight }}</div> -->
-      <v-btn color="primary" to="/videos/topics">トピックス</v-btn>
+      <div v-if="0">
+        <div>
+          vssHeight: {{ this.$vssHeight }} - mounted: {{ this.mountedHeight }}
+        </div>
+        <div>
+          vssWidth: {{ this.$vssWidth }} - mounted: {{ this.mountedWidth }}
+        </div>
+        <div>readingTopics: {{ this.readingTopics }}</div>
+      </div>
+      <v-btn v-show="!loading" color="primary" to="/videos/topics">トピックス</v-btn>
     </div>
     <div class="parent ma-0 pa-0 justify-center text-center">
       <!-- 以下のdivへは -->
@@ -26,6 +34,7 @@
           @enter="enter"
           @before-leave="beforeEnter"
           @leave="leave"
+          :style="textboxStyles"
         >
           <div
             v-for="(datas, index) in textModel"
@@ -51,6 +60,7 @@
         >
           <!-- <div class="videos__list"> -->
           <!-- LazyYoutubeVideoに食わせる場合、配列はストア->computedを通したものでないと表示できない -->
+          <!-- v-show="show === false" -->
           <li
             v-show="show === false"
             v-for="card in storetopics"
@@ -69,7 +79,18 @@
             /> -->
             <!-- パターン(2) -->
             <v-card>
-              <v-img rounded :src="card.tmb" @click="show = !show" />
+              <!-- 以下、v-imgを使うと表示が遅くなり、動き出しでは空白地帯になるため -->
+              <!-- プレーンのimgタグに変更した -->
+              <!-- サーバプロセスでhttpから取得されるのでassetsには置かなくてよいようだ -->
+              <!-- <img src="@/assets/images/default.jpg" @click="show = !show" /> -->
+              <!-- <v-img :src="image_src" @click="show = !show" /> -->
+              <!-- <img :src="require('@/assets/images/0.jpg')" /> -->
+              <!-- <v-img rounded :src="card.tmb" @click="show = !show" /> -->
+              <img
+                :style="{ width: '100%' }"
+                :src="card.tmb"
+                @click="show = !show"
+              />
             </v-card>
             <!-- 以下だと、col-6などが効かなくなる -->
             <!-- <router-link to="/videos/topics"><img :src="card.tmb" /></router-link> -->
@@ -158,26 +179,31 @@ export default {
     // video情報取得処理
     try {
       // 取得
-      const { data } = await app.$hasura({
-        query: print(GetRootTopics),
-      })
-      // console.log(data)
+      // const { data } = await app.$hasura({
+      //   query: print(GetRootTopics),
+      // })
+      // if (data.video_contents_master) {
+      //   console.log('hasura await success:', data.video_contents_master[0])
+      // }
       return {
         loading: true,
         show: true,
+        readingTopics: false,
         mountedHeight: 0,
+        mountedWidth: 0,
         textModel: textModel,
-        video_contents_array: data.video_contents_master,
-        // video_contents_array: minimalData,
+        // video_contents_array: data.video_contents_master,
       }
     } catch (err) {
       console.log('err: ', err)
       return {
         loading: true,
         show: true,
+        readingTopics: false,
         mountedHeight: 0,
+        mountedWidth: 0,
         textModel: textModel,
-        video_contents_array: minimalData,
+        // video_contents_array: minimalData,
       }
     }
   },
@@ -185,12 +211,14 @@ export default {
     this.$nextTick(() => {
       if (process.client) {
         // Loadingタイマー
+        // Loading済はreadTopicsで行うようにした
         setTimeout(() => {
-          this.loading = false
+          // this.loading = false
         }, 500)
         // 画面の高さ取得
         // console.log('mounted vssHeight:', this.$vssHeight)
         this.mountedHeight = this.$vssHeight
+        this.mountedWidth = this.$vssWidth
       }
     })
   },
@@ -204,7 +232,11 @@ export default {
       default: '50px',
     },
   },
-  data: () => {},
+  data: () => ({
+    loading: true,
+    readingTopics: false,
+    image_src: require('@/assets/images/default.jpg'),
+  }),
   // data() {
   //   return {
   //     show: false,
@@ -242,26 +274,68 @@ export default {
   //     return text
   //   },
   // },
+  watch: {
+    readingTopics: function (value) {
+      // この場合のvalueはthis.readingTopicsにセットした値である
+      // if (process.client) console.log('value:', value)
+      if (value) {
+        // if (process.client)
+        this.loading = false
+      }
+    },
+  },
   computed: {
     textShow() {
       const text = this.show ? 'Remove' : 'Show'
       return text
     },
     // ストアの状態から storeitems を表示
+    // しかしこれだと読み込み中にカクカクする
     storetopics() {
       // console.log('default.vue computed topics:', this.$store.state.topics)
       // console.log('this.$store.state.pages: ', this.$store.state.pages);
-      return this.$store.state.topics
+      // return this.$store.state.topics
+      if (this.$store.state.topics.length > 0) {
+        // console.log('storetopics read ok')
+        this.readingTopics = true
+        return this.$store.state.topics
+      } else {
+        // console.log('storetopics read not end')
+        return []
+      }
     },
+
     baseStyles() {
-      return {
-        position: 'absolute',
-        // top: `${this.$vssHeight / 3 - 40 - 56}px`,
-        top: `${this.mountedHeight / 3 - 40 - 56}px`,
-        // top: `0px`,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        // 'background-color': 'blue',
+      if (process.client) {
+        return {
+          position: 'absolute',
+          // top: `${this.$vssHeight / 3 - 40 - 56}px`,
+          top: `${this.mountedHeight / 3 - 40 - 56}px`,
+          // top: `0px`,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          // 'background-color': 'blue',
+        }
+      } else {
+        return {
+          position: 'absolute',
+          left: '50%',
+        }
+      }
+    },
+    textboxStyles() {
+      // ここでもprocess.clientとprocess.serverとが2通りある
+      if (process.client) {
+        let charWidth = Math.floor(this.mountedWidth / 13)
+        if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+          return {
+            'grid-template-columns': `repeat(13, ${charWidth}px)`,
+          }
+        } else {
+          return { 'grid-template-columns': `repeat(13, 28px)` }
+        }
+      } else {
+        console.log('textboxStyles server')
       }
     },
   },
@@ -344,8 +418,11 @@ export default {
   // justify-content: center;
   // grid-template-columns: 48px 48px 48px 48px 48px 48px 48px 48px 48px 48px 48px;
   // grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
-  grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
-  grid-template-columns: 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px;
+  // 現在13文字分
+  //
+  // grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
+  // grid-template-columns: 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px 28px;
+  //
   // grid-template-columns: 32px 32px 32px 32px 32px 32px 32px 32px 32px 32px;
   // TEST
   // background-color: yellowgreen;
@@ -363,7 +440,7 @@ export default {
   align-items: center;
 
   // transition: 0.4s cubic-bezier(0, 0.08, 0.05, 1);
-  transition: 0.7s cubic-bezier(0, 0.08, 0.05, 1);
+  transition: 1.7s cubic-bezier(0, 0.08, 0.05, 1);
   // animation: gapping 0.6s ease-in-out;
   animation: gapping 0.2s ease-in-out;
   animation-delay: 1s;
@@ -394,7 +471,7 @@ export default {
 }
 .textbox div {
   // transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
-  transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+  // transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
   // padding: 2px;
   // font-size: 24px;
 }
@@ -481,7 +558,11 @@ p {
     // ここまでコメント化
 
     // transition: 0.4s cubic-bezier(0, 0.08, 0.05, 1);
-    transition: 0.7s cubic-bezier(0, 0.08, 0.05, 1);
+    // transition: 0.7s cubic-bezier(0, 0.08, 0.05, 1);
+    // transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+    transition: 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+    // transition: 1.7s cubic-bezier(1, 1, 1, 1);
+    // transition: 1.7s;
     // animation: gapvideo 0.6s ease-in-out;
     animation: gapvideo 0.2s ease-in-out;
     animation-delay: 1s;
@@ -490,7 +571,8 @@ p {
 }
 // 追加
 .videos__list li {
-  transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
+  // 上の&__itemより優先
+  // transition: all 1.5s cubic-bezier(0, 0.08, 0.05, 1);
   box-shadow: 0 0 20px #000;
 }
 
