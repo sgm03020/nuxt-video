@@ -104,7 +104,7 @@
       <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
       <!-- </v-container> -->
       <!-- <v-container v-show="this.getIndex === -1" key="2" class="mx-0 px-0"> -->
-      <v-container v-else key="1" class="mx-0 pa-0 mt-2">
+      <v-container v-else key="1" class="mx-0 pa-0 mt-4">
         <!-- <div><v-card-text>container-2</v-card-text></div> -->
         <!-- <v-btn @click="$router.go(-1)">BACK</v-btn> -->
         <!-- v-bind:class="{

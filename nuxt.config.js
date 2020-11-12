@@ -6,6 +6,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   target: 'static',
+  // ssr: false,
   head: {
     titleTemplate: '%s - nuxt-video',
     title: 'nuxt-video',
@@ -17,7 +18,10 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/videos/favicon.ico' },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -30,7 +34,7 @@ export default {
     '@/plugins/Hasura.js',
     '@/plugins/SetInterval.js',
     // '@/plugins/Youtube.js',
-    {src: '~/plugins/Youtube', mode: 'client'},
+    { src: '~/plugins/Youtube', mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -162,7 +166,10 @@ export default {
   // env
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    // API_HASURA_URL: process.env.API_HASURA_URL || 'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
+    // API_HASURA_URL:
+    //   process.env.API_HASURA_URL ||
+    //   'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
+    // API_HASURA_URL: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql',
   },
 
   generate: {
@@ -183,10 +190,10 @@ export default {
   },
 
   router: {
-    middleware: 'CollectionMiddleware',
+    // middleware: 'CollectionMiddleware',
     scrollBehavior: function (to, from, savedPosition) {
       return { x: 0, y: 0 }
-    }
+    },
   },
 
   publicRuntimeConfig: {
@@ -200,8 +207,8 @@ export default {
 
   privateRuntimeConfig: {
     // api_url: API_HASURA_URL
-    // api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
-    api_url: process.env.API_HASURA_URL,
+    api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+    // api_url: process.env.API_HASURA_URL,
   },
 
   // Markdown
