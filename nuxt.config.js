@@ -207,7 +207,8 @@ export default {
 
   privateRuntimeConfig: {
     // api_url: API_HASURA_URL
-    api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+    // api_url: 'https://vcollectionbackendtestapi.tk:4430/v1/graphql'
+    api_url: 'https://vcollectionbackendtestapi.tk/v1/graphql'
     // api_url: process.env.API_HASURA_URL,
   },
 
