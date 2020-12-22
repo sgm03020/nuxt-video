@@ -8,6 +8,9 @@ export default {
   target: 'static',
   // ssr: false,
   head: {
+    base: {
+      href: 'router.base'
+    },
     titleTemplate: '%s - nuxt-video',
     title: 'nuxt-video',
     htmlAttrs: {
@@ -191,6 +194,7 @@ export default {
 
   router: {
     // middleware: 'CollectionMiddleware',
+    base: '/app/',
     scrollBehavior: function (to, from, savedPosition) {
       return { x: 0, y: 0 }
     },
