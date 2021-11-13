@@ -5,8 +5,8 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  ssr: false,
   target: 'static',
-  // ssr: false,
   head: {
     titleTemplate: '%s - nuxt-video',
     title: 'nuxt-video',
