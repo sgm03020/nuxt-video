@@ -1,52 +1,5 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in storeitems"
-          :key="i"
-          :to="item.full_path"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.page_name" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <!-- v-app-barの表示制御を行う場合  -->
-    <!-- :hidden="this.$store.state.isHideBar" -->
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <!-- <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn> -->
-      <!-- <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn> -->
-      <!-- <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn> -->
-      <v-spacer />
-      <v-toolbar-title v-text="title" />
-      <!-- <v-spacer /> -->
-      <!-- &nbsp;&nbsp; -->
-      <v-chip v-if="0" class="ma-0 pa=0"> 今井店 </v-chip>
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
-    </v-app-bar>
     <v-main>
       <v-container class="ma-0 pa-0">
         <!-- <div>{{pages}}</div> -->
@@ -55,108 +8,12 @@
         </transition>
       </v-container>
     </v-main>
-    <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed> -->
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      width="auto"
-      temporary
-      fixed
-    >
-      <!-- <v-list-item
-          @click.native="$vuetify.theme.dark = !$vuetify.theme.dark"
-          exact
-        > -->
-
-      <v-list v-if="0">
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch Theme</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="0" to="/blog" router exact>
-          <v-list-item-action>
-            <v-icon> mdi-application </v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>ブログ機能</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <br />
-        <v-row v-if="0" justify="center" align-content="center" no-gutters>
-          <v-col cols="12">
-            <v-list-item class="">
-              <!-- <v-date-picker v-model="picker" color="green lighten-1">
-              </v-date-picker> -->
-              <!--
-              <v-calendar locale="ja-jp"
-                :day-format="timestamp => new Date(timestamp.date).getDate()"
-                :month-format="timestamp => ('')"
-              ></v-calendar>
-              -->
-              <v-date-picker
-                v-if="0"
-                v-model="picker"
-                locale="jp-ja"
-                color="green lighten-1"
-                :day-format="(date) => new Date(date).getDate()"
-                :events="arrayEvents"
-                event-color="red lighten-1"
-              ></v-date-picker>
-            </v-list-item>
-          </v-col>
-        </v-row>
-      </v-list>
-
-      <!-- v-model="selectedItem" -->
-      <v-list>
-        <v-subheader>FEATURE</v-subheader>
-        <v-list-item-group color="primary">
-          <v-list-item
-            @click.native="$vuetify.theme.dark = !$vuetify.theme.dark"
-          >
-            <v-list-item-icon>
-              <v-icon> mdi-repeat </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>Switch Theme</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item v-if="0" to="/blog" router exact>
-            <v-list-item-action>
-              <v-icon> mdi-application </v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>ブログ機能</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
-  middleware: ['CollectionMiddleware'],
   computed: {
-    // ストアの状態から storeitems を表示
-    storeitems() {
-      console.log('default.vue computed')
-      // minimalItemsと結合してpage_orderでソート
-      // console.log('this.$store.state.pages: ', this.$store.state.pages);
-      const storeitems = this.minimalItems
-        .concat(this.$store.state.pages)
-        .sort((a, b) => {
-          return a.page_order - b.page_order
-        })
-      // console.log('storeitems: ', storeitems)
-      return storeitems
-    },
   },
   data() {
     return {

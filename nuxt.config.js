@@ -25,16 +25,18 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['vue-lazy-youtube-video/dist/style.simplified.css'],
+  css: [
+    // 'vue-lazy-youtube-video/dist/style.simplified.css'
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     // { src: '~/plugins/Carousel3d', mode: 'client' },
     // {src: '~/plugins/Carousel3d', mode:'server'},
-    '@/plugins/Hasura.js',
-    '@/plugins/SetInterval.js',
+    // '@/plugins/Hasura.js',
+    // '@/plugins/SetInterval.js',
     // '@/plugins/Youtube.js',
-    { src: '~/plugins/Youtube', mode: 'client' },
+    // { src: '~/plugins/Youtube', mode: 'client' },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -43,9 +45,9 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
+    // '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+    // '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     // https://color-mode.nuxtjs.org ADD 2020.10.26
