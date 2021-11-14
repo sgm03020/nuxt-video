@@ -47,6 +47,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
     "@nuxtjs/vuetify": "^1.12.1",
+    "@types/node": "^16.11.7",
     "prettier": "^2.4.1",
     "stylelint": "^14.0.1",
     "stylelint-config-prettier": "^9.0.3",
