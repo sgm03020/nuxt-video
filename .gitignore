@@ -92,3 +92,8 @@ sw.*
 # Add
 tmp/
 tmp/*
+
+# Add
+node_modules_*
+node_modules_old
+
