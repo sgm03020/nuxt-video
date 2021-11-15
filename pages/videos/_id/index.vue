@@ -163,8 +163,16 @@
 import LazyYoutubeVideo from 'vue-lazy-youtube-video'
 import gql from 'graphql-tag'
 import { print } from 'graphql/language/printer'
-import { GetVideoByCat, GetVideoPages } from '../../../queries/index.gql'
+import {
+  GetVideoByCat,
+  GetVideoPages,
+  GetAllVideo,
+} from '../../../queries/index.gql'
 const basePath = '/videos'
+// 予備データjsonをロード
+import pagesJsonData from '@/assets/json/video_pages'
+import topicsJsonData from '@/assets/json/video_topics'
+import videoMasterJsonData from '@/assets/json/video_master'
 
 export default {
   components: {
@@ -199,82 +207,142 @@ export default {
     // if (['upper', 'lower', 'stretch', 'topics'].indexOf(slugs) < 0) {
     //   error({ statusCode: 404, message: 'Error Not Found' })
     // }
+    let pages
+    let pagesData
+    let videoDataCategory
+    let videoMasterCategory
+    let videoMasterAll
+    let video_contents_array = []
+    let cat_index
+    let currentPage
+    let page_id
+    let page_name
+    let spacingPatturn = [] // cols(flex)の値を合計12以下のグループ配列
+
+    // For next
+    let nextPage
+    let next_route
+    let next_page_name
 
     try {
-      // console.log('start')
-      // const GetVideoPages = await app.$hasura({
-      //   query: print(GET_VIDEO_PAGES),
-      // })
-      // ここは、GetVideoPagesと違う名前にしないと取得できない
-      // しかし、{data}は下で使うので別名にする
-      const response_pages = await app.$hasura({
+      pagesData = await app.$hasura({
         query: print(GetVideoPages),
       })
+      pages = pagesData.data.video_pages
 
-      const pages = response_pages.data.video_pages
-      // タグ名から配列のインデックスを取得
-      const cat_index = pages.findIndex((v) => v.page_tag == id)
-      const currentPage = pages[cat_index]
-      const page_id = currentPage.page_id
-      const page_name = currentPage.page_name
-      let video_contents_array = []
-      // 以下を各v-cardの間のみpaddingを付けるために加える
-      let spacingPatturn = [] // cols(flex)の値を合計12以下のグループ配列
-
-      // For next
-      const nextPage = pages[(cat_index + 1) % pages.length]
-      const next_route = nextPage.full_path
-      const next_page_name = nextPage.page_name
-
-      const { data } = await app.$hasura({
+      videoDataCategory = await app.$hasura({
         query: print(GetVideoByCat),
         variables: {
           category_id: `${page_id}`,
         },
       })
-      // console.log('data: ', data)
-      if (data) {
-        video_contents_array = data.video_contents_master
+      video_contents_array = videoDataCategory.data.video_contents_master
+      cat_index = pages.findIndex((v) => v.page_tag == id)
+      currentPage = pages[cat_index]
+      page_id = currentPage.page_id
+      page_name = currentPage.page_name
+      nextPage = pages[(cat_index + 1) % pages.length]
+      next_route = nextPage.full_path
+      next_page_name = nextPage.page_name
+    } catch (e) {
+      console.log('error: ', e)
+      pages = pagesJsonData.video_pages
+      console.log('pages: ', pages)
+      cat_index = pages.findIndex((v) => v.page_tag == id)
+      currentPage = pages[cat_index]
+      page_id = currentPage.page_id
+      page_name = currentPage.page_name
+      nextPage = pages[(cat_index + 1) % pages.length]
+      next_route = nextPage.full_path
+      next_page_name = nextPage.page_name
+      //
+      // videoMasterJsonData.video_contents_master
+      console.log('videoMasterJsonData: ', videoMasterJsonData);
+      video_contents_array = videoMasterJsonData.video_contents_master.filter(
+        (v) => {
+          return v.category_id === page_id
+          // return 1
+        }
+      )
+      console.log('video_contents_array: ', video_contents_array)
+    }
+    // return
 
-        // 表示間隔のための処理
-        // methodsへ移動したい所だが、asyncDataからはアクセスできない
-        // 外へ出すとしたらcomputedかstore
-        const colsGroup = video_contents_array.reduce((acc, item, index) => {
-          if (acc.length > 0) {
-            const sum = acc[acc.length - 1].reduce(
-              (rcc, item) => rcc + parseInt(item.flex)
-            )
-            if (sum + parseInt(item.flex) <= 12) {
-              acc[acc.length - 1].push(parseInt(item.flex))
-            } else {
-              acc.push(new Array(1).fill(parseInt(item.flex)))
-            }
-          } else {
-            acc.push(new Array(1).fill(parseInt(item.flex)))
-          }
-          return [...acc]
-        }, [])
-        spacingPatturn = colsGroup.reduce((acc, line, index) => {
-          // console.log('line:', line, ' index:', index)
-          const lineSize = line.length
-          const mapLine = line.map((value, index, array) => {
-            if (index === 0 && lineSize === 1) {
-              return 0
-            } else if (index === 0 && lineSize > 1) {
-              return 1
-            } else if (index === lineSize - 1 && lineSize > 1) {
-              return 2
-            } else {
-              return 3
-            }
-          })
-          return acc.concat(mapLine)
-        }, [])
+    // try {
+    //   // console.log('start')
+    //   // const GetVideoPages = await app.$hasura({
+    //   //   query: print(GET_VIDEO_PAGES),
+    //   // })
+    //   // ここは、GetVideoPagesと違う名前にしないと取得できない
+    //   // しかし、{data}は下で使うので別名にする
+    //   const response_pages = await app.$hasura({
+    //     query: print(GetVideoPages),
+    //   })
 
-        // console.log('colsGroup: ', colsGroup);
+    // pages = response_pages.data.video_pages
+    // タグ名から配列のインデックスを取得
+    // const cat_index = pages.findIndex((v) => v.page_tag == id)
+    // const currentPage = pages[cat_index]
+    // const page_id = currentPage.page_id
+    // const page_name = currentPage.page_name
+    // let video_contents_array = []
+    // 以下を各v-cardの間のみpaddingを付けるために加える
+    // let spacingPatturn = [] // cols(flex)の値を合計12以下のグループ配列
+
+    // For next
+    // const nextPage = pages[(cat_index + 1) % pages.length]
+    // const next_route = nextPage.full_path
+    // const next_page_name = nextPage.page_name
+
+    // const { data } = await app.$hasura({
+    //   query: print(GetVideoByCat),
+    //   variables: {
+    //     category_id: `${page_id}`,
+    //   },
+    // })
+    // // console.log('data: ', data)
+    // if (data) {
+    //   video_contents_array = data.video_contents_master
+
+    // 表示間隔のための処理
+    // methodsへ移動したい所だが、asyncDataからはアクセスできない
+    // 外へ出すとしたらcomputedかstore
+    const colsGroup = video_contents_array.reduce((acc, item, index) => {
+      if (acc.length > 0) {
+        const sum = acc[acc.length - 1].reduce(
+          (rcc, item) => rcc + parseInt(item.flex)
+        )
+        if (sum + parseInt(item.flex) <= 12) {
+          acc[acc.length - 1].push(parseInt(item.flex))
+        } else {
+          acc.push(new Array(1).fill(parseInt(item.flex)))
+        }
+      } else {
+        acc.push(new Array(1).fill(parseInt(item.flex)))
       }
+      return [...acc]
+    }, [])
+    spacingPatturn = colsGroup.reduce((acc, line, index) => {
+      // console.log('line:', line, ' index:', index)
+      const lineSize = line.length
+      const mapLine = line.map((value, index, array) => {
+        if (index === 0 && lineSize === 1) {
+          return 0
+        } else if (index === 0 && lineSize > 1) {
+          return 1
+        } else if (index === lineSize - 1 && lineSize > 1) {
+          return 2
+        } else {
+          return 3
+        }
+      })
+      return acc.concat(mapLine)
+    }, [])
 
-      /* OK パターン1
+    // console.log('colsGroup: ', colsGroup);
+    //} // if (data)
+
+    /* OK パターン1
       const { data } = await app.$hasura({
         query: print(GET_VIDEO_BY_PAGE),
         variables: {
@@ -282,20 +350,20 @@ export default {
         },
       })
       */
-      return {
-        notfound: false,
-        id,
-        page_id,
-        page_name,
-        next_route,
-        next_page_name,
-        video_contents_array,
-        spacingPatturn,
-      }
-    } catch (err) {
-      error({ statusCode: 404, message: 'Server Error' })
-      //error({ statusCode: 404, message: err.message })
+    return {
+      notfound: false,
+      id,
+      page_id,
+      page_name,
+      next_route,
+      next_page_name,
+      video_contents_array,
+      spacingPatturn,
     }
+    // } catch (err) {
+    //   error({ statusCode: 404, message: 'Server Error' })
+    //   //error({ statusCode: 404, message: err.message })
+    // }
   },
   data: () => ({
     page_name: '',

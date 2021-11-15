@@ -8,7 +8,8 @@
       "src": "https://www.youtube.com/embed/ZoXdmxYa90c",
       "title": "開設しました",
       "tmb": "https://img.youtube.com/vi/ZoXdmxYa90c/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "12"
     },
     {
       "id": "202001021200",
@@ -18,7 +19,8 @@
       "src": "https://www.youtube.com/embed/C9nzVgyEvRU",
       "title": "腿上げ",
       "tmb": "https://img.youtube.com/vi/C9nzVgyEvRU/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001031200",
@@ -28,7 +30,8 @@
       "src": "https://www.youtube.com/embed/izgJ5GxR3Tg",
       "title": "懸垂",
       "tmb": "https://img.youtube.com/vi/izgJ5GxR3Tg/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001041200",
@@ -38,7 +41,8 @@
       "src": "https://www.youtube.com/embed/FMSsAXLJ7i0",
       "title": "SAM is",
       "tmb": "https://img.youtube.com/vi/FMSsAXLJ7i0/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001051200",
@@ -48,7 +52,8 @@
       "src": "https://www.youtube.com/embed/FcRffmg9g-4",
       "title": "腹筋",
       "tmb": "https://img.youtube.com/vi/FcRffmg9g-4/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001061200",
@@ -58,7 +63,8 @@
       "src": "https://www.youtube.com/embed/7Zr7WKtaCeg",
       "title": "腕立て",
       "tmb": "https://img.youtube.com/vi/7Zr7WKtaCeg/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001071200",
@@ -68,7 +74,8 @@
       "src": "https://www.youtube.com/embed/YMrS3WWfJ08",
       "title": "ストレッチ",
       "tmb": "https://img.youtube.com/vi/YMrS3WWfJ08/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001081200",
@@ -78,7 +85,8 @@
       "src": "https://www.youtube.com/embed/b0TkN7Ye_d8",
       "title": "パイクプレス(腕立て)",
       "tmb": "https://img.youtube.com/vi/b0TkN7Ye_d8/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001091200",
@@ -88,7 +96,8 @@
       "src": "https://www.youtube.com/embed/SMkGapX_xBU",
       "title": "ウォーミングアップ",
       "tmb": "https://img.youtube.com/vi/SMkGapX_xBU/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001101200",
@@ -98,7 +107,8 @@
       "src": "https://www.youtube.com/embed/x3Cqjgn7ThQ",
       "title": "腹筋2",
       "tmb": "https://img.youtube.com/vi/x3Cqjgn7ThQ/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001111200",
@@ -108,7 +118,8 @@
       "src": "https://www.youtube.com/embed/Kx56HNsOKuM",
       "title": "ランジ",
       "tmb": "https://img.youtube.com/vi/Kx56HNsOKuM/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001121200",
@@ -118,7 +129,8 @@
       "src": "https://www.youtube.com/embed/mwIVNbP8zSg",
       "title": "プッシュアップ",
       "tmb": "https://img.youtube.com/vi/mwIVNbP8zSg/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001131200",
@@ -128,7 +140,8 @@
       "src": "https://www.youtube.com/embed/QiYeMxQPa7M",
       "title": "下腹",
       "tmb": "https://img.youtube.com/vi/QiYeMxQPa7M/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001141200",
@@ -138,7 +151,8 @@
       "src": "https://www.youtube.com/embed/8th6vsBQMFU",
       "title": "全力50M",
       "tmb": "https://img.youtube.com/vi/8th6vsBQMFU/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001151200",
@@ -148,7 +162,8 @@
       "src": "https://www.youtube.com/embed/qH3RPTJuG2c",
       "title": "シェイプ",
       "tmb": "https://img.youtube.com/vi/qH3RPTJuG2c/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001161200",
@@ -158,7 +173,8 @@
       "src": "https://www.youtube.com/embed/gNFQxxTEjFA",
       "title": "ヒップ",
       "tmb": "https://img.youtube.com/vi/gNFQxxTEjFA/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001171200",
@@ -168,7 +184,8 @@
       "src": "https://www.youtube.com/embed/VDE60RROeGk",
       "title": "みんな全力",
       "tmb": "https://img.youtube.com/vi/VDE60RROeGk/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001181200",
@@ -178,7 +195,8 @@
       "src": "https://www.youtube.com/embed/6eJuDCst310",
       "title": "体幹",
       "tmb": "https://img.youtube.com/vi/6eJuDCst310/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001191200",
@@ -188,7 +206,8 @@
       "src": "https://www.youtube.com/embed/1S31jn41Lw0",
       "title": "がんばる君",
       "tmb": "https://img.youtube.com/vi/1S31jn41Lw0/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001201200",
@@ -198,7 +217,8 @@
       "src": "https://www.youtube.com/embed/Gz4cqkdEKvU",
       "title": "TRX-1",
       "tmb": "https://img.youtube.com/vi/Gz4cqkdEKvU/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001211200",
@@ -208,7 +228,8 @@
       "src": "https://www.youtube.com/embed/Q0oV9Ksuyh0",
       "title": "腱",
       "tmb": "https://img.youtube.com/vi/Q0oV9Ksuyh0/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001221200",
@@ -218,7 +239,8 @@
       "src": "https://www.youtube.com/embed/BQJmBtIqYtU",
       "title": "腹筋",
       "tmb": "https://img.youtube.com/vi/BQJmBtIqYtU/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001231200",
@@ -228,7 +250,8 @@
       "src": "https://www.youtube.com/embed/JUY7PlrH8OE",
       "title": "ジャンプ",
       "tmb": "https://img.youtube.com/vi/JUY7PlrH8OE/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001241200",
@@ -238,7 +261,8 @@
       "src": "https://www.youtube.com/embed/KzcJQcy_09k",
       "title": "肩",
       "tmb": "https://img.youtube.com/vi/KzcJQcy_09k/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     },
     {
       "id": "202001251200",
@@ -248,7 +272,8 @@
       "src": "https://www.youtube.com/embed/SsUg86Q22tE",
       "title": "ありがとう",
       "tmb": "https://img.youtube.com/vi/SsUg86Q22tE/maxresdefault.jpg",
-      "previewsize": "default"
+      "previewsize": "default",
+      "flex": "6"
     }
   ]
 }

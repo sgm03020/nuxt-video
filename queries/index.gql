@@ -69,6 +69,22 @@ query GetRootTopics2 {
   }
 }
 
+# 全ての動画情報
+# category_idも追加
+query GetAllVideo {
+  video_contents_master {
+    id
+    contents_id
+    category_id
+    title
+    url
+    src
+    tmb
+    previewsize
+    flex
+  }
+}
+
 # カテゴリ絞りの動画情報
 query GetVideoByCat($category_id: String!) {
   video_contents_master(where: { category_id: { _eq: $category_id } }) {
