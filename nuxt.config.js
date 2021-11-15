@@ -5,8 +5,8 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
+  ssr: false,
   target: 'static',
-  // ssr: false,
   head: {
     titleTemplate: '%s - nuxt-video',
     title: 'nuxt-video',
@@ -45,7 +45,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+    // '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     // https://color-mode.nuxtjs.org ADD 2020.10.26
