@@ -3,6 +3,11 @@ import { print } from 'graphql/language/printer'
 import { GetVideoPages } from '../queries/index.gql'
 import { GetRootTopics } from '../queries/index.gql'
 
+// バックアップjson
+import pages from '../assets/json/video_pages'
+import topics from '../assets/json/video_topics'
+import video_master from '../assets/json/video_master'
+
 export default async function ({ app, store }) {
   // do something
   // console.log('config.api_url:', $config.api_url)
@@ -48,5 +53,13 @@ export default async function ({ app, store }) {
     console.log('CollectionMiddleware http query error: ', err)
     // この場合、storeにpages情報がないことになる
     // (indexは稼働する)
+    console.log('pages', pages)
+    if (pages) {
+      // 以下にもawait必要
+      await store.commit('setPages', pages.video_pages)
+    }
+    if (topics) {
+      await store.commit('setTopics', topics.video_contents_master)
+    }
   }
 }

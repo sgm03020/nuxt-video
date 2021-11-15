@@ -1,0 +1,34 @@
+{
+  "video_contents_master": [
+    {
+      "id": "202001011200",
+      "contents_id": "ZoXdmxYa90c",
+      "url": "https://www.youtube.com/embed/ZoXdmxYa90c",
+      "src": "https://www.youtube.com/embed/ZoXdmxYa90c",
+      "title": "開設しました",
+      "tmb": "https://img.youtube.com/vi/ZoXdmxYa90c/maxresdefault.jpg",
+      "previewsize": "default",
+      "flex": "12"
+    },
+    {
+      "id": "202001041200",
+      "contents_id": "FMSsAXLJ7i0",
+      "url": "https://www.youtube.com/embed/FMSsAXLJ7i0",
+      "src": "https://www.youtube.com/embed/FMSsAXLJ7i0",
+      "title": "SAM is",
+      "tmb": "https://img.youtube.com/vi/FMSsAXLJ7i0/maxresdefault.jpg",
+      "previewsize": "default",
+      "flex": "6"
+    },
+    {
+      "id": "202001251200",
+      "contents_id": "SsUg86Q22tE",
+      "url": "https://www.youtube.com/embed/SsUg86Q22tE",
+      "src": "https://www.youtube.com/embed/SsUg86Q22tE",
+      "title": "ありがとう",
+      "tmb": "https://img.youtube.com/vi/SsUg86Q22tE/maxresdefault.jpg",
+      "previewsize": "default",
+      "flex": "6"
+    }
+  ]
+}
