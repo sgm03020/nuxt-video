@@ -44,6 +44,10 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    // memoryエラー対策 -> 別のエラーとなる
+    // ['@nuxt/typescript-build', {
+    //   typeCheck: false
+    // }],
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify

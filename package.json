@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "clean:dist": "rimraf dist",
-    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=3000 nuxt-ts",
+    "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 NODE_ENV=development HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "dev2": "cross-env NODE_ENV=production HOST=0.0.0.0 PORT=3000 nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
