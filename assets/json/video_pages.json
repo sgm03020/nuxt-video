@@ -1,0 +1,49 @@
+{
+  "video_pages": [
+    {
+      "page_id": "1001",
+      "page_order": 1000,
+      "page_tag": "topics",
+      "page_name": "トピックス",
+      "icon": "mdi-chart-bubble",
+      "base_path": "/videos",
+      "full_path": "/videos/topics"
+    },
+    {
+      "page_id": "1002",
+      "page_order": 1100,
+      "page_tag": "upper",
+      "page_name": "上半身(Upper)",
+      "icon": "mdi-weight-lifter",
+      "base_path": "/videos",
+      "full_path": "/videos/upper"
+    },
+    {
+      "page_id": "1003",
+      "page_order": 1200,
+      "page_tag": "lower",
+      "page_name": "下半身(Lower)",
+      "icon": "mdi-dumbbell",
+      "base_path": "/videos",
+      "full_path": "/videos/lower"
+    },
+    {
+      "page_id": "1004",
+      "page_order": 1300,
+      "page_tag": "stretch",
+      "page_name": "ストレッチ他",
+      "icon": "mdi-yoga",
+      "base_path": "/videos",
+      "full_path": "/videos/stretch"
+    },
+    {
+      "page_id": "2001",
+      "page_order": 2000,
+      "page_tag": "swimming",
+      "page_name": "水泳",
+      "icon": "mdi-swim",
+      "base_path": "/videos",
+      "full_path": "/videos/swimming"
+    }
+  ]
+}
