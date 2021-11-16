@@ -54,6 +54,9 @@ export default async function ({ app, store }) {
     // この場合、storeにpages情報がないことになる
     // (indexは稼働する)
     // console.log('pages', pages)
+    // ★
+    // hasuraへのアクセスでエラーの場合は、assetsにあるJSONを使って
+    // 情報を登録する
     if (pages) {
       // 以下にもawait必要
       await store.commit('setPages', pages.video_pages)
